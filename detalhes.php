@@ -1,0 +1,210 @@
+<?PHP
+// +---------------------------------------------------------+
+// | Detalhes da miniatura                                   |
+// +---------------------------------------------------------+
+// | Parte integrante do livro da série Faça um Site         |
+// | PHP 5 com banco de dados MySQL - Comércio eletrônico    |
+// | Editora Érica - autor: Carlos A J Oliviero              |
+// | www.facaumsite.com.br                                   |
+// +---------------------------------------------------------+
+SESSION_START();
+include "inc_dbConexao.php";
+
+
+// Recupera o produto (método POST) passado por index.php, categorias.php e pesquisa.php
+
+$produto = $_GET['produto'];
+
+$sql = " SELECT categorias.cat_nome, miniaturas.* FROM categorias ";
+$sql .= "INNER JOIN miniaturas ";
+$sql .= "ON categorias.id = miniaturas.id_categoria ";
+$sql .= "WHERE miniaturas.codigo = '" . $produto . "' ";
+
+//echo $mysqli;
+//exit;
+$rs = mysqli_query($conexao,$sql);
+$reg = mysqli_fetch_array($rs);
+
+// Carrega as variaveis com os valores dos campos
+$codigo = $reg["codigo"];
+$nome = $reg["nome"];
+$ano = $reg["ano"];
+$nome_cat = $reg["nome_cat"];
+$cat_sub = $reg["cat_sub"];
+$preco = $reg["preco"];
+$desconto = $reg["desconto"];
+$desconto_boleto = $reg["desconto_boleto"];
+$max_parcelas = $reg["max_parcelas"];
+$escala = $reg["escala"];
+$peso = $reg["peso"];
+$comprimento = $reg["comprimento"];
+$largura = $reg["largura"];
+$altura = $reg["altura"];
+$cor = $reg["cor"];
+$estoque = $reg["estoque"];
+$min_estoque = $reg["min_estoque"];
+$credito = $reg["credito"];
+// Armazena em $valor_boleto o valor a ser pago com desconto por intermédio do cartão de credito
+$valor_desconto = $preco - ($preco * $desconto / 100);
+// Armazena em $valor_boleto o valor a ser pago com desconto por intermédio de boleto bancário
+$valor_boleto = $valor_desconto - ($valor_desconto * $desconto_boleto / 100);
+?>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faça um Site - PHP 5 com Banco de Dados MySQL</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="style.css">
+	<script type="text/JavaScript">
+		<!--
+// Função para abertura da janela de imagens ampliadas
+function ampliar_imagem(url,nome_janela,parametros) { 
+  window.open(url,nome_janela,parametros);
+}
+//-->
+	</script>
+</head>
+
+<body>
+	<div class="container">
+		
+		<?PHP include "inc_menu_superior.php" ?>
+		<?PHP include "inc_menu_categorias.php" ?>
+		
+		<!-- Título da página (exibe o nome da categoria) -->
+		<h3 class="mt-3 mb-3"><span class="c_cinza">Detalhes <img src="imagens/marcador_setaDir.gif" align="absmiddle" /> <?PHP print $nome_cat; ?></span> <img src="imagens/marcador_setaDir.gif" align="absmiddle" /> <span class="c_preto"><?PHP print $nome; ?></span></h3>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3">
+					<div class="row">
+						<a href="#"><img src="imagens/<?PHP print $codigo; ?>G.jpg" width="200" height="121" border="0" onclick="ampliar_imagem('ampliar.php?codigo=<?PHP print $codigo; ?>&nome=<?PHP print $nome; ?>','','width=522,height=338,top=50,left=50')" /></a>
+					</div>
+					<div class="row">
+						<p class="text-muted">Clique na imagem para ampliar</p>
+					</div>
+					<div class="row">
+						<h4 class="mt-2 mb-2">Dados técnicos</h4>
+					</div>
+					<div class="row p-3">
+						<table class="table">
+							<tr><td class="p-0"><p>Código:</p></td><td class="p-0"><p><?PHP print $codigo; ?></p></td></tr>
+							<tr><td class="p-0"><p>Categoria:</p></td><td class="p-0"><p><?PHP print $nome_cat; ?></p></td></tr>
+							<tr><td class="p-0"><p>Tipo:</p></td><td class="p-0"><p><?PHP print $cat_sub; ?></p></td></tr>
+							<tr><td class="p-0"><p>Ano:</p></td><td class="p-0"><p><?PHP print $ano; ?></p></td></tr>
+							<tr><td class="p-0"><p>Escala:</p></td><td class="p-0"><p><?PHP print $escala; ?> - Die Caste Models</p></td></tr>
+							<tr><td class="p-0"><p>Peso:</p></td><td class="p-0"><p><?PHP print number_format($peso, 3, ',', '.'); ?> Kg</p></td></tr>
+							<tr><td class="p-0"><p>Cor:</p></td><td class="p-0"><p><?PHP print $cor; ?></p></td></tr>
+							<tr><td class="p-0"><p>Dimensões:</p></td><td class="p-0"><p>(C x L x A): <?PHP print number_format($comprimento, 1, ',', '.'); ?> x <?PHP print number_format($largura, 1, ',', '.'); ?> x <?PHP print number_format($altura, 1, ',', '.'); ?> cm</p></td></tr>
+						</table>
+					</div>
+					<div class="row">
+						<p class="text-muted">Créditos da imagem: <br><?PHP print $credito; ?></p>
+					</div>
+				</div> <!-- col esquerda-->
+
+				<div class="col-md-9">
+				<div class="container">
+					<div class="row row-cols-4 text-center">
+						<div class="col"><p><?PHP print $nome ?></p></div>
+
+						<div class="col"><p class="text-decoration-line-through" style="color: red;">de: R$ <span style="font-weight: bold;"><?PHP print number_format($preco, 2, ',', '.'); ?></span></p></div>
+						<div class="col"><p style="color: green;">Por: <span style="font-weight: bold"> R$ <?PHP print number_format($valor_desconto, 2, ',', '.'); ?></span> </p></div>
+
+						<?PHP if ($estoque > $min_estoque) { ?>
+							<div class="col text-end">
+								<a href="cesta.php?produto=<?PHP print $codigo; ?>&inserir=S"><button class="btn btn-success">Comprar</button></a>
+							</div>
+						<?PHP } else { ?>
+							<div class="col">
+								<button class="btn btn-info">Não disponível em estoque</button>
+							</div>
+						<?PHP } ?>
+					</div>
+
+					<div class="row">
+						<?PHP if ($max_parcelas >= $_SESSION['max_parcelas']) {
+							$_SESSION['max_parcelas'] = $max_parcelas;
+						} ?>
+
+						<table class="table table-borderless table-striped table-sm">
+							<thead>
+								<th colspan="2" scope="col">Parcelamento no cartão de crédito</th>
+							</thead>
+							<tbody>
+								<?PHP for ($contador = 1; $contador <= $max_parcelas; $contador++) { ?>
+									<?PHP if ($contador % 2 == 1) { ?>
+								<tr class="w-50">
+									<td>
+										<p><?PHP print $contador; ?> x de R$ <?PHP print number_format($valor_desconto / $contador, 2, ',', '.'); ?> sem juros</p>
+									</td>
+								<?PHP } else { ?>
+									<td>
+										<p><?PHP print $contador; ?> x de R$ <?PHP print number_format($valor_desconto / $contador, 2, ',', '.'); ?> sem juros</p>
+									</td>
+								</tr>
+								<?PHP
+								} // Encerra o Else
+						}   // Encerra o for
+						?>
+							</tbody>
+						</table>
+					</div>
+
+					
+						<div class="row">
+							<div class="col">
+								<p>* Pague com Boleto Bancário e ganhe + <?PHP print number_format(($desconto_boleto), 0, ',', '.'); ?>% de desconto: <br><span style="font-weight: bold; color: green;">R$ <?PHP print number_format(($valor_boleto), 2, ',', '.'); ?></span></p>
+							</div>
+							<div class="col">
+								<p>* Este produto pode ser pago com cartão de crédito em até <?PHP print $max_parcelas; ?> parcelas.</p>
+								
+							</div>
+						</div>
+
+					<div class="row mb-3">	
+						<div class="col">
+							<p style="font-weight: bold">Formas de pagamento</p>
+							<img src="imagens/banner_formapag.gif" alt="formas de pagamento" width="297" height="23" vspace="5" />
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col">
+							<div class="row">
+								<p style="font-weight: bold">Prazos de entrega</p>
+							</div>
+							<div class="row">
+								<p>2 dias úteis para o estado de São Paulo.></p>
+								<p>5 dias úteis para os demais estados.</p>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<p style="font-weight: bold">Observações</p>
+						<p>As mercadorias adquiridas serão despachadas, via Sedex(Sedex ou e_Sedex), no primeiro dia útil após a comprovação de pagamento, estando a entrega condicionada à disponibilidade de estoque. Prazo médio de entrega dos Correios: 24 a 72 horas.</p>
+					</div>
+				
+				</div>
+				</div> <!-- col direita-->
+			</div>
+		</div>
+		<?PHP include "inc_rodape.php" ?>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+
+</html>
+<?PHP
+// Libera os recursos usados pela conexão atual
+mysqli_free_result($rs);
+mysqli_close($conexao);
+?>
