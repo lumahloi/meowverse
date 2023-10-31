@@ -110,7 +110,7 @@ if ($dif_dias == 0) {
 
     <?PHP if ($dif_dias >= 0 and $formpag == "B") {; ?>
       <p><img src="imagens/marcador_atencao.gif" width="20" height="15" vspace="1" /> Olá <strong><?PHP print $_SESSION['nome']; ?></strong<strong>,</strong> Esse pedido se encontra no prazo de validade. <?PHP print $mensagem_dias; ?> para efetuar seu pagamento. Após este periodo seu pedido será cancelado. Se você ainda não imprimiu o referido boleto, poderá fazê-lo agora clicando no botão "Imprimir Boleto".</p>
-      <div class="row text-end"><a href="emitir_boleto.php"><button class="btn btn-success">Imprimir boleto</button></a></div>
+      <div class="row text-end"><a href="emitir_boleto.php"><button class="btn btn-success" style="background-color: purple; border-color: purple;">Imprimir boleto</button></a></div>
 
     <?PHP } ?>
 

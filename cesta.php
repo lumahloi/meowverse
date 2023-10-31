@@ -66,7 +66,7 @@ if ($excluir = "S") {
 }
 
 // Captura dados do produto selecionado
-$sql = "SELECT id, codigo, nome, preco, desconto, peso, desconto_boleto ";
+$sql = "SELECT id, codigo, nome, preco, desconto, desconto_boleto ";
 $sql .= " FROM miniaturas ";
 $sql .= " WHERE codigo = '" . $produto . "' ";
 
@@ -76,7 +76,6 @@ $reg = mysqli_fetch_array($rs);
 $codigo = $reg["codigo"];
 $nome = $reg["nome"];
 $preco = $reg["preco"];
-$peso = $reg["peso"];
 $desconto = $reg["desconto"];
 $desconto_boleto = $reg["desconto_boleto"];
 $preco_desconto = $preco - ($preco * $desconto / 100);
@@ -97,8 +96,8 @@ $item_duplicado = mysqli_num_rows($rsd);
 // Adiciona o produto à tabela de itens somente se $item_duplicado for igual a 0 
 if ($item_duplicado == 0 and $inserir == "S"){
 	$sqli = "INSERT into itens";
-	$sqli .= "(num_ped,codigo,nome,qt,preco,peso,preco_boleto,desconto,desconto_boleto) ";
-	$sqli .= "VALUES('$num_ped','$codigo','$nome','$qt','$preco','$peso','$preco_boleto','$desconto','$desconto_boleto') ";
+	$sqli .= "(num_ped,codigo,nome,qt,preco,preco_boleto,desconto,desconto_boleto) ";
+	$sqli .= "VALUES('$num_ped','$codigo','$nome','$qt','$preco','$preco_boleto','$desconto','$desconto_boleto') ";
 	
 	mysqli_query($conexao, $sqli);
 }
@@ -173,7 +172,7 @@ $_SESSION['total_itens'] = $total_itens;
                     </div>
                     <div class="row">
                         <div class="col">
-                            <a href="index.php" class="btn btn-success" role="button" aria-pressed="true">Voltar à loja</a>
+                            <a href="index.php" class="btn btn-success" role="button" aria-pressed="true" style="background-color: purple; border-color: purple;">Voltar à loja</a>
                         </div>
                     </div>
                 </div>
@@ -207,17 +206,16 @@ $_SESSION['total_itens'] = $total_itens;
                                 $nome = $reg["nome"];
                                 $qt = $reg["qt"];
                                 $preco_unitario = $reg["preco"];
-                                $peso = $reg["peso"];
                                 $preco_total = $preco_unitario * $qt;
                                 $subtotal = $subtotal + $preco_total;
                             ?>
                         <tbody>
                             <tr>
                                 <td>
-                                    <img src='imagens/<?PHP print $codigo; ?>.jpg' width='53' height='32' align="absmiddle" />&nbsp;&nbsp;&nbsp;<?PHP print $codigo; ?> - <?PHP print $nome; ?>
+                                    <img src='imagens/<?PHP print $codigo; ?>.jpg' width='50' height='50' align="absmiddle" />&nbsp;&nbsp;&nbsp;<?PHP print $codigo; ?> - <?PHP print $nome; ?>
                                 </td>
                                 <td>
-                                    <input name="txt<?PHP print $n; ?>" value="<?PHP print $qt; ?>" type="text" size="2" maxlength="6" class="caixa_texto" readonly/>
+                                    <input name="txt<?PHP print $n; ?>" value="<?PHP print $qt; ?>" type="text" size="2" maxlength="6" class="caixa_texto"/>
                                 </td>
                                 <td>
                                     <a href="cesta.php?id=<?PHP print $id ?>&excluir=S"><img src='imagens/btn_removerItem.gif' alt='Comprar' hspace='5' border='0' /></a>
@@ -250,12 +248,12 @@ $_SESSION['total_itens'] = $total_itens;
                         <tfoot>
                             <td colspan="4">
                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                    <a href="index.php"><button type="button" class="btn btn-secondary">Comprar mais produtos</button></a>
-                                    <a href="cesta.php"><button type="button" class="btn btn-primary">Atualizar valores</button></a>
+                                    <a href="index.php" role="button" class="btn btn-secondary">Comprar mais produtos</a>
+                                    <a href="cesta.php"  role="button" class="btn btn-primary">Atualizar valores</a>
                                 </div>
                             </td>
                             <td>
-                                <button type="submit" class="btn btn-success">Finalizar pedido</button>
+                                <button type="submit" class="btn btn-success" style="background-color: purple; border-color: purple;">Finalizar pedido</button>
                             </td>
                         </tfoot>
                     </table>

@@ -85,10 +85,17 @@ if ($_SESSION['acao'] == "alt") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Faça um Site - PHP 5 com Banco de Dados MySQL</title>
+
+	<script
+			  src="https://code.jquery.com/jquery-3.6.0.js"
+			  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+			  crossorigin="anonymous"></script>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="style.css">
-	<script language="javascript">
+
+	<script type="text/javascript">
 		function valida_form() {
 			if (document.cadastro.txtnome.value == "") {
 				alert("Por favor, informe seu nome completo.");
@@ -193,11 +200,11 @@ if ($_SESSION['acao'] == "alt") {
 				return false;
 			}
 
-			if (document.cadastro.txtcep.value.length < 8) {
+			/*if (document.cadastro.txtcep.value.length < 8) {
 				alert("O campo CEP deve conter 8 caracteres.");
 				cadastro.txtcep.focus();
 				return false;
-			}
+			}*/
 
 			if (document.cadastro.txtbairro.value == "") {
 				alert("Por favor, informe seu bairro.");
@@ -218,7 +225,7 @@ if ($_SESSION['acao'] == "alt") {
 			}
 
 			// Verifica o CEP conforme o estado selecionado
-			if (document.cadastro.txtuf.value == "AC") {
+			/*if (document.cadastro.txtuf.value == "AC") {
 				if (document.cadastro.txtcep.value < "69900000" || document.cadastro.txtcep.value > "69999999") {
 					alert("O CEP digitado é inválido para o estado selecionado.");
 					cadastro.txtcep.focus();
@@ -413,10 +420,75 @@ if ($_SESSION['acao'] == "alt") {
 					cadastro.txtcep.focus();
 					return false;
 				}
-			}
+			}*/
 			return true;
 		}
 	</script>
+
+	
+<script>
+	$(document).ready(function() {
+
+		function limpa_formulário_cep() {
+			// Limpa valores do formulário de cep.
+			$("#txtend_nome").val("");
+			$("#txtbairro").val("");
+			$("#txtcidade").val("");
+			$("#txtuf").val("");
+		}
+
+		//Quando o campo cep perde o foco.
+		$("#txtcep").blur(function() {
+
+			//Nova variável "cep" somente com dígitos.
+			var cep = $(this).val().replace(/\D/g, '');
+
+			//Verifica se campo cep possui valor informado.
+			if (cep != "") {
+
+				//Expressão regular para validar o CEP.
+				var validacep = /^[0-9]{8}$/;
+
+				//Valida o formato do CEP.
+				if(validacep.test(cep)) {
+
+					//Preenche os campos com "..." enquanto consulta webservice.
+					$("#txtend_nome").val("...");
+					$("#txtbairro").val("...");
+					$("#txtcidade").val("...");
+					$("#txtuf").val("...");
+
+					//Consulta o webservice viacep.com.br/
+					$.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+						if (!("erro" in dados)) {
+							//Atualiza os campos com os valores da consulta.
+							$("#txtend_nome").val(dados.logradouro);
+							$("#txtbairro").val(dados.bairro);
+							$("#txtcidade").val(dados.localidade);
+							$("#txtuf").val(dados.uf);
+						} //end if.
+						else {
+							//CEP pesquisado não foi encontrado.
+							limpa_formulário_cep();
+							alert("CEP não encontrado.");
+						}
+					});
+				} //end if.
+				else {
+					//cep é inválido.
+					limpa_formulário_cep();
+					alert("Formato de CEP inválido.");
+				}
+			} //end if.
+			else {
+				//cep sem valor, limpa formulário.
+				limpa_formulário_cep();
+			}
+		});
+	});
+</script>
+
 </head>
 
 <body>
@@ -434,7 +506,7 @@ if ($_SESSION['acao'] == "alt") {
 			<?PHP } else { ?>
 				<?PHP $titulo_1 = "Etapa 2"; ?>
 				<?PHP $titulo_2 = "Endereço de Entrega - Dados Pessoais"; ?>
-				<a href="index.php"><img src="imagens/logo_fs.gif" alt="Faça um Site" border="0" /></a>
+				<a href="index.php"><img src="imagens/logo.png" alt="Faça um Site" /></a>
 			<?PHP } ?>
 				<!-- Título da página -->
 				<h3><?PHP print $titulo_1; ?> <img src="imagens/marcador_setaDir.gif" align="absmiddle" /> <span class="c_cinza"><?PHP print $titulo_2; ?> </span> </h3>
@@ -503,6 +575,10 @@ if ($_SESSION['acao'] == "alt") {
 											</tr>
 										</thead>
 										<tr>
+											<td><label>CEP:</label></td>
+											<td><input name="txtcep" type="text" class="caixa_texto" id="txtcep" size="15" maxlength="8" value="<?PHP print $txtcep; ?>" />*</td>
+										</tr>
+										<tr>
 											<td><label>Logradouro:</label></td>
 											<td><input name="txtend_nome" type="text" class="caixa_texto" id="txtend_nome" size="35" maxlength="60" value="<?PHP print $txtend_nome; ?>" />*</td>
 										</tr>
@@ -515,10 +591,6 @@ if ($_SESSION['acao'] == "alt") {
 											<td><input name="txtend_comp" type="text" class="caixa_texto" id="txtend_comp" size="20" maxlength="20" value="<?PHP print $txtend_comp; ?>" /></td>
 										</tr>
 										<tr>
-											<td><label>CEP:</label></td>
-											<td><input name="txtcep" type="text" class="caixa_texto" id="txtcep" size="15" maxlength="8" value="<?PHP print $txtcep; ?>" />*</td>
-										</tr>
-										<tr>
 											<td><label>Bairro:</label></td>
 											<td><input name="txtbairro" type="text" class="caixa_texto" id="txtbairro" size="35" maxlength="40" value="<?PHP print $txtbairro; ?>" />*</td>
 										</tr>
@@ -528,8 +600,10 @@ if ($_SESSION['acao'] == "alt") {
 										</tr>
 										<tr>
 											<td><label>Unidade federativa:</label></td>
-											<td><select name="txtuf" class="formulario_cadastro2">
+											<td><input type="text" name="txtuf" id="txtuf">
+												<!-- <select name="txtuf" class="formulario_cadastro2"> -->
 												<?PHP
+												/*
 													// Carrega combo de unidades federativas
 													$itens_uf = "<option value='0'>-- Selecione um estado</option><br /> ";
 													$sql_uf = "SELECT * FROM tb_estados ";
@@ -541,16 +615,16 @@ if ($_SESSION['acao'] == "alt") {
 															$itens_uf = $itens_uf . "<option value='" . $reg_uf['uf'] . "'>" . $reg_uf['nome'] . "</option><br /> ";
 														}
 													}
-													print $itens_uf;
-												?>
-											</select> *</td>
+													print $itens_uf; */
+													?>*
+											<!-- </select> --> </td>
 										</tr>
 									</table>
 								</div> <!-- col entrega -->
 							</div>
 							<div class="row mb-3">
           						<div class="text-center">
-            						<button class="btn btn-success" type="submit">Continuar</button>
+            						<button class="btn btn-success" type="submit" style="background-color: purple; border-color: purple;">Continuar</button>
           						</div>
         					</div>
 						</form>
@@ -578,7 +652,7 @@ if ($_SESSION['acao'] == "alt") {
 				<?PHP } ?>
 				<?PHP include "inc_rodape.php" ?>
 			</div>
-			<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+			
 			<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 			<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 		</div> <!-- container conteudo--> 

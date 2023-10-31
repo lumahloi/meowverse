@@ -40,7 +40,7 @@ include "inc_dbConexao.php";
       <tr>
         <td width="37%">
           <div align="center">
-            <h5 align="right"><img src="imagens/logo_fs1.gif" width="178" height="178" /></h5>
+            <h5 align="right"><img src="imagens/logo.png" width="178" height="178" /></h5>
           </div>
         </td>
         <td width="63%">

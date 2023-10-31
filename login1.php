@@ -96,7 +96,7 @@ if ($erro == "0") {
 			<!-- Não exibe menu superior e menu de categorias. Neste caso, exibe o banner da primeira etapa de uma compra (1. Minha identificação) -->
 		<?PHP } else { ?>
 			<?PHP $tit_etapa = "Etapa 1"; ?>
-			<div id="etapa1"><a href="index.php"><img src="imagens/logo_fs.gif" alt="Faça um Site" border="0" /></a></div>
+			<div id="etapa1"><a href="index.php"><img src="imagens/logo.png" alt="Faça um Site" border="0" /></a></div>
 		<?PHP } ?>
 
 		<!-- Título da página -->
@@ -110,12 +110,12 @@ if ($erro == "0") {
 							<!-- Exibe mensagens de erro -->
 							<?PHP if ($erro == 1) { ?>
 								<h4 class="c_vermelho"><?PHP print $mensagem_erro; ?></h4>
-								<p><a href="javascript:history.go(-1)"><button class="btn btn-success">Voltar</button></a></p>
+								<p><a href="javascript:history.go(-1)"><button class="btn btn-success" style="background-color: purple; border-color: purple;">Voltar</button></a></p>
 							<?PHP } ?>
 
 							<?PHP if ($erro == 2) { ?>
 								<h4 class="c_vermelho"><?PHP print $mensagem_erro; ?></h4>
-								<p><a href="javascript:history.go(-1)"><button class="btn btn-success">Voltar</button></a></p>
+								<p><a href="javascript:history.go(-1)"><button class="btn btn-success" style="background-color: purple; border-color: purple;">Voltar</button></a></p>
 							<?PHP } ?>
 						</td>
 					</tr>

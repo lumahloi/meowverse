@@ -93,7 +93,7 @@ $num_ped = $_SESSION['num_ped'];
 
 <body>
 	<div class="container">
-		<a href="index.php"><img src="imagens/logo_fs.gif" alt="Faça um Site" border="0" /></a>
+		<a href="index.php"><img src="imagens/logo.png" alt="Faça um Site" border="0" /></a>
 
 		<h3 class="mt-3">Etapa 3 <img src="imagens/marcador_setaDir.gif"/> Pagamento</h3>
 
@@ -221,7 +221,7 @@ $num_ped = $_SESSION['num_ped'];
 									<p>Valor da fatura para pagamento com boleto bancário: <span style="font-weight: bold">R$ <?PHP print number_format($total_pag_boleto, 2, ',', '.'); ?></span></p>
 									<p><img src="imagens/marcador_atencao.gif" alt="aten&ccedil;&atilde;o" align="left" />O boleto deve ser impresso após a confirmação do pedido, pois não o enviamos via correio. </p>
 									<p><small>A data de vencimento do boleto é de 5 dias corridos após o fechamento do pedido, após esta data, ele perderá a validade. Na impossibilidade de imprimi-lo, faça o pagamento do boleto pelo Home Banking de seu banco. Para isso, utilize o código de barras localizado na parte superior esquerda da ficha de compensação do boleto. Não é possível pagar o seu pedido através de DOC, transferência ou depósito para conta indicada neste boleto.</small></p>
-									<div class="row text-end"><a href="cesta.php"><button class="btn btn-success">Confirmar forma de pagamento</button></a></div>
+									<div class="row text-end"><a href="cesta.php"><button class="btn btn-success" style="background-color: purple; border-color: purple;">Confirmar forma de pagamento</button></a></div>
 								</div>
 							</div>
 					</div> <!-- boleto--->
@@ -282,7 +282,7 @@ $num_ped = $_SESSION['num_ped'];
 											</div>
 										</form>
 								    </div>
-								<div class="row text-end mt-3"><a href="cesta.php"><button class="btn btn-success">Confirmar forma de pagamento</button></a></div>
+								<div class="row text-end mt-3"><a href="cesta.php"><button class="btn btn-success" style="background-color: purple; border-color: purple;">Confirmar forma de pagamento</button></a></div>
 						</div>
 					</div><!-- credito--->
 

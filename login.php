@@ -99,7 +99,7 @@ $_SESSION['acao'] = "ver";
                     <div class="row mt-4 justify-content-between">
                         <div class="text-center">
                             <a class="btn btn-secondary" href="senha.php">Esqueci minha senha</a>
-                            <input type="submit" value="Continuar" class="btn btn-success">
+                            <input type="submit" value="Continuar" class="btn btn-success" style="background-color: purple; border-color: purple;">
                         </div>
                     </div>
                 </form>
@@ -128,7 +128,7 @@ $_SESSION['acao'] = "ver";
                     </div>
                     <div class="row mt-4 d-flex">
                         <div class="text-center">
-                            <input type="submit" value="Continuar" class="btn btn-success">
+                            <input type="submit" value="Continuar" class="btn btn-success" style="background-color: purple; border-color: purple;">
                         </div>
                     </div>
                     <input type="hidden" name="acao" value="inc" />

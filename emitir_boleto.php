@@ -521,7 +521,7 @@ function calculo_dac2($campo)
 	<!-- Recibo do Sacado -->
 	<table width="700" border="0" align="center" cellpadding="0" cellspacing="0">
 		<tr>
-			<td class="logo_fs"><a href="index.php"><img src="imagens/logo_fsboleto.gif" width="178" height="37" vspace="2" border="0" /></a></td>
+			<td class="logo_fs"><a href="index.php"><img src="imagens/logo.png" width="178" height="37" vspace="2" border="0" /></a></td>
 			<td width="439" class="titulo">Boleto para pagamento do pedido n°<strong>&nbsp;<?PHP print $_SESSION['num_ped']; ?></strong></td>
 		</tr>
 	</table>

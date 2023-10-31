@@ -164,7 +164,7 @@ if ($erro == "0") {
 					</div>
 					<div class="row mt-3">
 						<div class="col">
-							<a href="index.php" class="btn btn-success" role="button" aria-pressed="true">Voltar à loja</a>
+							<a href="index.php" class="btn btn-success" role="button" aria-pressed="true" style="background-color: purple; border-color: purple;">Voltar à loja</a>
 						</div>
 					</div>
 				</div>
@@ -182,7 +182,7 @@ if ($erro == "0") {
 					</div>
 					<div class="row mt-3">
 						<div class="col">
-							<a href="index.php" class="btn btn-success" role="button" aria-pressed="true">Voltar à loja</a>
+							<a href="index.php" class="btn btn-success" role="button" aria-pressed="true" style="background-color: purple; border-color: purple;">Voltar à loja</a>
 						</div>
 					</div>
 				</div>
@@ -195,7 +195,7 @@ if ($erro == "0") {
 				</div>
 				<div class="row mt-3">
                         <div class="col">
-                            <a href="index.php" class="btn btn-success" role="button" aria-pressed="true">Voltar à loja</a>
+                            <a href="index.php" class="btn btn-success" role="button" aria-pressed="true" style="background-color: purple; border-color: purple;">Voltar à loja</a>
                         </div>
                     </div>
 			<?PHP } ?>

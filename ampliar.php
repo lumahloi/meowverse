@@ -39,7 +39,7 @@ $nome = $_GET['nome'];
       <td class="titulo_imagem"><?PHP print $nome; ?></td>
     </tr>
     <tr>
-      <td valign="top"><img src="imagens/<?PHP print $codigo; ?>G.jpg" width="516" height="310" /></td>
+      <td valign="top"><img src="imagens/<?PHP print $codigo; ?>.jpg"/></td>
     </tr>
   </table>
 </body>

@@ -235,9 +235,9 @@ if ($_SESSION['acao'] == "ins") {
 				<div class="col text-end">
 					<a href="cadastro.php"><button class="btn btn-secondary">Alterar dados</button></a>
 					<?PHP if ($_SESSION['cadastro'] == "S") { ?>
-								<a href="index.php"><button class="btn btn-success">Voltar à loja</button></a>
+								<a href="index.php"><button class="btn btn-success" style="background-color: purple; border-color: purple;">Voltar à loja</button></a>
 							<?PHP } else { ?>
-								<a href="pagamento.php"><button class="btn btn-success">Continuar</button></a>
+								<a href="pagamento.php"><button class="btn btn-success" style="background-color: purple; border-color: purple;">Continuar</button></a>
 					<?PHP } ?>
 				</div>
 			</div>

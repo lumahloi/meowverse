@@ -57,7 +57,7 @@ mysqli_query($conexao, $sqlp);
 
 
 <div class="container">
-	<a href="index.php"><img src="imagens/logo_fs.gif" alt="Faça um Site" /></a>
+	<a href="index.php"><img src="imagens/logo.png" alt="Faça um Site" /></a>
 
 	<h3>Etapa 4 <img src="imagens/marcador_setaDir.gif" align="absmiddle" /> Confirmação do seu pedido <img src="imagens/marcador_setaDir.gif" align="absmiddle" /> Pagamento com Cartão de Crédito</h3>
 	<p class="text-end">Número do seu pedido: <?PHP print $_SESSION['num_ped']; ?></p>

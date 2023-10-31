@@ -44,7 +44,7 @@ include "inc_dbConexao.php";
 			<!-- Nâo exibe menu superior e menu de categorias. Neste caso, exibe o banner da primeira etapa de uma compra (1. Minha identificação) -->
 		<?PHP } else { ?>
 			<?PHP $tit_etapa = "Etapa 1"; ?>
-			<div id="etapa1"><a href="index.php"><img src="imagens/logo_fs.gif" alt="Faça um Site" border="0" /></a></div>
+			<div id="etapa1"><a href="index.php"><img src="imagens/logo.png" alt="Faça um Site" border="0" /></a></div>
 		<?PHP } ?>
 
 		<h3 class="mt-3 mb-2">Esqueceu sua senha? </h3>
@@ -64,7 +64,7 @@ include "inc_dbConexao.php";
 							<input name="txtemail" type="text" class="caixa_texto" size="60" />
 					</div>
 					<div class="col-md-3">
-							<button class="btn btn-success">Continuar</button>
+							<button class="btn btn-success" style="background-color: purple; border-color: purple;">Continuar</button>
 						</form>
 					</div>
 			</div>

@@ -60,7 +60,7 @@ include "inc_dbConexao.php";
 
         <div class="row mb-3">
           <div class="text-center">
-            <button class="btn btn-success" type="submit">Continuar</button>
+            <button class="btn btn-success" type="submit" style="background-color: purple; border-color: purple;" >Continuar</button>
           </div>
         </div>
         

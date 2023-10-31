@@ -34,9 +34,9 @@ $total_registros = mysqli_num_rows($rs);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Faça um Site - PHP 5 com Banco de Dados MySQL</title>
+	<link rel="stylesheet" href="style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="style.css">
 	<script type="text/JavaScript">
 		<!--
 // Função para abertura da janela de imagens ampliadas
@@ -55,7 +55,7 @@ function ampliar_imagem(url,nome_janela,parametros) {
 
 		<!-- Decoração Home page -->
 		<div class="row">
-			<img src="imagens/deco_home.jpg" width="800" height="285" />
+			<img src="imagens/deco_home.png"/>
 		</div>
 
 		<div class="row">
@@ -70,22 +70,25 @@ function ampliar_imagem(url,nome_janela,parametros) {
 			</div>
 			<div class="col">
 				<div class="row row-cols-3">
-					<div class="col"><p>Ordenar por:</p></div>
-					<?PHP if ($ordenar == "preco ASC") { ?>
-						<div class="col">
-							<p>Menor preço</p>
-						</div>
-						<div class="col">
-							<a href="index.php?ordenar=preco DESC"><p>Maior preço</p></a>
-						</div>
-					<?PHP } else { ?>
-						<div class="col">
-							<a href="index.php?ordenar=preco ASC"><p>Menor preço</p></a>
-						</div>
-						<div class="col">
-							<p>Maior preço</p>
-						</div>
-					<?PHP } ?>
+				<div class="col">
+				<p>Ordenar por:</p>
+			</div>
+			
+			<?PHP if ($ordenar == "preco ASC") { ?>
+				<div class="col">
+					<p>Menor preço</p>
+				</div>
+				<div class="col">
+					<a href="index.php?ordenar=preco DESC">Maior preço</a>
+				</div>
+			<?PHP } else { ?>
+				<div class="col">
+					<a href="index.php?ordenar=preco ASC">Menor preço</a>
+				</div>
+				<div class="col">
+					<p>Maior preço</p>
+				</div>
+			<?PHP } ?>
 				</div>
 			</div>
 		</div>
@@ -110,20 +113,17 @@ function ampliar_imagem(url,nome_janela,parametros) {
 
 <div class="container">
 				<div class="row row-cols-2">
-					<div class="col-sm-5 p-3 mt-3 mb-3">
+					<div class="col-md-6 p-3 mt-3 mb-3">
 							<div class="row row-cols-2">
-								<div class="col">
+								<div class="col-md-6">
 									<div class="row">
-										<a href="#"><img src="imagens/<?PHP print $codigo; ?>.jpg" onclick="ampliar_imagem('ampliar.php?codigo=<?PHP print $codigo; ?>&nome=<?PHP print $nome; ?>','','width=522,height=338,top=50,left=50')" /></a>
+										<a href="#"><img src="imagens/<?PHP print $codigo; ?>.jpg" class="img-fluid" onclick="ampliar_imagem('ampliar.php?codigo=<?PHP print $codigo; ?>&nome=<?PHP print $nome; ?>','','width=522,height=338,top=50,left=50')" /></a>
 									</div>
 									<div class="row">
-										<p class="text-muted">Clique na imagem para ampliar</p>
-									</div>
-									<div class="row">
-										<p class="fw-lighter text-muted fs-6">crédito da imagem: <?PHP print $credito; ?></p>
+										<p class="text-muted text-center small">Clique na imagem para ampliar</p>
 									</div>
 								</div> <!-- fecha col imagem -->
-								<div class="col">
+								<div class="col-md-6">
 									<div class="row">
 										<h5><?PHP print $nome; ?></h5>
 									</div>
@@ -133,9 +133,10 @@ function ampliar_imagem(url,nome_janela,parametros) {
 									<div class="row">
 										<p>Por: <span class="fw-bold">R$ <?PHP print number_format($valor_desconto,2,',','.'); ?></span> à vista</p>
 									</div>
+
 									<div class="row">
-										<div class="col">
-											<p class="fw-bold"><a href="detalhes.php?produto=<?PHP print $codigo; ?>" class="text-decoration-none mais-detalhes">Mais detalhes</a></p>
+										<div class="col-md-9 text-center">
+											<a href="detalhes.php?produto=<?PHP print $codigo; ?>"><button class="btn btn-success" style="background-color: purple; border-color: purple;">Mais detalhes</button></a>
 										</div>
 										<div class="col">
 											<p class="text-danger"><?PHP if ($estoque < $min_estoque) { ?>Indisponível<?PHP } ?></p>
@@ -151,40 +152,38 @@ function ampliar_imagem(url,nome_janela,parametros) {
 			// Exibe dados da coluna direita 
 			} else { 
 				?>
-					<div class="col-sm-5 p-3 mx-auto mt-3 mb-3">
-						<div class="row">
-							<div class="col">
-									<div class="row row-cols-2">
-										<a href="#"><img src="imagens/<?PHP print $codigo; ?>.jpg" onclick="ampliar_imagem('ampliar.php?codigo=<?PHP print $codigo; ?>&nome=<?PHP print $nome; ?>','','width=522,height=338,top=50,left=50')" /></a>
+					<div class="col-md-6 p-3 mt-3 mb-3">
+							<div class="row row-cols-2">
+								<div class="col-md-6">
+									<div class="row">
+										<a href="#"><img src="imagens/<?PHP print $codigo; ?>.jpg" class="img-fluid" onclick="ampliar_imagem('ampliar.php?codigo=<?PHP print $codigo; ?>&nome=<?PHP print $nome; ?>','','width=522,height=338,top=50,left=50')" /></a>
 									</div>
 									<div class="row">
-										<p class="text-muted">Clique na imagem para ampliar</p>
+										<p class="text-muted text-center small">Clique na imagem para ampliar</p>
+									</div>
+								</div> <!-- fecha col imagem -->
+								<div class="col-md-6">
+									<div class="row">
+										<h5><?PHP print $nome; ?></h5>
 									</div>
 									<div class="row">
-										<p class="fw-lighter text-muted fs-6">crédito da imagem: <?PHP print $credito; ?></p>
+										<p class="text-decoration-line-through">de: R$ <?PHP print number_format($preco,2,',','.'); ?></p>
 									</div>
-							</div> <!-- fecha col imagem -->
-							<div class="col">
-								<div class="row">
-									<h5><?PHP print $nome; ?></h5>
-								</div>
-								<div class="row">
-									<p class="text-decoration-line-through">de: R$ <?PHP print number_format($preco,2,',','.'); ?></p>
-								</div>
-								<div class="row">
-									<p>Por: <span class="fw-bold">R$ <?PHP print number_format($valor_desconto,2,',','.'); ?></span> à vista</p>
-								</div>
-								<div class="row">
-									<div class="col">
-										<p class="fw-bold"><a href="detalhes.php?produto=<?PHP print $codigo; ?>" class="text-decoration-none mais-detalhes">Mais detalhes</a></p>
+									<div class="row">
+										<p>Por: <span class="fw-bold">R$ <?PHP print number_format($valor_desconto,2,',','.'); ?></span> à vista</p>
 									</div>
-									<div class="col">
-										<p class="text-danger"><?PHP if ($estoque < $min_estoque) { ?>Indisponível<?PHP } ?></p>
+
+									<div class="row">
+										<div class="col-md-9 text-center">
+											<a href="detalhes.php?produto=<?PHP print $codigo; ?>"><button class="btn btn-success" style="background-color: purple; border-color: purple;">Mais detalhes</button></a>
+										</div>
+										<div class="col">
+											<p class="text-danger"><?PHP if ($estoque < $min_estoque) { ?>Indisponível<?PHP } ?></p>
+										</div>
 									</div>
-								</div>
-							</div> <!-- fecha col conteudo -->
-						</div>
-					</div> <!-- fecha coluna direita -->
+								</div> <!-- fecha col conteudo  -->
+							</div>
+					</div> <!-- fecha coluna esquerda -->
 			
 				</div> <!-- fecha row -->
 			</div> <!-- fecha container -->

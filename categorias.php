@@ -52,7 +52,7 @@ $total_registros	= mysqli_num_rows($rs);
 	<?PHP include "inc_menu_categorias.php" ?>
 
 	<div class="row">
-		<img src="imagens/deco_<?PHP print $cat_id; ?>.jpg"/>
+		<img src="imagens/deco_<?PHP print $cat_id; ?>.png"/>
 	</div>
 
 	<div class="row row-cols-2 mt-3 justify-content-between">
@@ -110,13 +110,10 @@ $total_registros	= mysqli_num_rows($rs);
 							<div class="row row-cols-2">
 								<div class="col">
 									<div class="row">
-										<a href="#"><img src="imagens/<?PHP print $codigo; ?>.jpg" onclick="ampliar_imagem('ampliar.php?codigo=<?PHP print $codigo; ?>&nome=<?PHP print $nome; ?>','','width=522,height=338,top=50,left=50')" /></a>
+										<a href="#"><img src="imagens/<?PHP print $codigo; ?>.jpg" class="img-fluid" onclick="ampliar_imagem('ampliar.php?codigo=<?PHP print $codigo; ?>&nome=<?PHP print $nome; ?>','','width=522,height=338,top=50,left=50')" /></a>
 									</div>
 									<div class="row">
-										<p class="text-muted">Clique na imagem para ampliar</p>
-									</div>
-									<div class="row">
-										<p class="fw-lighter text-muted fs-6">crédito da imagem: <?PHP print $credito; ?></p>
+										<p class="text-muted small text-center">Clique na imagem para ampliar</p>
 									</div>
 								</div> <!-- fecha col imagem -->
 								<div class="col">
@@ -130,8 +127,8 @@ $total_registros	= mysqli_num_rows($rs);
 										<p>Por: <span class="fw-bold">R$ <?PHP print number_format($valor_desconto,2,',','.'); ?></span> à vista</p>
 									</div>
 									<div class="row">
-										<div class="col">
-											<p class="fw-bold"><a href="detalhes.php?produto=<?PHP print $codigo; ?>" class="text-decoration-none mais-detalhes">Mais detalhes</a></p>
+									<div class="col-md-9 text-center">
+											<a href="detalhes.php?produto=<?PHP print $codigo; ?>"><button class="btn btn-success" style="background-color: purple; border-color: purple;">Mais detalhes</button></a>
 										</div>
 										<div class="col">
 											<p class="text-danger"><?PHP if ($estoque < $min_estoque) { ?>Indisponível<?PHP } ?></p>
@@ -148,16 +145,13 @@ $total_registros	= mysqli_num_rows($rs);
 			} else { 
 				?>
 					<div class="col-sm-5 p-3 mx-auto mt-3 mb-3">
-						<div class="row">
+						<div class="row row-cols-2">
 							<div class="col">
-									<div class="row row-cols-2">
-										<a href="#"><img src="imagens/<?PHP print $codigo; ?>.jpg" onclick="ampliar_imagem('ampliar.php?codigo=<?PHP print $codigo; ?>&nome=<?PHP print $nome; ?>','','width=522,height=338,top=50,left=50')" /></a>
+									<div class="row">
+										<a href="#"><img src="imagens/<?PHP print $codigo; ?>.jpg" class="img-fluid" onclick="ampliar_imagem('ampliar.php?codigo=<?PHP print $codigo; ?>&nome=<?PHP print $nome; ?>','','width=522,height=338,top=50,left=50')" /></a>
 									</div>
 									<div class="row">
-										<p class="text-muted">Clique na imagem para ampliar</p>
-									</div>
-									<div class="row">
-										<p class="fw-lighter text-muted fs-6">crédito da imagem: <?PHP print $credito; ?></p>
+									<p class="text-muted small text-center">Clique na imagem para ampliar</p>
 									</div>
 							</div> <!-- fecha col imagem -->
 							<div class="col">
@@ -171,9 +165,9 @@ $total_registros	= mysqli_num_rows($rs);
 									<p>Por: <span class="fw-bold">R$ <?PHP print number_format($valor_desconto,2,',','.'); ?></span> à vista</p>
 								</div>
 								<div class="row">
-									<div class="col">
-										<p class="fw-bold"><a href="detalhes.php?produto=<?PHP print $codigo; ?>" class="text-decoration-none mais-detalhes">Mais detalhes</a></p>
-									</div>
+								<div class="col-md-9 text-center">
+											<a href="detalhes.php?produto=<?PHP print $codigo; ?>"><button class="btn btn-success" style="background-color: purple; border-color: purple;">Mais detalhes</button></a>
+										</div>
 									<div class="col">
 										<p class="text-danger"><?PHP if ($estoque < $min_estoque) { ?>Indisponível<?PHP } ?></p>
 									</div>

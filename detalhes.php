@@ -44,6 +44,11 @@ $cor = $reg["cor"];
 $estoque = $reg["estoque"];
 $min_estoque = $reg["min_estoque"];
 $credito = $reg["credito"];
+
+$subcategoria = $reg["subcateg"];
+$altura = $reg["altura"];
+$fabrica = $reg["fabrica"];
+$descricao = $reg["descricao"];
 // Armazena em $valor_boleto o valor a ser pago com desconto por intermédio do cartão de credito
 $valor_desconto = $preco - ($preco * $desconto / 100);
 // Armazena em $valor_boleto o valor a ser pago com desconto por intermédio de boleto bancário
@@ -76,48 +81,45 @@ function ampliar_imagem(url,nome_janela,parametros) {
 		<?PHP include "inc_menu_categorias.php" ?>
 		
 		<!-- Título da página (exibe o nome da categoria) -->
-		<h3 class="mt-3 mb-3"><span class="c_cinza">Detalhes <img src="imagens/marcador_setaDir.gif" align="absmiddle" /> <?PHP print $nome_cat; ?></span> <img src="imagens/marcador_setaDir.gif" align="absmiddle" /> <span class="c_preto"><?PHP print $nome; ?></span></h3>
+		<h3 class="mt-4 mb-4"><span class="c_cinza">Detalhes <?PHP print $nome_cat; ?></span> <img src="imagens/marcador_setaDir.gif" align="absmiddle" /> <span class="c_preto"><?PHP print $nome; ?></span></h3>
 
 		<div class="container">
 			<div class="row">
 				<div class="col-md-3">
 					<div class="row">
-						<a href="#"><img src="imagens/<?PHP print $codigo; ?>G.jpg" width="200" height="121" border="0" onclick="ampliar_imagem('ampliar.php?codigo=<?PHP print $codigo; ?>&nome=<?PHP print $nome; ?>','','width=522,height=338,top=50,left=50')" /></a>
+						<a href="#"><img src="imagens/<?PHP print $codigo; ?>.jpg" class="img-fluid" onclick="ampliar_imagem('ampliar.php?codigo=<?PHP print $codigo; ?>&nome=<?PHP print $nome; ?>','','width=522,height=338,top=50,left=50')" /></a>
 					</div>
 					<div class="row">
-						<p class="text-muted">Clique na imagem para ampliar</p>
+						<p class="text-muted small text-center">Clique na imagem para ampliar</p>
 					</div>
 					<div class="row">
 						<h4 class="mt-2 mb-2">Dados técnicos</h4>
 					</div>
 					<div class="row p-3">
 						<table class="table">
-							<tr><td class="p-0"><p>Código:</p></td><td class="p-0"><p><?PHP print $codigo; ?></p></td></tr>
-							<tr><td class="p-0"><p>Categoria:</p></td><td class="p-0"><p><?PHP print $nome_cat; ?></p></td></tr>
-							<tr><td class="p-0"><p>Tipo:</p></td><td class="p-0"><p><?PHP print $cat_sub; ?></p></td></tr>
-							<tr><td class="p-0"><p>Ano:</p></td><td class="p-0"><p><?PHP print $ano; ?></p></td></tr>
-							<tr><td class="p-0"><p>Escala:</p></td><td class="p-0"><p><?PHP print $escala; ?> - Die Caste Models</p></td></tr>
-							<tr><td class="p-0"><p>Peso:</p></td><td class="p-0"><p><?PHP print number_format($peso, 3, ',', '.'); ?> Kg</p></td></tr>
-							<tr><td class="p-0"><p>Cor:</p></td><td class="p-0"><p><?PHP print $cor; ?></p></td></tr>
-							<tr><td class="p-0"><p>Dimensões:</p></td><td class="p-0"><p>(C x L x A): <?PHP print number_format($comprimento, 1, ',', '.'); ?> x <?PHP print number_format($largura, 1, ',', '.'); ?> x <?PHP print number_format($altura, 1, ',', '.'); ?> cm</p></td></tr>
+							<tr><td class="p-0"><p>Subcategoria:</p></td><td class="p-0"><p><?PHP print $subcategoria; ?></p></td></tr>
+							<tr><td class="p-0"><p>Altura:</p></td><td class="p-0"><p><?PHP print $altura; ?></p></td></tr>
+							<tr><td class="p-0"><p>Fábrica:</p></td><td class="p-0"><p><?PHP print $fabrica; ?></p></td></tr>
 						</table>
-					</div>
-					<div class="row">
-						<p class="text-muted">Créditos da imagem: <br><?PHP print $credito; ?></p>
 					</div>
 				</div> <!-- col esquerda-->
 
 				<div class="col-md-9">
 				<div class="container">
-					<div class="row row-cols-4 text-center">
-						<div class="col"><p><?PHP print $nome ?></p></div>
+					<div class="row">
 
-						<div class="col"><p class="text-decoration-line-through" style="color: red;">de: R$ <span style="font-weight: bold;"><?PHP print number_format($preco, 2, ',', '.'); ?></span></p></div>
-						<div class="col"><p style="color: green;">Por: <span style="font-weight: bold"> R$ <?PHP print number_format($valor_desconto, 2, ',', '.'); ?></span> </p></div>
+						<div class="col">
+							<div class="row">
+								<p class="text-decoration-line-through" style="color: gray;">de: R$ <span style="font-weight: bold;"><?PHP print number_format($preco, 2, ',', '.'); ?></span></p>
+							</div>
+							<div class="row">
+								<p class="h4">Por: <span style="font-weight: bold; color: green"> R$ <?PHP print number_format($valor_desconto, 2, ',', '.'); ?></span> </p>
+							</div>
+						</div>
 
 						<?PHP if ($estoque > $min_estoque) { ?>
-							<div class="col text-end">
-								<a href="cesta.php?produto=<?PHP print $codigo; ?>&inserir=S"><button class="btn btn-success">Comprar</button></a>
+							<div class="col-md-4 text-end">
+								<a href="cesta.php?produto=<?PHP print $codigo; ?>&inserir=S"><button class="btn btn-success btn-lg" style="background-color: purple; border-color: purple;">Comprar</button></a>
 							</div>
 						<?PHP } else { ?>
 							<div class="col">
@@ -127,6 +129,9 @@ function ampliar_imagem(url,nome_janela,parametros) {
 					</div>
 
 					<div class="row">
+
+						<p class="mb-4 mt-4"><?php echo $descricao; ?></p>
+
 						<?PHP if ($max_parcelas >= $_SESSION['max_parcelas']) {
 							$_SESSION['max_parcelas'] = $max_parcelas;
 						} ?>
@@ -140,11 +145,11 @@ function ampliar_imagem(url,nome_janela,parametros) {
 									<?PHP if ($contador % 2 == 1) { ?>
 								<tr class="w-50">
 									<td>
-										<p><?PHP print $contador; ?> x de R$ <?PHP print number_format($valor_desconto / $contador, 2, ',', '.'); ?> sem juros</p>
+										<p class="small"><?PHP print $contador; ?> x de R$ <?PHP print number_format($valor_desconto / $contador, 2, ',', '.'); ?> sem juros</p>
 									</td>
 								<?PHP } else { ?>
 									<td>
-										<p><?PHP print $contador; ?> x de R$ <?PHP print number_format($valor_desconto / $contador, 2, ',', '.'); ?> sem juros</p>
+										<p class="small"><?PHP print $contador; ?> x de R$ <?PHP print number_format($valor_desconto / $contador, 2, ',', '.'); ?> sem juros</p>
 									</td>
 								</tr>
 								<?PHP
@@ -166,7 +171,7 @@ function ampliar_imagem(url,nome_janela,parametros) {
 							</div>
 						</div>
 
-					<div class="row mb-3">	
+					<div class="row mb-3 mt-4">	
 						<div class="col">
 							<p style="font-weight: bold">Formas de pagamento</p>
 							<img src="imagens/banner_formapag.gif" alt="formas de pagamento" width="297" height="23" vspace="5" />
@@ -179,7 +184,7 @@ function ampliar_imagem(url,nome_janela,parametros) {
 								<p style="font-weight: bold">Prazos de entrega</p>
 							</div>
 							<div class="row">
-								<p>2 dias úteis para o estado de São Paulo.></p>
+								<p>2 dias úteis para o estado de São Paulo.</p>
 								<p>5 dias úteis para os demais estados.</p>
 							</div>
 						</div>

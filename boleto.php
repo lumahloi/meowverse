@@ -85,7 +85,7 @@ $num_ped = $_SESSION['num_ped'];
 
 <body>
 	<div class="container">
-		<a href="index.php"><img src="imagens/logo_fs.gif" alt="Faça um Site" /></a>
+		<a href="index.php"><img src="imagens/logo.png" alt="Faça um Site" /></a>
 
 		<h3>Etapa 4 <img src="imagens/marcador_setaDir.gif" align="absmiddle" /> Confirmação do seu pedido <img src="imagens/marcador_setaDir.gif" align="absmiddle" /> Pagamento com Boleto Bancário</h3>
 		<p class="text-end">Número do seu pedido: <?PHP print $_SESSION['num_ped']; ?></p>
@@ -96,7 +96,7 @@ $num_ped = $_SESSION['num_ped'];
 				<p>Obrigado por comprar em nossa loja. Seu pedido foi aceito e está aguardando pagamento. Por favor, clique no botão abaixo, imprima o boleto bancário e pague em qualquer banco. Se preferir, pague por intermédio do Internet Banking. Para isso, utilize o <strong>código de barras </strong>localizado na parte superior direita da ficha de compensação do boleto.</p>
 				<p><img src="imagens/marcador_atencao.gif" width="20" height="15"  />Após recebermos a confirmação de pagamento, nós lhe enviaremos um e-mail de notificação confirmando a entrega do pedido.</p>
 				<p><img src="imagens/marcador_atencao.gif" width="20" height="15"  />A data de vencimento do boleto é de <strong>5 (cinco)</strong> dias após o fechamento do pedido. ATENÇÃO:<strong>Não pague após o vencimento</strong>. Após esta data o pedido será cancelado e o boleto perderá a validade.</p>
-				<div class="row text-end"><a href="emitir_boleto.php"><button class="btn btn-success">Imprimir boleto</button></a></div>
+				<div class="row text-end"><a href="emitir_boleto.php"><button class="btn btn-success" style="background-color: purple; border-color: purple;">Imprimir boleto</button></a></div>
 			</div>
 
 			<h4 class="mt-4">Informações gerais sobre sua compra</h4>

@@ -63,7 +63,7 @@ $senha = $reg['senha'];
 			<!-- Não exibe menu superior e menu categorias. Neste caso, exibe o banner da primeira etapa de uma compra (1. Minha identificação) -->
 		<?PHP } else { ?>
 			<?PHP $tit_etapa = "Etapa 1"; ?>
-			<div id="etapa1"><a href="index.php"><img src="imagens/logo_fs.gif" alt="Faça um Site" border="0" /></a></div>
+			<div id="etapa1"><a href="index.php"><img src="imagens/logo.png" alt="Faça um Site" border="0" /></a></div>
 		<?PHP } ?>
 
 		<h3 class="mt-3 mb-2">Esqueceu sua senha? </h3>
@@ -91,7 +91,7 @@ $senha = $reg['senha'];
 					<h4 align="center" class="c_vermelho">E-mail não cadastrado.</h4>
 				</div>
 						
-				<div class="row text-center"><a href="login.php?cadastro=<?PHP print $_SESSION['cadastro']; ?>"><button class="btn btn-success">Voltar</button></a></div>
+				<div class="row text-center"><a href="login.php?cadastro=<?PHP print $_SESSION['cadastro']; ?>"><button class="btn btn-success" style="background-color: purple; border-color: purple;">Voltar</button></a></div>
 						
 			<?PHP } ?>
 
