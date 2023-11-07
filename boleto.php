@@ -17,6 +17,9 @@ $sql .= "WHERE num_ped = '" . $_SESSION['num_ped'] . "' ";
 $sql .= "ORDER BY id ";
 $rs = mysqli_query($conexao, $sql);
 
+ini_set('display_errors', 0);
+ini_set('error_reporting', E_ALL & ~E_NOTICE & ~E_WARNING);
+
 // Atualiza a tabela de pedidos
 $sqlp = "UPDATE pedidos set ";
 $sqlp .= "id_cliente = '" . $_SESSION['id_cli'] . "', ";
@@ -68,8 +71,9 @@ $num_ped = $_SESSION['num_ped'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faça um Site - PHP 5 com Banco de Dados MySQL</title>
+    <title>Meowverse</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="js/jquery.autocomplete.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="style.css">
 	<script language="javascript">
@@ -104,14 +108,14 @@ $num_ped = $_SESSION['num_ped'];
 				<h5>Resumo do pedido</h5>
 
 				<div class="row row-cols-2 p-3">
-					<div class="col-md-4">
+					<div class="col-md-4 col-12">
 						<p><span style="font-weight:bold;">Data do pedido</span>: <?PHP print substr($_SESSION['dataped'], 8, 2) . "/" . substr($_SESSION['dataped'], 5, 2) . "/" . substr($_SESSION['dataped'], 0, 4); ?></p>
 						<p><span style="font-weight:bold;">Vencimento</span>: <?PHP print substr($_SESSION['datavenc'], 8, 2) . "/" . substr($_SESSION['datavenc'], 5, 2) . "/" . substr($_SESSION['datavenc'], 0, 4); ?></p>
 						<p><span style="font-weight:bold;">Peso</span>: <?PHP print $_SESSION['peso']; ?> Kg</p>
 						<p><span style="font-weight:bold;">Forma de pagamento</span>: Boleto bancário</p>
 						<p><span style="font-weight:bold;">Status</span>: Aguardando pagamento do boleto</p>
 					</div>
-					<div class="col-md-8">
+					<div class="col-md-8 col-12">
 						<table class="table table-striped">
 							<thead>
 								<th>Descrição do produto</th>

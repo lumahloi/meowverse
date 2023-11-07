@@ -11,6 +11,9 @@
 SESSION_START();
 include "inc_dbConexao.php";
 
+ini_set('display_errors', 0);
+ini_set('error_reporting', E_ALL & ~E_NOTICE & ~E_WARNING);
+
 if ($_POST['txtemail2'] <> "") {
 	$txtemail2 = $_POST['txtemail2'];
 	$_SESSION['acao'] = $_POST['acao'];
@@ -38,7 +41,6 @@ if ($_SESSION['ACAO'] == "inc") {
 	$txtcpf = "";
 	$txtrg = "";
 	$txtsexo = "0";
-	$txtemail_1 = $_POST['txtemail2'];
 	$txtsenha_1 = "";
 	$txtsenha_2 = "";
 	$txtend_nome = "";
@@ -61,7 +63,7 @@ if ($_SESSION['acao'] == "alt") {
 	$txtcpf = $_SESSION['cpf'];
 	$txtrg = $_SESSION['rg'];
 	$txtsexo = $_SESSION['sexo'];
-	$txtemail_1 = $_SESSION['email_cli'];
+	$txtemail2 = $_SESSION['email_cli'];
 	$txtemail_2 = $_SESSION['email_cli'];
 	$txtsenha_1 = $_SESSION['senha'];
 	$txtsenha_2 = $_SESSION['senha'];
@@ -84,16 +86,15 @@ if ($_SESSION['acao'] == "alt") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faça um Site - PHP 5 com Banco de Dados MySQL</title>
+    <title>Meowverse</title>
 
-	<script
-			  src="https://code.jquery.com/jquery-3.6.0.js"
-			  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-			  crossorigin="anonymous"></script>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+	<script type="text/javascript" src="js/jquery-1.4.2.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script type='text/javascript' src="js/jquery.autocomplete.js"></script>
+	<link rel="stylesheet" type="text/css" href="js/jquery.autocomplete.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="style.css">
 
 	<script type="text/javascript">
 		function valida_form() {
@@ -143,14 +144,14 @@ if ($_SESSION['acao'] == "alt") {
 			}
 
 			if (document.cadastro.txtsexo.value == 0) {
-				alert("Por favor, selecione seu sexo.");
+				alert("Por favor, selecione seu gênero.");
 				cadastro.txtsexo.focus();
 				return false;
 			}
 
-			if (document.cadastro.txtemail_1.value == "") {
+			if (document.cadastro.txtemail2.value == "") {
 				alert("Por favor, confirme seu e-mail.");
-				cadastro.txtemail_1.focus();
+				cadastro.txtemail2.focus();
 				return false;
 			}
 
@@ -160,11 +161,11 @@ if ($_SESSION['acao'] == "alt") {
 				return false;
 			}
 
-			if (document.cadastro.txtemail_1.value != document.cadastro.txtemail_2.value) {
+			if (document.cadastro.txtemail2.value != document.cadastro.txtemail_2.value) {
 				alert("O campo e-mail não confere com sua confirmação.");
-				cadastro.txtemail_1.value = "";
+				cadastro.txtemail2.value = "";
 				cadastro.txtemail_2.value = "";
-				cadastro.txtemail_1.focus();
+				cadastro.txtemail2.focus();
 				return false;
 			}
 
@@ -200,12 +201,6 @@ if ($_SESSION['acao'] == "alt") {
 				return false;
 			}
 
-			/*if (document.cadastro.txtcep.value.length < 8) {
-				alert("O campo CEP deve conter 8 caracteres.");
-				cadastro.txtcep.focus();
-				return false;
-			}*/
-
 			if (document.cadastro.txtbairro.value == "") {
 				alert("Por favor, informe seu bairro.");
 				cadastro.txtbairro.focus();
@@ -224,271 +219,118 @@ if ($_SESSION['acao'] == "alt") {
 				return false;
 			}
 
-			// Verifica o CEP conforme o estado selecionado
-			/*if (document.cadastro.txtuf.value == "AC") {
-				if (document.cadastro.txtcep.value < "69900000" || document.cadastro.txtcep.value > "69999999") {
-					alert("O CEP digitado é inválido para o estado selecionado.");
-					cadastro.txtcep.focus();
-					return false;
-				}
-			}
-			if (document.cadastro.txtuf.value == "AL") {
-				if (document.cadastro.txtcep.value < "57000000" || document.cadastro.txtcep.value > "57999999") {
-					alert("O CEP digitado é invalido para o estado selecionado.");
-					cadastro.txtcep.focus();
-					return false;
-				}
-			}
-			if (document.cadastro.txtuf.value == "AP") {
-				if (document.cadastro.txtcep.value < "68900000" || document.cadastro.txtcep.value > "68999999") {
-					alert("O CEP digitado é inválido para o estado selecionado.");
-					cadastro.txtcep.focus();
-					return false;
-				}
-			}
-			if (document.cadastro.txtuf.value == "AM") {
-				if (document.cadastro.txtcep.value < "69000000" || document.cadastro.txtcep.value > "69899999") {
-					alert("O CEP digitado é inválido para o estado selecionado.");
-					cadastro.txtcep.focus();
-					return false;
-				}
-			}
-			if (document.cadastro.txtuf.value == "BA") {
-				if (document.cadastro.txtcep.value < "40000000" || document.cadastro.txtcep.value > "48999999") {
-					alert("O CEP digitado é inválido para o estado selecionado.");
-					cadastro.txtcep.focus();
-					return false;
-				}
-			}
-			if (document.cadastro.txtuf.value == "CE") {
-				if (document.cadastro.txtcep.value < "60000000" || document.cadastro.txtcep.value > "63999999") {
-					alert("O CEP digitado é inválido para o estado selecionado.");
-					cadastro.txtcep.focus();
-					return false;
-				}
-			}
-			if (document.cadastro.txtuf.value == "DF") {
-				if (document.cadastro.txtcep.value < "70000000" || document.cadastro.txtcep.value > "73699999") {
-					alert("O CEP digitado é inválido para o estado selecionado.");
-					cadastro.txtcep.focus();
-					return false;
-				}
-			}
-			if (document.cadastro.txtuf.value == "ES") {
-				if (document.cadastro.txtcep.value < "29000000" || document.cadastro.txtcep.value > "29999999") {
-					alert("O CEP digitado é inválido para o estado selecionado.");
-					cadastro.txtcep.focus();
-					return false;
-				}
-			}
-			if (document.cadastro.txtuf.value == "GO") {
-				if (document.cadastro.txtcep.value < "72800000" || document.cadastro.txtcep.value > "76799999") {
-					alert("O CEP digitado é inválido para o estado selecionado.");
-					cadastro.txtcep.focus();
-					return false;
-				}
-			}
-			if (document.cadastro.txtuf.value == "MA") {
-				if (document.cadastro.txtcep.value < "65000000" || document.cadastro.txtcep.value > "65999999") {
-					alert("O CEP digitado é inválido para o estado selecionado.");
-					cadastro.txtcep.focus();
-					return false;
-				}
-			}
-			if (document.cadastro.txtuf.value == "MT") {
-				if (document.cadastro.txtcep.value < "78000000" || document.cadastro.txtcep.value > "78899999") {
-					alert("O CEP digitado é inválido para o estado selecionado.");
-					cadastro.txtcep.focus();
-					return false;
-				}
-			}
-			if (document.cadastro.txtuf.value == "MS") {
-				if (document.cadastro.txtcep.value < "79000000" || document.cadastro.txtcep.value > "79999999") {
-					alert("O CEP digitado é inválido para o estado selecionado.");
-					cadastro.txtcep.focus();
-					return false;
-				}
-			}
-			if (document.cadastro.txtuf.value == "MG") {
-				if (document.cadastro.txtcep.value < "30000000" || document.cadastro.txtcep.value > "39999999") {
-					alert("O CEP digitado é inválido para o estado selecionado.");
-					cadastro.txtcep.focus();
-					return false;
-				}
-			}
-			if (document.cadastro.txtuf.value == "PA") {
-				if (document.cadastro.txtcep.value < "66000000" || document.cadastro.txtcep.value > "68899999") {
-					alert("O CEP digitado é inválido para o estado selecionado.");
-					cadastro.txtcep.focus();
-					return false;
-				}
-			}
-			if (document.cadastro.txtuf.value == "PB") {
-				if (document.cadastro.txtcep.value < "58000000" || document.cadastro.txtcep.value > "58999999") {
-					alert("O CEP digitado é inválido para o estado selecionado.");
-					cadastro.txtcep.focus();
-					return false;
-				}
-			}
-			if (document.cadastro.txtuf.value == "PR") {
-				if (document.cadastro.txtcep.value < "80000000" || document.cadastro.txtcep.value > "87999999") {
-					alert("O CEP digitado é inválido para o estado selecionado.");
-					cadastro.txtcep.focus();
-					return false;
-				}
-			}
-			if (document.cadastro.txtuf.value == "PE") {
-				if (document.cadastro.txtcep.value < "50000000" || document.cadastro.txtcep.value > "56999999") {
-					alert("O CEP digitado é inválido para o estado selecionado.");
-					cadastro.txtcep.focus();
-					return false;
-				}
-			}
-			if (document.cadastro.txtuf.value == "PI") {
-				if (document.cadastro.txtcep.value < "64000000" || document.cadastro.txtcep.value > "64999999") {
-					alert("O CEP digitado é inválido para o estado selecionado.");
-					cadastro.txtcep.focus();
-					return false;
-				}
-			}
-			if (document.cadastro.txtuf.value == "RJ") {
-				if (document.cadastro.txtcep.value < "20000000" || document.cadastro.txtcep.value > "28999999") {
-					alert("O CEP digitado é inválido para o estado selecionado.");
-					cadastro.txtcep.focus();
-					return false;
-				}
-			}
-			if (document.cadastro.txtuf.value == "RN") {
-				if (document.cadastro.txtcep.value < "59000000" || document.cadastro.txtcep.value > "59999999") {
-					alert("O CEP digitado é inválido para o estado selecionado.");
-					cadastro.txtcep.focus();
-					return false;
-				}
-			}
-			if (document.cadastro.txtuf.value == "RS") {
-				if (document.cadastro.txtcep.value < "90000000" || document.cadastro.txtcep.value > "99999999") {
-					alert("O CEP digitado é inválido para o estado selecionado.");
-					cadastro.txtcep.focus();
-					return false;
-				}
-			}
-			if (document.cadastro.txtuf.value == "RO") {
-				if (document.cadastro.txtcep.value < "78900000" || document.cadastro.txtcep.value > "78999999") {
-					alert("O CEP digitado é inválido para o estado selecionado.");
-					cadastro.txtcep.focus();
-					return false;
-				}
-			}
-			if (document.cadastro.txtuf.value == "RR") {
-				if (document.cadastro.txtcep.value < "69300000" || document.cadastro.txtcep.value > "69399999") {
-					alert("O CEP digitado é inválido para o estado selecionado.");
-					cadastro.txtcep.focus();
-					return false;
-				}
-			}
-			if (document.cadastro.txtuf.value == "SC") {
-				if (document.cadastro.txtcep.value < "88000000" || document.cadastro.txtcep.value > "89999999") {
-					alert("O CEP digitado é inválido para o estado selecionado.");
-					cadastro.txtcep.focus();
-					return false;
-				}
-			}
-			if (document.cadastro.txtuf.value == "SC") {
-				if (document.cadastro.txtcep.value < "00000000" || document.cadastro.txtcep.value > "19999999") {
-					alert("O CEP digitado é inválido para o estado selecionado.");
-					cadastro.txtcep.focus();
-					return false;
-				}
-			}
-			if (document.cadastro.txtuf.value == "SP") {
-				if (document.cadastro.txtcep.value < "01000000" || document.cadastro.txtcep.value > "19999999") {
-					alert("O CEP digitado é inválido para o estado selecionado.");
-					cadastro.txtcep.focus();
-					return false;
-				}
-			}
-			if (document.cadastro.txtuf.value == "SE") {
-				if (document.cadastro.txtcep.value < "49000000" || document.cadastro.txtcep.value > "49999999") {
-					alert("O CEP digitado é inválido para o estado selecionado.");
-					cadastro.txtcep.focus();
-					return false;
-				}
-			}
-			if (document.cadastro.txtuf.value == "TO") {
-				if (document.cadastro.txtcep.value < "77000000" || document.cadastro.txtcep.value > "77999999") {
-					alert("O CEP digitado é inválido para o estado selecionado.");
-					cadastro.txtcep.focus();
-					return false;
-				}
-			}*/
 			return true;
 		}
-	</script>
-
 	
-<script>
-	$(document).ready(function() {
+		$(document).ready(function() {
+			$( "#olho1" ).mousedown(function() {
+				$("#txtsenha_1").attr("type", "text");
+			});
 
-		function limpa_formulário_cep() {
-			// Limpa valores do formulário de cep.
-			$("#txtend_nome").val("");
-			$("#txtbairro").val("");
-			$("#txtcidade").val("");
-			$("#txtuf").val("");
-		}
+			$( "#olho1" ).mouseup(function() {
+				$("#txtsenha_1").attr("type", "password");
+			});
 
-		//Quando o campo cep perde o foco.
-		$("#txtcep").blur(function() {
+			var senha1 = $('#txtsenha_1');
+			var olho1 = $("#olho1");
 
-			//Nova variável "cep" somente com dígitos.
-			var cep = $(this).val().replace(/\D/g, '');
+			olho1.mousedown(function() {
+				senha1.attr("type", "text");
+			});
 
-			//Verifica se campo cep possui valor informado.
-			if (cep != "") {
+			olho1.mouseup(function() {
+				senha1.attr("type", "password");
+			});
+			// para evitar o problema de arrastar a imagem e a senha continuar exposta, 
+			//citada pelo nosso amigo nos comentários
+			$( "#olho1" ).mouseout(function() { 
+				$("#txtsenha_1").attr("type", "password");
+			});
 
-				//Expressão regular para validar o CEP.
-				var validacep = /^[0-9]{8}$/;
+			//////////////////////////////////////////////////////
 
-				//Valida o formato do CEP.
-				if(validacep.test(cep)) {
+			$( "#olho2" ).mousedown(function() {
+				$("#txtsenha_2").attr("type", "text");
+			});
 
-					//Preenche os campos com "..." enquanto consulta webservice.
-					$("#txtend_nome").val("...");
-					$("#txtbairro").val("...");
-					$("#txtcidade").val("...");
-					$("#txtuf").val("...");
+			$( "#olho2" ).mouseup(function() {
+				$("#txtsenha_2").attr("type", "password");
+			});
 
-					//Consulta o webservice viacep.com.br/
-					$.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+			var senha2 = $('#txtsenha_2');
+			var olho2 = $("#olho2");
 
-						if (!("erro" in dados)) {
-							//Atualiza os campos com os valores da consulta.
-							$("#txtend_nome").val(dados.logradouro);
-							$("#txtbairro").val(dados.bairro);
-							$("#txtcidade").val(dados.localidade);
-							$("#txtuf").val(dados.uf);
-						} //end if.
-						else {
-							//CEP pesquisado não foi encontrado.
-							limpa_formulário_cep();
-							alert("CEP não encontrado.");
-						}
-					});
+			olho2.mousedown(function() {
+				senha2.attr("type", "text");
+			});
+
+			olho2.mouseup(function() {
+				senha2.attr("type", "password");
+			});
+			// para evitar o problema de arrastar a imagem e a senha continuar exposta, 
+			//citada pelo nosso amigo nos comentários
+			$( "#olho2" ).mouseout(function() { 
+				$("#txtsenha_2").attr("type", "password");
+			});
+
+			function limpa_formulário_cep() {
+				// Limpa valores do formulário de cep.
+				$("#txtend_nome").val("");
+				$("#txtbairro").val("");
+				$("#txtcidade").val("");
+				$("#txtuf").val("");
+			}
+
+			//Quando o campo cep perde o foco.
+			$("#txtcep").blur(function() {
+				//Nova variável "cep" somente com dígitos.
+				var cep = $(this).val().replace(/\D/g, '');
+
+				//Verifica se campo cep possui valor informado.
+				if (cep != "") {
+
+					//Expressão regular para validar o CEP.
+					var validacep = /^[0-9]{8}$/;
+
+					//Valida o formato do CEP.
+					if(validacep.test(cep)) {
+
+						//Preenche os campos com "..." enquanto consulta webservice.
+						$("#txtend_nome").val("...");
+						$("#txtbairro").val("...");
+						$("#txtcidade").val("...");
+						$("#txtuf").val("...");
+
+						//Consulta o webservice viacep.com.br/
+						$.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+							if (!("erro" in dados)) {
+								//Atualiza os campos com os valores da consulta.
+								$("#txtend_nome").val(dados.logradouro);
+								$("#txtbairro").val(dados.bairro);
+								$("#txtcidade").val(dados.localidade);
+								$("#txtuf").val(dados.uf);
+							} //end if.
+							else {
+								//CEP pesquisado não foi encontrado.
+								limpa_formulário_cep();
+								alert("CEP não encontrado.");
+							}
+						});
+					} //end if.
+					else {
+						//cep é inválido.
+						limpa_formulário_cep();
+						alert("Formato de CEP inválido.");
+					}
 				} //end if.
 				else {
-					//cep é inválido.
+					//cep sem valor, limpa formulário.
 					limpa_formulário_cep();
-					alert("Formato de CEP inválido.");
 				}
-			} //end if.
-			else {
-				//cep sem valor, limpa formulário.
-				limpa_formulário_cep();
-			}
+			});
 		});
-	});
-</script>
-
+	</script>
 </head>
 
 <body>
@@ -515,7 +357,7 @@ if ($_SESSION['acao'] == "alt") {
 					<div class="container mt-4 border p-3">
 						<form name="cadastro" method="post" action="cadastro1.php" onsubmit="return valida_form(this);">
 							<div class="row row-cols-2">
-								<div class="col">
+								<div class="col-lg-6 col-12">
 									<table class="table table-borderless">
 										<thead>
 											<tr>
@@ -524,50 +366,62 @@ if ($_SESSION['acao'] == "alt") {
 										</thead>
 										<tr>
 											<td><label>Nome completo:</label></td>
-											<td><input name="txtnome" type="text" class="caixa_texto" id="txtnome" size="35" maxlength="60" value="<?PHP print $txtnome; ?>" />*</td>
+											<td><input name="txtnome" type="text" class="caixa_texto" id="txtnome" maxlength="60" value="<?PHP print $txtnome; ?>" style="display: inline; width: 95%"/>*</td>
 										</tr>
 										<tr>
 											<td><label><strong>(1)</strong> CPF:</label></td>
-											<td><input name="txtcpf" type="text" class="caixa_texto" id="txtcpf" size="15" maxlength="11" value="<?PHP print $txtcpf; ?>" /> * (somente números)</td>
+											<td><input name="txtcpf" type="text" class="caixa_texto" id="txtcpf" value="<?PHP print $txtcpf; ?>" onKeyPress="if(this.value.length==11) return false;" size="14"/> * </td>
 										</tr>
 										<tr>
 											<td><label>RG:</label></td>
-											<td><input name="txtrg" type="text" class="caixa_texto" id="txtrg" size="15" maxlength="14" value="<?PHP print $txtrg; ?>" />*</td>
+											<td><input name="txtrg" type="text" class="caixa_texto" id="txtrg" value="<?PHP print $txtrg; ?>" onKeyPress="if(this.value.length==7) return false;" size="10"/>*</td>
 										</tr>
 										<tr>
-											<td><label>Sexo:</label></td>
-											<td><select name="txtsexo" id="txtsexo">
-												<?PHP
-													if ($txtsexo == "F") {
-														$itens_sexo = $itens_sexo . "<option value='M'>Masculino</option><br /> ";
-														$itens_sexo = $itens_sexo . "<option value='F' selected='selected'>Feminino</option><br /> ";
-													} else {
-														$itens_sexo = $itens_sexo . "<option value='M' selected='selected'>Masculino</option><br /> ";
-														$itens_sexo = $itens_sexo . "<option value='F'>Feminino</option><br /> ";
+										<td><label>Gênero:</label></td>
+											<td>
+												<select name="txtsexo" id="txtsexo">
+													<?php
+													$generoSelecionado = isset($txtsexo) ? $txtsexo : "M"; // Define o gênero selecionado (padrão: Masculino)
+													$opcoesGenero = array(
+														"M" => "Masculino",
+														"F" => "Feminino",
+														"A" => "Agênero",
+														"N" => "Não Binário",
+														"O" => "Outro",
+														"P" => "Prefiro não responder"
+													);
+
+													foreach ($opcoesGenero as $abreviacao => $genero) {
+														$selected = ($generoSelecionado == $abreviacao) ? 'selected' : '';
+														echo "<option value='$abreviacao' $selected>$genero</option>";
 													}
-													print $itens_sexo;
-												?></select> *</td>
+													?>
+												</select> *
+											</td>
+
 										</tr>
 										<tr>
 											<td><label>E-mail:</label></td>
-											<td><input name="txtemail_1" type="text" class="caixa_texto" size="35" maxlength="60" value="<?PHP print $txtemail_1; ?>" />*</td>
+											<td><input name="txtemail2" type="text" class="caixa_texto" maxlength="60" value="<?PHP print $txtemail2; ?>" style="display: inline; width: 95%"/>*</td>
 										</tr>
 										<tr>
 											<td><label><strong>(2)</strong> Confirme o e-mail:</label></td>
-											<td><input name="txtemail_2" type="text" class="caixa_texto" size="35" maxlength="60" value="<?PHP print $txtemail_2; ?>" />*</td>
+											<td><input name="txtemail_2" type="text" class="caixa_texto" maxlength="60" value="<?PHP print $txtemail_2; ?>" style="display: inline; width: 95%"/>*</td>
 										</tr>
 										<tr>
 											<td><label>Senha:</label></td>
-											<td><input name="txtsenha_1" type="text" class="caixa_texto" id="txtsenha_1" size="10" maxlength="10" value="<?PHP print $txtsenha_1; ?>" />* (mínimo de 5 caracteres)</td>
+											<td><input name="txtsenha_1" type="password" class="caixa_texto" id="txtsenha_1" size="10" maxlength="10" value="<?PHP print $txtsenha_1; ?>" /><img id="olho1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABDUlEQVQ4jd2SvW3DMBBGbwQVKlyo4BGC4FKFS4+TATKCNxAggkeoSpHSRQbwAB7AA7hQoUKFLH6E2qQQHfgHdpo0yQHX8T3exyPR/ytlQ8kOhgV7FvSx9+xglA3lM3DBgh0LPn/onbJhcQ0bv2SHlgVgQa/suFHVkCg7bm5gzB2OyvjlDFdDcoa19etZMN8Qp7oUDPEM2KFV1ZAQO2zPMBERO7Ra4JQNpRa4K4FDS0R0IdneCbQLb4/zh/c7QdH4NL40tPXrovFpjHQr6PJ6yr5hQV80PiUiIm1OKxZ0LICS8TWvpyyOf2DBQQtcXk8Zi3+JcKfNafVsjZ0WfGgJlZZQxZjdwzX+ykf6u/UF0Fwo5Apfcq8AAAAASUVORK5CYII="
+											/>* (mínimo de 5 caracteres)</td>
 										</tr>
 										<tr>
 											<td><label>Confirme a senha:</label></td>
-											<td><input name="txtsenha_2" type="text" class="caixa_texto" id="txtsenha_2" size="10" maxlength="10" value="<?PHP print $txtsenha_2; ?>" />*</td>
+											<td><input name="txtsenha_2" type="password" class="caixa_texto" id="txtsenha_2" size="10" maxlength="10" value="<?PHP print $txtsenha_2; ?>" /><img id="olho2" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABDUlEQVQ4jd2SvW3DMBBGbwQVKlyo4BGC4FKFS4+TATKCNxAggkeoSpHSRQbwAB7AA7hQoUKFLH6E2qQQHfgHdpo0yQHX8T3exyPR/ytlQ8kOhgV7FvSx9+xglA3lM3DBgh0LPn/onbJhcQ0bv2SHlgVgQa/suFHVkCg7bm5gzB2OyvjlDFdDcoa19etZMN8Qp7oUDPEM2KFV1ZAQO2zPMBERO7Ra4JQNpRa4K4FDS0R0IdneCbQLb4/zh/c7QdH4NL40tPXrovFpjHQr6PJ6yr5hQV80PiUiIm1OKxZ0LICS8TWvpyyOf2DBQQtcXk8Zi3+JcKfNafVsjZ0WfGgJlZZQxZjdwzX+ykf6u/UF0Fwo5Apfcq8AAAAASUVORK5CYII="
+											/>*</td>
 										</tr>
 							
 									</table>
 								</div> <!-- col dados-->
-								<div class="col">
+								<div class="col-lg-6 col-12">
 									<table class="table table-borderless">
 										<thead>
 											<tr>
@@ -576,11 +430,11 @@ if ($_SESSION['acao'] == "alt") {
 										</thead>
 										<tr>
 											<td><label>CEP:</label></td>
-											<td><input name="txtcep" type="text" class="caixa_texto" id="txtcep" size="15" maxlength="8" value="<?PHP print $txtcep; ?>" />*</td>
+											<td><input name="txtcep" type="text" class="caixa_texto" id="txtcep" size="11" value="<?PHP print $txtcep; ?>" />*</td>
 										</tr>
 										<tr>
 											<td><label>Logradouro:</label></td>
-											<td><input name="txtend_nome" type="text" class="caixa_texto" id="txtend_nome" size="35" maxlength="60" value="<?PHP print $txtend_nome; ?>" />*</td>
+											<td><input name="txtend_nome" type="text" class="caixa_texto" id="txtend_nome"  maxlength="60" value="<?PHP print $txtend_nome; ?>" readonly style="background-color: #f0f0f0" style="display: inline; width: 95%"/></td>
 										</tr>
 										<tr>
 											<td><label>Número:</label></td>
@@ -588,36 +442,19 @@ if ($_SESSION['acao'] == "alt") {
 										</tr>
 										<tr>
 											<td><label>Complemento:</label></td>
-											<td><input name="txtend_comp" type="text" class="caixa_texto" id="txtend_comp" size="20" maxlength="20" value="<?PHP print $txtend_comp; ?>" /></td>
+											<td><input name="txtend_comp" type="text" class="caixa_texto" id="txtend_comp"  maxlength="50" value="<?PHP print $txtend_comp; ?>" style="display: inline; width: 95%"/></td>
 										</tr>
 										<tr>
 											<td><label>Bairro:</label></td>
-											<td><input name="txtbairro" type="text" class="caixa_texto" id="txtbairro" size="35" maxlength="40" value="<?PHP print $txtbairro; ?>" />*</td>
+											<td><input name="txtbairro" type="text" class="caixa_texto" id="txtbairro"  maxlength="40" value="<?PHP print $txtbairro; ?>" readonly style="background-color: #f0f0f0; display: inline; width: 95%"/></td>
 										</tr>
 										<tr>
 											<td><label>Cidade:</label></td>
-											<td><input name="txtcidade" type="text" class="caixa_texto" id="txtcidade" size="35" maxlength="40" value="<?PHP print $txtcidade; ?>" />*</td>
+											<td><input name="txtcidade" type="text" class="caixa_texto" id="txtcidade"  maxlength="40" value="<?PHP print $txtcidade; ?>" readonly style="background-color: #f0f0f0; display: inline; width: 95%"/></td>
 										</tr>
 										<tr>
 											<td><label>Unidade federativa:</label></td>
-											<td><input type="text" name="txtuf" id="txtuf">
-												<!-- <select name="txtuf" class="formulario_cadastro2"> -->
-												<?PHP
-												/*
-													// Carrega combo de unidades federativas
-													$itens_uf = "<option value='0'>-- Selecione um estado</option><br /> ";
-													$sql_uf = "SELECT * FROM tb_estados ";
-													$rs_uf = mysqli_query($conexao, $sql_uf);
-													while ($reg_uf = mysqli_fetch_array($rs_uf)) {
-														if ($txtuf == $reg_uf['uf']) {
-															$itens_uf = $itens_uf . "<option value='" . $reg_uf['uf'] . "' selected='selected'>" . $reg_uf['nome'] . "</option><br /> ";
-														} else {
-															$itens_uf = $itens_uf . "<option value='" . $reg_uf['uf'] . "'>" . $reg_uf['nome'] . "</option><br /> ";
-														}
-													}
-													print $itens_uf; */
-													?>*
-											<!-- </select> --> </td>
+											<td><input type="text" name="txtuf" id="txtuf" readonly style="background-color: #f0f0f0" value="<?php print $txtuf ?>"></td>
 										</tr>
 									</table>
 								</div> <!-- col entrega -->
@@ -653,8 +490,9 @@ if ($_SESSION['acao'] == "alt") {
 				<?PHP include "inc_rodape.php" ?>
 			</div>
 			
-			<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-			<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+			<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
 		</div> <!-- container conteudo--> 
 		
 	</div> <!-- container principal--> 

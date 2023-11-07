@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-center">
-    <ul class="nav justify-content-center col-md-12 rounded" style="background-color: purple;">
+    <ul class="nav justify-content-center col-md-12 rounded" style="background-image: linear-gradient(to right, purple, #b52b9a);">
         <li class="nav-item">
             <a class="nav-link text-light" href="index.php">Home</a>
         </li>

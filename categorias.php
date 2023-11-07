@@ -10,6 +10,9 @@
 include "inc_dbConexao.php";
 SESSION_START();
 
+ini_set('display_errors', 0);
+ini_set('error_reporting', E_ALL & ~E_NOTICE & ~E_WARNING);
+
 // Recupera id da categoria, nome da categoria e modo de ordenação e modo de ordenação pelo método GET
 
 // Passados pelo inc_menu_sup e os links Menor Preço e Maior preço desta página
@@ -32,10 +35,14 @@ $total_registros	= mysqli_num_rows($rs);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faça um Site - PHP 5 com Banco de Dados MySQL</title>
+    <title>Meowverse</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+	<script type="text/javascript" src="js/jquery-1.4.2.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+
+    <script type='text/javascript' src="js/jquery.autocomplete.js"></script>
+	<link rel="stylesheet" type="text/css" href="js/jquery.autocomplete.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="style.css">
 </head>
   <script type="text/JavaScript">
 	<!--
@@ -55,36 +62,37 @@ $total_registros	= mysqli_num_rows($rs);
 		<img src="imagens/deco_<?PHP print $cat_id; ?>.png"/>
 	</div>
 
-	<div class="row row-cols-2 mt-3 justify-content-between">
-		<div class="col-md-6">
-			<p><?PHP print $cat_nome; ?> <span class="c_cinza">Total de itens nesta categoria: <?PHP print $total_registros; ?></span></p>
-		</div>
-
-		<div class="row row-cols-3">
-			<div class="col">
-				<p>Ordenar por:</p>
+	<div class="row row-cols-2">
+			<div class="col-6">
+				<p>Total de itens nesta categoria: <?PHP print $total_registros; ?></p>
 			</div>
+			<div class="col-6">
+				<div class="row row-cols-3 text-end gx-0">
+					<div class="col-6">
+						<p>Ordenar por:</p>
+					</div>
 			
 			<?PHP if ($ordenar == "preco ASC") { ?>
-				<div class="col">
-					<p>Menor preço</p>
+				<div class="col-3">
+					<p style="font-weight: bold; color: purple">Menor preço</p>
 				</div>
-				<div class="col">
-					<a href="categorias.php?cat_id=<?PHP print $cat_id; ?>&cat_nome=<?PHP print $cat_nome; ?>&ordenar=preco DESC">Maior preço</a>
+				<div class="col-3">
+					<a href="categorias.php?cat_id=<?php echo $cat_id ?>&ordenar=preco DESC" style="text-decoration:none" class="link-secondary">Maior preço</a>
 				</div>
 			<?PHP } else { ?>
-				<div class="col">
-					<a href="categorias.php?cat_id=<?PHP print $cat_id; ?>&cat_nome=<?PHP print $cat_nome; ?>&ordenar=preco ASC">Menor preço</a>
+				<div class="col-3">
+					<a href="categorias.php?cat_id=<?php echo $cat_id ?>&ordenar=preco ASC" style="text-decoration:none" class="link-secondary">Menor preço</a>
 				</div>
-				<div class="col">
-					<p>Maior preço</p>
+				<div class="col-3">
+					<p style="font-weight: bold; color: purple">Maior preço</p>
 				</div>
 			<?PHP } ?>
+				</div>
+			</div>
 		</div>
-	</div>
 
 	<!-- exibição dos itens -->
-	<div class="container mt-3">
+	<div class="container mt-3 border bg-light">
 
 		<?PHP
 		for($contador=0; $contador < $total_registros; $contador++) {
@@ -104,9 +112,9 @@ $total_registros	= mysqli_num_rows($rs);
 			if ($contador % 2 == 0) {
 			?>
 			
-			<div class="container-fluid bg-light border">
+			<div class="container-fluid">
 				<div class="row row-cols-2">
-					<div class="col-sm-5 p-3 mt-3 mb-3">
+					<div class="col-md-6 col-12 p-3 mt-3 mb-3">
 							<div class="row row-cols-2">
 								<div class="col">
 									<div class="row">
@@ -126,14 +134,28 @@ $total_registros	= mysqli_num_rows($rs);
 									<div class="row">
 										<p>Por: <span class="fw-bold">R$ <?PHP print number_format($valor_desconto,2,',','.'); ?></span> à vista</p>
 									</div>
-									<div class="row">
-									<div class="col-md-9 text-center">
-											<a href="detalhes.php?produto=<?PHP print $codigo; ?>"><button class="btn btn-success" style="background-color: purple; border-color: purple;">Mais detalhes</button></a>
+									<?php 
+									if($estoque < $min_estoque){
+									?>
+										<div class="row row-cols-2 text-center">
+											<div class="col-6">
+												<a href="detalhes.php?produto=<?PHP print $codigo; ?>"><button class="btn btn-success" style="background-color: purple; border-color: purple;">Mais detalhes</button></a>
+											</div>
+											<div class="col-6">
+												<button class="btn btn-danger">Indisponível</button>
+											</div>
 										</div>
-										<div class="col">
-											<p class="text-danger"><?PHP if ($estoque < $min_estoque) { ?>Indisponível<?PHP } ?></p>
+									<?php
+									} else { 
+									?>
+										<div class="row text-center">
+												<div class="col">
+													<a href="detalhes.php?produto=<?PHP print $codigo; ?>"><button class="btn btn-success" style="background-color: purple; border-color: purple;">Mais detalhes</button></a>
+												</div>
 										</div>
-									</div>
+									<?php 
+									} 
+									?>
 								</div> <!-- fecha col conteudo  -->
 							</div>
 					</div> <!-- fecha coluna esquerda -->
@@ -144,14 +166,14 @@ $total_registros	= mysqli_num_rows($rs);
 			// Exibe dados da coluna direita 
 			} else { 
 				?>
-					<div class="col-sm-5 p-3 mx-auto mt-3 mb-3">
+					<div class="col-md-6 col-12 p-3 mx-auto mt-3 mb-3">
 						<div class="row row-cols-2">
 							<div class="col">
 									<div class="row">
 										<a href="#"><img src="imagens/<?PHP print $codigo; ?>.jpg" class="img-fluid" onclick="ampliar_imagem('ampliar.php?codigo=<?PHP print $codigo; ?>&nome=<?PHP print $nome; ?>','','width=522,height=338,top=50,left=50')" /></a>
 									</div>
 									<div class="row">
-									<p class="text-muted small text-center">Clique na imagem para ampliar</p>
+										<p class="text-muted small text-center">Clique na imagem para ampliar</p>
 									</div>
 							</div> <!-- fecha col imagem -->
 							<div class="col">
@@ -164,14 +186,28 @@ $total_registros	= mysqli_num_rows($rs);
 								<div class="row">
 									<p>Por: <span class="fw-bold">R$ <?PHP print number_format($valor_desconto,2,',','.'); ?></span> à vista</p>
 								</div>
-								<div class="row">
-								<div class="col-md-9 text-center">
-											<a href="detalhes.php?produto=<?PHP print $codigo; ?>"><button class="btn btn-success" style="background-color: purple; border-color: purple;">Mais detalhes</button></a>
+								<?php 
+									if($estoque < $min_estoque){
+									?>
+										<div class="row row-cols-2 text-center">
+											<div class="col-6">
+												<a href="detalhes.php?produto=<?PHP print $codigo; ?>"><button class="btn btn-success" style="background-color: purple; border-color: purple;">Mais detalhes</button></a>
+											</div>
+											<div class="col-6">
+												<button class="btn btn-danger">Indisponível</button>
+											</div>
 										</div>
-									<div class="col">
-										<p class="text-danger"><?PHP if ($estoque < $min_estoque) { ?>Indisponível<?PHP } ?></p>
-									</div>
-								</div>
+									<?php
+									} else { 
+									?>
+										<div class="row text-center">
+												<div class="col">
+													<a href="detalhes.php?produto=<?PHP print $codigo; ?>"><button class="btn btn-success" style="background-color: purple; border-color: purple;">Mais detalhes</button></a>
+												</div>
+										</div>
+									<?php 
+									} 
+									?>
 							</div> <!-- fecha col conteudo -->
 						</div>
 					</div> <!-- fecha coluna direita -->
@@ -185,9 +221,10 @@ $total_registros	= mysqli_num_rows($rs);
 		?>
 	</div> <!-- fecha container -->
 		
-	
+	<?PHP include "inc_rodape.php" ?>
 
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 	</div>
 </body>
 </html>

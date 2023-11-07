@@ -10,6 +10,9 @@
 SESSION_START();
 include "inc_dbConexao.php";
 
+ini_set('display_errors', 0);
+ini_set('error_reporting', E_ALL & ~E_NOTICE & ~E_WARNING);
+
 // Recupera código do pedido (selecionado em pedidos2.php
 $det_ped = $_GET['det_ped'];
 
@@ -87,10 +90,13 @@ if ($dif_dias == 0) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faça um Site - PHP 5 com Banco de Dados MySQL</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+	<script type="text/javascript" src="js/jquery-1.4.2.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+
+    <script type='text/javascript' src="js/jquery.autocomplete.js"></script>
+	<link rel="stylesheet" type="text/css" href="js/jquery.autocomplete.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="container">
@@ -207,6 +213,8 @@ if ($dif_dias == 0) {
 
   <?PHP include "inc_rodape.php" ?>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>
 <?PHP

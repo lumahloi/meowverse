@@ -1,6 +1,9 @@
 <?PHP
 SESSION_START();
 
+ini_set('display_errors', 0);
+ini_set('error_reporting', E_ALL & ~E_NOTICE & ~E_WARNING);
+
 $txtnumero = $_POST['txtnumero'];
 $txtnome = $_POST['txtnome'];
 $txtmes = $_POST['txtmes'];

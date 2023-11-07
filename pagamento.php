@@ -11,6 +11,9 @@ SESSION_START();
 
 include "inc_dbConexao.php";
 
+ini_set('display_errors', 0);
+ini_set('error_reporting', E_ALL & ~E_NOTICE & ~E_WARNING);
+
 // Captura os itens da cesta
 $sql = "SELECT * FROM itens ";
 $sql .= " WHERE num_ped = '" . $_SESSION['num_ped'] . "' ";
@@ -54,10 +57,14 @@ $num_ped = $_SESSION['num_ped'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faça um Site - PHP 5 com Banco de Dados MySQL</title>
+    <title>Meowverse</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+	<script type="text/javascript" src="js/jquery-1.4.2.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+
+    <script type='text/javascript' src="js/jquery.autocomplete.js"></script>
+	<link rel="stylesheet" type="text/css" href="js/jquery.autocomplete.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="style.css">
 	<script language="javascript">
 		function valida_form() {
 			if (document.pag.form_pag[0].checked == false && document.pag.form_pag[1].checked == false && document.pag.form_pag[2].checked == false && document.pag.form_pag[3].checked == false && document.pag.form_pag[4].checked == false) {
@@ -206,18 +213,18 @@ $num_ped = $_SESSION['num_ped'];
 								
 			<form name="pag" method="post" action="pagamento1.php" onsubmit="return valida_form(this);">
 				<h4 class="mt-5 mb-3">Formas de pagamento</h4>
-				<div class="border bg-light p-3">
+				<div>
 					<!-- Pagamento com boleto bancário -->
-					<div class="container">
+					<div class="container border bg-light p-3">
 							<div class="row">
 								<h2><strong>Opção 1:</strong> Quero pagar este pedido por intermédio de <strong>BOLETO BANCÁRIO</strong></h2>
 							</div>
 							<div class="row row-cols-2">
-								<div class="col-md-4">
+								<div class="col-md-4 col-12">
 									<p style="font-weight:bold;">Selecione esta opção para pagar por intermédio de boleto bancário</p>
 									<input name="form_pag" type="radio" value="boleto" /><img src="imagens/marcador_boleto.gif" alt="codigo de barras" hspace="3" align="absmiddle" /> (Boleto bancário)
 								</div>
-								<div class="col-md-8">
+								<div class="col-md-8 col-12">
 									<p>Valor da fatura para pagamento com boleto bancário: <span style="font-weight: bold">R$ <?PHP print number_format($total_pag_boleto, 2, ',', '.'); ?></span></p>
 									<p><img src="imagens/marcador_atencao.gif" alt="aten&ccedil;&atilde;o" align="left" />O boleto deve ser impresso após a confirmação do pedido, pois não o enviamos via correio. </p>
 									<p><small>A data de vencimento do boleto é de 5 dias corridos após o fechamento do pedido, após esta data, ele perderá a validade. Na impossibilidade de imprimi-lo, faça o pagamento do boleto pelo Home Banking de seu banco. Para isso, utilize o código de barras localizado na parte superior esquerda da ficha de compensação do boleto. Não é possível pagar o seu pedido através de DOC, transferência ou depósito para conta indicada neste boleto.</small></p>
@@ -226,28 +233,32 @@ $num_ped = $_SESSION['num_ped'];
 							</div>
 					</div> <!-- boleto--->
 
-					<div class="container mt-5">
+					<div class="container mt-5 border bg-light p-3">
 						<h2><strong>Opção 2:</strong> Quero pagar este pedido por intermédio de <span class="c_preto"><strong>CARTÂO DE CRÉDITO</strong></span></h2>
 
 						<div class="row row-cols-2">
-								<div class="col-md-4">
+								<div class="col-md-4 col-12 mb-4">
 									<p style="font-weight: bold">Selecione um cartão de crédito</p>
 									<input name="form_pag" type="radio" value="Visa" /><img src="imagens/c_visa.gif" width="25" height="16" hspace="7" align="absmiddle" />(Visa)<br />
 									<input name="form_pag" type="radio" value="Mastercard" /><img src="imagens/c_mastercard.gif" width="25" height="16" hspace="7" align="absmiddle" />(Mastercard)<br />
 									<input name="form_pag" type="radio" value="Amex" /><img src="imagens/c_amex.gif" width="25" height="16" hspace="7" align="absmiddle" />(Amex)<br />
 									<input name="form_pag" type="radio" value="Diners" /><img src="imagens/c_diners.gif" width="25" height="16" hspace="7" align="absmiddle" />(Diners)<br />
 								</div>
-								<div class="col-md-8">
+								<div class="col-md-8 col-12">
 									<p><img src="imagens/marcador_atencao.gif" alt="aten&ccedil;&atilde;o" align="left" />é necessário um cartão de crédito válido (Visa, Mastercard, Amex ou Diners). Para sua segurança, usamos a tecnologia SSL (Secure Socket Layer) para proteger as informações de seu cartão. </p>
 									<p><img src="imagens/marcador_atencao.gif" alt="aten&ccedil;&atilde;o" align="left" />Para sua segurança desabilitamos o campo [N° do cartão] para a demonstração deste site.</p>
 									<p style="font-weight: bold">Informações sobre o seu cartão de crédito</p>
 									<div class="border p-3">
 										<form>
 											<div class="form-group">
-												<p><label>N° do cartão:</label><input name="txtnumero" type="text" class="caixa_texto" value="5432154321123" size="20" maxlength="20" readonly="true" /> (Desabilitado no modo de teste)</p>
-												<p><label>Nome imp no cartão:</label><input name="txtnome" type="text" class="caixa_texto" size="40" maxlength="40" /> * (Seu nome impresso no cartão)</p>
-												<p><label>Data de validade:</label><input name="txtmes" type="text" class="caixa_texto" size="3" maxlength="2" />&nbsp;/&nbsp;<input name="txtano" type="text" class="caixa_texto" size="3" maxlength="2" /> * (mm/aa)</p>
-												<p><label>Código de segurança:</label><input name="txtcodigo" type="text" class="caixa_texto" size="5" maxlength="4" /></p>
+												<p><label>N° do cartão:</label> <input name="txtnumero" type="text" class="caixa_texto" value="5432154321123" maxlength="20" readonly="true" style="display: inline; width: 100%"/></p>
+												
+												<p><label>Nome imp no cartão:</label><input name="txtnome" type="text" class="caixa_texto" style="display: inline; width: 100%" maxlength="40" readonly value="Girimunda da Silva Aborboreda"/></p>
+												
+												<p><label>Data de validade:</label> <input name="txtmes" type="text" class="caixa_texto" size="3" maxlength="2" readonly value="12"/>&nbsp;/&nbsp;<input name="txtano" type="text" class="caixa_texto" size="3" maxlength="2" readonly value="26"/></p>
+												
+												<p><label>Código de segurança:</label> <input name="txtcodigo" type="text" class="caixa_texto" size="5" maxlength="4" readonly value="171"/></p>
+
 												<p class="text-muted"><small>O Código de Segurança do Cartão é um código de 3 ou 4 dígitos gravado ou impresso no verso dos cartões Visa, MasterCard, Diners. No cartão Amex este código se encontra na frente do cartão.</small></p>
 
 												<table class="table table-borderless table-sm table-striped">
@@ -292,9 +303,8 @@ $num_ped = $_SESSION['num_ped'];
 
 		<?PHP include "inc_rodape.php" ?>
 
-		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 	</div> <!--fecha container principal-->
 </body>
 </html>

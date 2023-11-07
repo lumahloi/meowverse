@@ -1,6 +1,44 @@
-<div class="bg-light mt-5 p-3 border">
-    <p>Copyright 1999 - 2010, <span class="c_preto">Carlos A J Oliviero</span> - Projeto do livro: Faça um Site - PHP 5 com banco de dados MySQL - Comércio Eletrônico.</p>
-    <p><span class="c_preto"><strong>Advertência</strong></span>: Este Site foi construído para fins didáticos. Dados técnicos, imagens, textos e referências de ordens diversas foram utilizados apenas com o objetivo de possibilitar ao leitor a construção do projeto que está proposto neste livro. As informações aqui exibidas não refletem, em nenhum momento, a realidade.</p>
-    <p>É terminantemente proibido o uso das imagens utilizadas nesse Projeto Didático que não possui qualquer conotação comercial, para quaisquer outros fins que não ao do projeto em si, sem a autorização do detentor dos direitos das mesmas.</p>
-    <p>Este site exibe o projeto completo do livro PHP 5 com banco de dados MySQL - Comércio Eletrônico. Você poderá testá-lo, simulando uma compra fictícia pela Internet. Os dados coletados em seu teste seguem as normas da política de privacidade deste site. Sua compra é fictícia:<span class="c_preto"><strong> Nada lhe será cobrado e nada lhe será entregue</strong></span>.
+<div class="mt-5 p-5 rounded" style="background-image: linear-gradient(purple, #66024f);">
+    <div class="row row-cols-3">
+        <div class="col-lg-6 col-12">
+            <a href="index.php"><img src="imagens/logo2.png" alt="Logo Meowverse"></a>
+            <p class="small" style="color: white">A loja mais purrfeita para os nerds!</p>
+
+            <div class="row row-cols-5 mb-4">
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="row row-cols-5">
+                        <div class="col"><img src="imagens/facebook.png" alt=""></div>
+                        <div class="col"><img src="imagens/instagram.png" alt=""></div>
+                        <div class="col"><img src="imagens/youtube.png" alt=""></div>
+                        <div class="col"><img src="imagens/tik-tok.png" alt=""></div>
+                        <div class="col"><img src="imagens/twitter.png" alt=""></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-12 mb-3">
+                <h3 style="color: white">Categorias</h3>
+                <a class="text-decoration-none small" style="color: white" href="categorias.php?cat_id=1&cat_nome=Nendoroid&ordenar=preco%20ASC"><p>Nendoroid</p></a>
+                <a class="text-decoration-none small" style="color: white" href="categorias.php?cat_id=2&cat_nome=Figma&ordenar=preco%20ASC"><p>Figma</p></a>
+                <a class="text-decoration-none small" style="color: white" href="categorias.php?cat_id=3&cat_nome=Action Figures&ordenar=preco ASC"><p>Action Figures</p></a>
+                <a class="text-decoration-none small" style="color: white" href="categorias.php?cat_id=4&cat_nome=Funko POP&ordenar=preco ASC"><p>Funko POP</p></a>
+                <a class="text-decoration-none small" style="color: white" href="categorias.php?cat_id=5&cat_nome=Plushies&ordenar=preco ASC"><p>Plushies</p></a>
+        </div>
+
+        <div class="col-lg-3 col-12">
+            <h3 style="color: white">Precisa de ajuda?</h3>
+            <a class="text-decoration-none small" style="color: white" href="#"><p>Termos de Uso</p></a>
+            <a class="text-decoration-none small" style="color: white" href="#"><p>Políticas de Privacidade</p></a>
+            <a class="text-decoration-none small" style="color: white" href="#"><p>Políticas de Proteção a Dados</p></a>
+            <a class="text-decoration-none small" style="color: white" href="#"><p>Políticas de Produtos</p></a>
+            <a class="text-decoration-none small" style="color: white" href="#"><p>Meowverse FAQ</p></a>
+        </div>
+
+        
+    </div>
+    <div class="row">
+        <p class="small text-end mt-5 mb-0" style="color: white">Site de compra <span style="font-weight: bold">fictícia</span>! Nada lhe será cobrado e nada lhe será entregue.</p>
+        <p class="small text-end mb-0" style="color: white">2023© <a href="https://github.com/lumahloi" style="font-weight: bold; color: white;" class="text-decoration-none">Lumah Pereira</a> - Informática para Internet ETEOT</p>
+    </div>
 </div>

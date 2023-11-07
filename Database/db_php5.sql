@@ -1,8 +1,8 @@
 -- --------------------------------------------------------
 -- Servidor:                     127.0.0.1
--- Versão do servidor:           10.4.24-MariaDB - mariadb.org binary distribution
+-- Versão do servidor:           10.4.28-MariaDB - mariadb.org binary distribution
 -- OS do Servidor:               Win64
--- HeidiSQL Versão:              12.0.0.6468
+-- HeidiSQL Versão:              12.5.0.6677
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -17,7 +17,7 @@
 
 -- Copiando estrutura do banco de dados para db_php5
 DROP DATABASE IF EXISTS `db_php5`;
-CREATE DATABASE IF NOT EXISTS `db_php5` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+CREATE DATABASE IF NOT EXISTS `db_php5` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
 USE `db_php5`;
 
 -- Copiando estrutura para tabela db_php5.cadcli
@@ -38,12 +38,10 @@ CREATE TABLE IF NOT EXISTS `cadcli` (
   `cidade` varchar(40) DEFAULT NULL,
   `uf` varchar(2) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=203 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=203 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Copiando dados para a tabela db_php5.cadcli: 1 rows
+-- Copiando dados para a tabela db_php5.cadcli: 0 rows
 /*!40000 ALTER TABLE `cadcli` DISABLE KEYS */;
-INSERT INTO `cadcli` (`id`, `nome`, `cpf`, `rg`, `sexo`, `email`, `senha`, `end_nome`, `end_num`, `end_comp`, `cep`, `bairro`, `cidade`, `uf`) VALUES
-	(201, 'Marcos de Almeida', '31548754898', '78478956', 'M', 'marcos@teste1.com.br', '1234567', 'R Miranda de Azevedo', '251', '', '01257001', 'Sumaré', 'São Paulo', 'SP');
 /*!40000 ALTER TABLE `cadcli` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela db_php5.categorias
@@ -52,18 +50,16 @@ CREATE TABLE IF NOT EXISTS `categorias` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `cat_nome` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Copiando dados para a tabela db_php5.categorias: 7 rows
+-- Copiando dados para a tabela db_php5.categorias: 5 rows
 /*!40000 ALTER TABLE `categorias` DISABLE KEYS */;
-INSERT INTO `categorias` (`id`, `cat_nome`) VALUES
-	(1, 'Ônibus'),
-	(2, 'Automóveis'),
-	(3, 'Máquinas pesadas'),
-	(4, 'Caminhões'),
-	(5, 'Motocicletas'),
-	(6, 'Aviões'),
-	(7, 'Militares');
+REPLACE INTO `categorias` (`id`, `cat_nome`) VALUES
+	(1, 'Nendoroid'),
+	(2, 'Figma'),
+	(3, 'Action Figures'),
+	(4, 'Funko POP'),
+	(5, 'Plushies');
 /*!40000 ALTER TABLE `categorias` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela db_php5.itens
@@ -81,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `itens` (
   `desconto_boleto` tinyint(4) DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `id_pedido` (`codigo`)
-) ENGINE=MyISAM AUTO_INCREMENT=723 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=724 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- Copiando dados para a tabela db_php5.itens: 0 rows
 /*!40000 ALTER TABLE `itens` DISABLE KEYS */;
@@ -91,249 +87,46 @@ CREATE TABLE IF NOT EXISTS `itens` (
 DROP TABLE IF EXISTS `miniaturas`;
 CREATE TABLE IF NOT EXISTS `miniaturas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `codigo` varchar(5) CHARACTER SET latin1 DEFAULT '',
-  `destaque` char(1) COLLATE latin1_bin DEFAULT 'S',
-  `nome` varchar(60) CHARACTER SET latin1 DEFAULT '',
-  `ano` varchar(4) COLLATE latin1_bin DEFAULT '',
+  `codigo` varchar(5) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT '',
+  `destaque` char(1) DEFAULT 'S',
+  `nome` varchar(60) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT '',
   `id_categoria` int(11) DEFAULT 0,
-  `subcateg` varchar(30) CHARACTER SET latin1 DEFAULT '',
-  `escala` varchar(10) CHARACTER SET latin1 DEFAULT '1:18',
-  `peso` float(9,1) DEFAULT 0.0,
-  `comprimento` float(9,1) DEFAULT 0.0,
-  `largura` float(9,1) DEFAULT 0.0,
+  `subcateg` varchar(30) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT '',
   `altura` float(9,1) DEFAULT 0.0,
-  `cor` varchar(20) CHARACTER SET latin1 NOT NULL DEFAULT '',
   `preco` float(9,2) DEFAULT 0.00,
   `desconto` tinyint(4) DEFAULT 5,
   `desconto_boleto` tinyint(4) DEFAULT 10,
   `max_parcelas` tinyint(4) DEFAULT 10,
   `estoque` int(11) DEFAULT 100,
   `min_estoque` int(11) DEFAULT 10,
-  `credito` varchar(200) CHARACTER SET latin1 DEFAULT 'http://www.motormint.com (acesso 21/09/2009)',
-  `data_cad` date DEFAULT NULL,
+  `fabrica` varchar(50) DEFAULT NULL,
+  `descricao` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`),
   KEY `id_categoria` (`id_categoria`)
 ) ENGINE=MyISAM AUTO_INCREMENT=104 DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 
--- Copiando dados para a tabela db_php5.miniaturas: 90 rows
+-- Copiando dados para a tabela db_php5.miniaturas: 10 rows
 /*!40000 ALTER TABLE `miniaturas` DISABLE KEYS */;
-INSERT INTO `miniaturas` (`id`, `codigo`, `destaque`, `nome`, `ano`, `id_categoria`, `subcateg`, `escala`, `peso`, `comprimento`, `largura`, `altura`, `cor`, `preco`, `desconto`, `desconto_boleto`, `max_parcelas`, `estoque`, `min_estoque`, `credito`, `data_cad`) VALUES
-	(1, '10510', 'N', 'Marcopolo Paradiso 1200', '2009', 1, 'Ônibus rodoviário', '1:36', 1.0, 20.2, 7.9, 11.3, 'Branco', 100.00, 5, 5, 3, 210, 10, 'http://www.marcopolo.com.br (acesso 21/09/2009)', '2009-05-27'),
-	(2, '10511', 'N', 'Marcopolo Paradiso 1550 LD', '2009', 1, 'Ônibus rodoviário', '1:36', 0.9, 20.2, 8.7, 11.3, 'Azul', 78.30, 5, 10, 2, 2, 10, 'http://www.marcopolo.com.br (acesso 21/09/2009)', '2009-05-27'),
-	(3, '10512', 'N', 'Marcopolo Viaggio 1050 MD', '2009', 1, 'Ônibus rodoviário', '1:36', 0.9, 20.2, 8.7, 11.3, 'Azul', 120.30, 5, 10, 5, 140, 10, 'http://www.marcopolo.com.br (acesso 21/09/2009)', '2009-05-27'),
-	(4, '10513', 'N', 'Marcopolo Viaggio 1050 MT', '2009', 1, 'Ônibus rodoviário', '1:36', 1.2, 20.2, 8.3, 11.3, 'Amarelo', 140.70, 5, 10, 7, 85, 10, 'http://www.marcopolo.com.br (acesso 21/09/2009)', '2009-05-27'),
-	(5, '10514', 'S', 'Marcopolo Paradiso 1800 DD', '2009', 1, 'Ônibus rodoviário', '1:36', 1.0, 20.2, 8.1, 13.1, 'Prata/verde', 155.25, 5, 10, 10, 105, 10, 'http://www.marcopolo.com.br (acesso 21/09/2009)', '2009-05-27'),
-	(6, '11510', 'N', 'Marcopolo Senior Midi', '2009', 1, 'Ônibus urbano', '1:36', 1.1, 20.2, 7.8, 11.3, 'Branco', 175.00, 5, 10, 10, 2, 10, 'http://www.marcopolo.com.br (acesso 21/09/2009)', '2009-05-27'),
-	(7, '11511', 'N', 'Marcopolo Torino', '2009', 1, 'Ônibus urbano', '1:36', 1.2, 20.2, 7.5, 11.3, 'Branco', 115.00, 5, 10, 10, 140, 10, 'http://www.marcopolo.com.br (acesso 21/09/2009)', '2009-05-27'),
-	(8, '11512', 'N', 'Marcopolo Viale', '2009', 1, 'Ônibus urbano', '1:36', 1.0, 20.2, 8.3, 11.3, 'Branco', 170.30, 5, 10, 10, 18, 10, 'http://www.marcopolo.com.br (acesso 21/09/2009)', '2009-05-27'),
-	(9, '12510', 'N', 'BRIT L004 Leyland Titan PD2 deck bus', '1962', 1, 'Ônibus dois andares', '1:36', 0.9, 10.8, 4.2, 2.5, 'Verde/branco', 120.50, 5, 10, 10, 45, 10, 'http://krwmodels.co.uk (acesso 21/09/2009)', '2009-05-27'),
-	(10, '12511', 'N', 'RM2217 - The Last Routemaster', '1952', 1, 'Ônibus dois andares', '1:36', 0.9, 11.5, 4.3, 2.5, 'Vermelho', 201.00, 5, 10, 10, 32, 10, 'http://krwmodels.co.uk (acesso 21/09/2009)', '2009-05-27'),
-	(11, '12512', 'N', 'RCL Routmaster Coach Greenline', '1952', 1, 'Ônibus dois andares', '1:36', 1.0, 10.7, 3.8, 2.5, 'Verde', 175.00, 5, 10, 10, 25, 10, 'http://krwmodels.co.uk (acesso 21/09/2009)', '2009-05-27'),
-	(12, '12513', 'N', 'East Lancs Myllenium', '2000', 1, 'Ônibus dois andares', '1:36', 1.0, 11.5, 3.9, 2.5, 'Vermelho', 167.00, 5, 10, 10, 130, 10, 'http://krwmodels.co.uk (acesso 21/09/2009)', '2009-05-27'),
-	(13, '12514', 'N', 'Crossley DD42 Portsmouth Eastney/Cosham', '1960', 1, 'Ônibus dois andares', '1:36', 1.1, 11.0, 4.2, 2.5, 'Vermelho/branco', 132.00, 5, 10, 10, 157, 10, 'http://krwmodels.co.uk (acesso 21/09/2009)', '2009-05-27'),
-	(14, '12515', 'N', 'Queen Mary - British Shoe Corporation', '1936', 1, 'Ônibus dois andares', '1:36', 1.3, 11.7, 5.0, 2.5, 'Azul', 225.00, 5, 10, 10, 1, 10, 'http://krwmodels.co.uk (acesso 21/09/2009)', '2009-05-27'),
-	(15, '12516', 'N', 'Bedford Val - West Riding', '1975', 1, 'Ônibus rodoviário', '1:36', 1.0, 10.5, 4.8, 2.5, 'Branco/verde', 248.00, 5, 10, 10, 15, 10, 'http://krwmodels.co.uk (acesso 21/09/2009)', '2009-05-27'),
-	(16, '12517', 'N', 'Bimingham/Worcester Split run, 2 of each dest', '1967', 1, 'Ônibus urbano', '1:36', 1.2, 11.5, 4.7, 2.5, 'Vermelho/preto', 156.60, 5, 10, 10, 147, 10, 'http://krwmodels.co.uk (acesso 21/09/2009)', '2009-05-27'),
-	(17, '12518', 'N', 'Scania Irizar PB - Bus Eireann', '2007', 1, 'Ônibus rodoviário', '1:36', 1.1, 11.5, 4.3, 2.5, 'Branco/vermelho', 205.00, 5, 10, 10, 18, 10, 'http://krwmodels.co.uk (acesso 21/09/2009)', '2009-06-10'),
-	(18, '12519', 'N', 'Bussing 6500 T - Sauerland', '1967', 1, 'Ônibus rodoviário', '1:36', 1.0, 11.5, 4.9, 2.5, 'Azul/creme', 148.00, 5, 10, 10, 9, 10, 'http://krwmodels.co.uk (acesso 21/09/2009)', '2009-06-10'),
-	(19, '20301', 'N', 'Volvo S40', '2009', 2, 'Linha Volvo', '1:18', 0.4, 11.5, 5.1, 2.5, 'Vermelho', 95.00, 5, 10, 5, 35, 10, 'http://www.volvocars.com/us/models/s40/Pages (acesso 22/09/2009)', '2009-06-10'),
-	(20, '20302', 'N', 'Volvo S80', '2009', 2, 'Linha Volvo', '1:18', 0.5, 11.5, 5.3, 2.5, 'Preto', 78.00, 5, 10, 3, 48, 10, 'http://www.volvocars.com/us/models/s40/Pages (acesso 22/09/2009)', '2009-06-10'),
-	(21, '20303', 'N', 'Volvo V50', '2009', 2, 'Linha Volvo', '1:18', 0.7, 11.5, 4.2, 2.5, 'Azul', 95.50, 5, 10, 6, 23, 10, 'http://www.volvocars.com/us/models/s40/Pages (acesso 22/09/2009)', '2009-06-10'),
-	(22, '20304', 'N', 'Volvo V70', '2009', 2, 'Linha Volvo', '1:18', 0.6, 11.5, 4.2, 2.5, 'Cinza', 89.50, 5, 10, 2, 120, 10, 'http://www.volvocars.com/us/models/s40/Pages (acesso 22/09/2009)', '2009-06-10'),
-	(23, '20305', 'N', 'Volvo XC70', '2009', 2, 'Linha Volvo', '1:18', 0.5, 11.5, 4.2, 2.5, 'Verde', 95.00, 5, 10, 3, 237, 10, 'http://www.volvocars.com/us/models/s40/Pages (acesso 22/09/2009)', '2009-06-10'),
-	(24, '20306', 'N', 'Volvo XC90', '2009', 2, 'Linha Volvo', '1:18', 0.8, 11.5, 4.8, 2.5, 'Prata', 95.00, 5, 10, 3, 8, 10, 'http://www.volvocars.com/us/models/s40/Pages (acesso 22/09/2009)', '2009-06-10'),
-	(25, '20307', 'N', 'Volvo C30', '2009', 2, 'Linha Volvo', '1:18', 0.4, 11.5, 4.1, 2.5, 'Vermelho', 95.00, 5, 10, 3, 4, 10, 'http://www.volvocars.com/us/models/s40/Pages (acesso 22/09/2009)', '2009-06-10'),
-	(26, '20308', 'S', 'Volvo C70', '2009', 2, 'Linha Volvo', '1:18', 0.4, 11.5, 4.0, 2.5, 'Prata', 95.00, 5, 10, 3, 13, 10, 'http://www.volvocars.com/us/models/s40/Pages (acesso 22/09/2009)', '2009-06-10'),
-	(27, '21301', 'N', 'Hummer H3', '2009', 2, 'Linha Hummer', '1:18', 0.5, 11.6, 5.0, 3.2, 'Preto', 290.00, 5, 10, 10, 27, 10, 'http://www.hummer.com (acesso 22/09/2009)', '2009-06-10'),
-	(28, '21302', 'N', 'Hummer H3T', '2009', 2, 'Linha Hummer', '1:18', 0.6, 10.8, 5.3, 3.2, 'Vermelho', 310.00, 5, 10, 10, 78, 10, 'http://www.hummer.com (acesso 22/09/2009)', '2009-06-10'),
-	(29, '21303', 'N', 'Hummer H3x', '2009', 2, 'Linha Hummer', '1:18', 0.6, 11.5, 4.8, 3.2, 'Cinza', 210.00, 5, 10, 10, 56, 10, 'http://www.hummer.com (acesso 22/09/2009)', '2009-06-10'),
-	(30, '21304', 'S', 'Hummer H3 Alpha', '2009', 2, 'Linha Hummer', '1:18', 0.6, 11.5, 4.2, 3.2, 'Azul', 238.00, 5, 10, 10, 54, 10, 'http://www.hummer.com (acesso 22/09/2009)', '2009-06-29'),
-	(31, '21305', 'N', 'Hummer H2', '2009', 2, 'Linha Hummer', '1:18', 0.5, 11.5, 4.3, 3.2, 'Vermelho', 185.00, 5, 10, 10, 83, 10, 'http://www.hummer.com (acesso 22/09/2009)', '2009-06-29'),
-	(32, '21306', 'N', 'Hummer H2 SUT', '2009', 2, 'Linha Hummer', '1:18', 0.6, 11.5, 4.8, 3.2, 'Cinza', 230.00, 5, 10, 10, 254, 10, 'http://www.hummer.com (acesso 22/09/2009)', '2009-06-29'),
-	(33, '22301', 'N', 'Chevrolet Malibu', '2009', 2, 'Linha Chevrolet', '1:18', 0.6, 11.5, 4.2, 3.2, 'Ouro', 157.00, 5, 10, 10, 1, 10, 'http://www.gm.com (acesso 22/09/2009)', '2009-06-29'),
-	(34, '22302', 'N', 'Chevrolet Traversi', '2009', 2, 'Linha Chevrolet', '1:18', 0.7, 11.5, 4.2, 3.2, 'Vinho', 195.00, 5, 10, 10, 0, 10, 'http://www.gm.com (acesso 22/09/2009)', '2009-06-29'),
-	(35, '22303', 'N', 'Chevrolet Camaro', '2009', 2, 'Linha Chevrolet', '1:18', 0.5, 11.5, 5.1, 2.0, 'Amarelo', 195.00, 5, 10, 10, 17, 10, 'http://www.gm.com (acesso 22/09/2009)', '2009-06-29'),
-	(36, '22304', 'N', 'Chevrolet Equinox', '2009', 2, 'Linha Chevrolet', '1:18', 0.5, 11.5, 5.3, 3.2, 'Vermelho', 230.00, 5, 10, 10, 168, 10, 'http://www.gm.com (acesso 22/09/2009)', '2009-06-29'),
-	(37, '22305', 'N', 'Chevrolet Tahoe Hybrid', '2009', 2, 'Linha Chevrolet', '1:18', 0.6, 11.5, 4.9, 3.2, 'Azul', 156.30, 5, 10, 10, 21, 10, 'http://www.gm.com (acesso 22/09/2009)', '2009-06-29'),
-	(38, '22306', 'S', 'Chevrolet Corvette ZR1', '2009', 2, 'Linha Chevrolet', '1:18', 0.7, 11.5, 4.8, 3.2, 'Amarelo', 89.00, 5, 10, 3, 75, 10, 'http://www.gm.com (acesso 22/09/2009)', '2009-06-29'),
-	(39, '30101', 'N', 'Retroescavadeira 416E', '2009', 3, 'Retroescavadeiras', '1:46', 1.0, 15.2, 4.2, 5.5, 'Amarelo', 85.00, 5, 10, 3, 14, 10, 'http://brasil.cat.com (acesso 21/09/2009)', '2009-07-18'),
-	(40, '30102', 'N', 'Retroescavadeira 420E', '2009', 3, 'Retroescavadeiras', '1:46', 1.0, 14.8, 5.6, 5.5, 'Amarelo', 131.00, 5, 10, 10, 2, 10, 'http://brasil.cat.com (acesso 21/09/2009)', '2009-07-18'),
-	(41, '30103', 'N', 'Retroescavadeira 450E', '2009', 3, 'Retroescavadeiras', '1:46', 1.0, 13.7, 5.7, 5.5, 'Amarelo', 156.00, 5, 10, 10, 45, 10, 'http://brasil.cat.com (acesso 21/09/2009)', '2009-07-18'),
-	(42, '32101', 'N', 'Fresadora PM-101', '2009', 3, 'Fresadoras', '1:46', 1.0, 11.8, 5.0, 5.5, 'Amarelo', 157.00, 5, 10, 10, 15, 10, 'http://brasil.cat.com (acesso 21/09/2009)', '2009-07-18'),
-	(43, '32102', 'N', 'Fresadora PM-201', '2009', 3, 'Fresadoras', '1:46', 1.1, 13.8, 5.3, 5.5, 'Amarelo', 98.00, 5, 10, 3, 32, 10, 'http://brasil.cat.com (acesso 21/09/2009)', '2009-07-18'),
-	(44, '33101', 'N', 'Escavadeira Hidráulica 307D ', '2009', 3, 'Escavadeiras', '1:46', 1.1, 11.7, 4.2, 5.5, 'Amarelo', 75.00, 5, 10, 2, 45, 10, 'http://brasil.cat.com (acesso 21/09/2009)', '2009-07-18'),
-	(45, '33102', 'N', 'Escavadeira Hidráulica 314D CR/314D LCR', '2009', 3, 'Escavadeiras', '1:46', 0.9, 11.5, 4.2, 5.5, 'Amarelo', 85.60, 5, 10, 10, 125, 10, 'http://brasil.cat.com (acesso 21/09/2009)', '2009-07-18'),
-	(46, '34101', 'N', 'Caminhão Fora de Estrada 770', '2009', 3, 'Fora de estrada', '1:46', 1.3, 15.6, 4.2, 5.5, 'Amarelo', 295.00, 5, 10, 10, 100, 10, 'http://brasil.cat.com (acesso 21/09/2009)', '2009-07-18'),
-	(47, '34102', 'N', 'Caminhão Fora de Estrada 775F', '2009', 3, 'Fora de estrada', '1:46', 1.2, 16.4, 4.2, 5.5, 'Amarelo', 268.00, 5, 10, 10, 45, 10, 'http://brasil.cat.com (acesso 21/09/2009)', '2009-07-18'),
-	(48, '35101', 'S', 'Minerador 785D', '2009', 3, 'Mineração', '1:46', 1.1, 14.6, 4.7, 5.5, 'Amarelo', 194.00, 5, 10, 10, 41, 10, 'http://brasil.cat.com (acesso 21/09/2009)', '2009-07-18'),
-	(49, '35102', 'N', '789C Mining Truck', '2009', 3, 'Mineração', '1:46', 1.1, 14.8, 4.6, 5.5, 'Amarelo', 189.50, 5, 10, 10, 75, 10, 'http://brasil.cat.com (acesso 21/09/2009)', '2009-07-18'),
-	(50, '36101', 'N', 'Pavimentadora de Asfalto AP-1000D', '2009', 3, 'Pavimentação', '1:46', 1.3, 13.4, 4.2, 5.5, 'Amarelo', 127.00, 5, 10, 10, 46, 10, 'http://brasil.cat.com (acesso 21/09/2009)', '2009-07-18'),
-	(51, '36102', 'S', 'Misturador Rotativo RM-500', '2009', 3, 'Pavimentação', '1:46', 1.1, 12.8, 4.5, 5.5, 'Amarelo', 95.60, 5, 10, 10, 24, 10, 'http://brasil.cat.com (acesso 21/09/2009)', '2009-07-20'),
-	(52, '41101', 'N', 'American LaFrance Fire Pumper', '1921', 4, 'Caminhões de bombeiro', '1:36', 1.2, 11.5, 4.2, 5.5, 'Vermelho', 155.00, 5, 10, 10, 12, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-20'),
-	(53, '41102', 'N', 'Studebaker South Bend, Indiana F.D. ', '1928', 4, 'Caminhões de bombeiro', '1:36', 1.1, 11.5, 4.3, 5.5, 'Vermelho', 147.00, 5, 10, 10, 44, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-20'),
-	(54, '41103', 'N', 'GMC CO2 Firewagon', '1941', 4, 'Caminhões de bombeiro', '1:36', 1.3, 11.5, 4.3, 5.5, 'Vermelho', 135.00, 5, 10, 10, 19, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-20'),
-	(55, '41104', 'N', 'MACK C (1000GPM) Fire Pumper', '1960', 4, 'Caminhões de bombeiro', '1:36', 1.0, 11.5, 4.2, 5.5, 'Vermelho', 155.00, 5, 10, 10, 29, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-20'),
-	(56, '41105', 'S', 'Ford Fire Engine', '1938', 4, 'Caminhões de bombeiro', '1:36', 1.1, 11.5, 4.9, 5.5, 'Vermelho', 155.00, 5, 10, 10, 44, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-20'),
-	(57, '41106', 'N', 'Mercedes-Benz L4500F Fire Engine', '1944', 4, 'Caminhões de bombeiro', '1:36', 1.1, 11.5, 5.3, 5.5, 'Vermelho', 168.00, 5, 10, 10, 1, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-20'),
-	(58, '41107', 'N', 'F.D.N.Y. E-One Rescue Truck ', '1985', 4, 'Caminhões de bombeiro', '1:36', 1.1, 11.5, 5.0, 5.5, 'Vermelho', 169.00, 5, 10, 10, 0, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-20'),
-	(59, '41108', 'N', 'F.D.N.Y. Super Tender', '1970', 4, 'Caminhões de bombeiro', '1:36', 0.8, 11.5, 4.2, 5.5, 'Vermelho', 97.50, 5, 10, 10, 0, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-20'),
-	(60, '41109', 'N', 'Ford Tanker Truck', '1934', 4, 'Veículos antigos', '1:36', 1.0, 11.5, 4.3, 5.5, 'Azul', 127.00, 5, 10, 5, 0, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-20'),
-	(61, '41110', 'N', 'Ford Chain Truck', '1934', 4, 'Veículos antigos', '1:36', 1.1, 11.5, 4.2, 5.5, 'Verde', 136.50, 5, 10, 10, 0, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-20'),
-	(62, '41111', 'N', 'Chevrolet Ajax Flatbed Truck', '1941', 4, 'Veículos antigos', '1:36', 1.1, 11.5, 4.2, 5.5, 'Laranja', 122.00, 5, 10, 10, 0, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-25'),
-	(63, '41112', 'N', 'Historical UPS Truck - Ford', '1934', 4, 'Veículos antigos', '1:36', 0.9, 11.5, 4.3, 5.5, 'Preto', 105.00, 5, 10, 10, 18, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-25'),
-	(64, '41113', 'N', 'Ford F100', '1956', 4, 'Veículos antigos', '1:36', 0.8, 11.5, 5.8, 5.5, 'Amarelo', 155.00, 5, 10, 10, 45, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-25'),
-	(65, '42101', 'N', 'JDH', '1928', 5, 'Motos antigas', '1:18', 0.4, 7.5, 2.5, 5.5, 'Preto', 85.00, 5, 10, 4, 79, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-28'),
-	(66, '42102', 'N', 'Indian Sport Scout', '1934', 5, 'Motos antigas', '1:18', 0.4, 6.2, 2.5, 5.5, 'Amarelo', 85.00, 5, 10, 4, 85, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-28'),
-	(67, '42103', 'N', 'Harley Davidson El Knucklehead', '1936', 5, 'Motos antigas', '1:18', 0.5, 5.3, 2.4, 5.5, 'Roxo', 85.00, 5, 10, 4, 47, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-28'),
-	(68, '42104', 'N', 'Panhead ', '1948', 5, 'Motos antigas', '1:18', 0.4, 7.3, 2.8, 5.5, 'Vermelho', 85.00, 5, 10, 4, 65, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-28'),
-	(69, '42105', 'S', 'Duo-Glide', '1958', 5, 'Motos antigas', '1:18', 0.6, 6.4, 2.8, 5.5, 'Azul', 85.00, 5, 10, 4, 54, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-28'),
-	(70, '42106', 'N', 'Harley Davidson FLHT Virginia State Police', '1998', 5, 'Motos atuais', '1:18', 0.6, 5.9, 2.9, 5.5, 'Preto', 85.00, 5, 10, 4, 24, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-28'),
-	(71, '42107', 'N', 'Harley Davidson FLSTC Heritage Softail Classic ', '2000', 5, 'Motos atuais', '1:18', 0.6, 6.7, 2.7, 5.5, 'Preto', 85.00, 5, 10, 4, 25, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-28'),
-	(72, '51101', 'N', 'Embraer ERJ 135', '2009', 6, 'Embraer', '1:42', 1.1, 20.5, 18.5, 5.5, 'Azul/branco', 210.00, 5, 10, 10, 4, 10, 'http://www.embraer.com.br (acesso 21/09/2009)', '2009-07-28'),
-	(73, '51102', 'N', 'Embraer EMB 120', '2009', 6, 'Embraer', '1:42', 1.1, 19.5, 17.2, 5.5, 'Azul/branco', 205.00, 5, 10, 10, 0, 10, 'http://www.embraer.com.br (acesso 21/09/2009)', '2009-07-28'),
-	(74, '51103', 'N', 'Embraer ERJ 140', '2009', 6, 'Embraer', '1:42', 1.3, 21.7, 18.2, 5.5, 'Azul/branco', 187.00, 5, 10, 10, 45, 10, 'http://www.embraer.com.br (acesso 21/09/2009)', '2009-08-15'),
-	(75, '51104', 'N', 'Embraer Super Tucano', '2009', 6, 'Embraer', '1:42', 1.0, 19.6, 19.4, 5.5, 'Verde/branco', 157.00, 5, 10, 10, 3, 10, 'http://www.embraer.com.br (acesso 21/09/2009)', '2009-08-15'),
-	(76, '51105', 'N', 'Embraer EMB 145 AEW&C', '2009', 6, 'Embraer', '1:42', 1.3, 18.6, 17.2, 5.5, 'Prata', 196.00, 5, 10, 10, 2, 10, 'http://www.embraer.com.br (acesso 21/09/2009)', '2009-08-15'),
-	(77, '51106', 'N', 'Embraer 175', '2009', 6, 'Embraer', '1:42', 1.3, 19.5, 19.0, 5.5, 'Azul/branco', 178.50, 5, 10, 10, 48, 10, 'http://www.embraer.com.br (acesso 21/09/2009)', '2009-08-15'),
-	(78, '51107', 'N', 'Embraer 195', '2009', 6, 'Embraer', '1:42', 1.0, 21.9, 17.2, 5.5, 'Azul/branco', 152.00, 5, 10, 10, 214, 10, 'http://www.embraer.com.br (acesso 21/09/2009)', '2009-08-15'),
-	(79, '51108', 'N', 'Boeing 777-400', '2009', 6, 'Boeing', '1:42', 1.4, 24.8, 21.8, 5.5, 'Azul/branco', 210.50, 5, 10, 10, 48, 10, 'http://www.boeing.com (acesso 21/09/2009)', '2009-08-15'),
-	(80, '61101', 'S', 'Dodge Military Power Wagon', '1946', 7, 'Veículos antigos', '1:18', 1.0, 11.5, 4.2, 5.5, 'Verde', 78.00, 5, 10, 2, 42, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-08-20'),
-	(81, '61102', 'N', 'White Ambulance', '1920', 7, 'Veículos antigos', '1:18', 1.0, 11.5, 4.2, 5.5, 'Verde', 75.60, 5, 10, 10, 1, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-08-20'),
-	(82, '61103', 'N', 'Willys U.S. Army Jeep', '1941', 7, 'Veículos antigos', '1:18', 1.1, 11.5, 4.2, 5.5, 'Verde', 89.60, 5, 10, 10, 44, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-08-20'),
-	(83, '61104', 'N', 'Original World War II Jeep', '1941', 7, 'Veículos antigos', '1:18', 0.9, 11.5, 4.2, 5.5, 'Verde', 72.00, 5, 10, 10, 67, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-08-20'),
-	(84, '61105', 'S', 'Chevrolet® U.S. Hickam Air Field Flatbed ', '1941', 7, 'Veículos antigos', '1:18', 0.9, 11.5, 4.2, 5.5, 'Verde', 65.00, 5, 10, 10, 47, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-08-20'),
-	(85, '61106', 'N', 'Berlin Express Tanker', '1952', 7, 'Veículos antigos', '1:18', 1.1, 11.5, 4.2, 5.5, 'Verde', 110.00, 5, 10, 10, 127, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-08-20'),
-	(86, '61107', 'N', 'German Panther Tank', '1960', 7, 'Veículos antigos', '1:18', 1.2, 11.5, 4.2, 5.5, 'Verde', 95.60, 5, 10, 10, 4, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-08-20'),
-	(87, '61108', 'N', 'Marine M1A1 Abrams Tank', '1972', 7, 'Veículos antigos', '1:18', 1.2, 11.5, 4.2, 5.5, 'Verde', 105.50, 5, 10, 10, 0, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-08-20'),
-	(88, '61109', 'N', 'Westland Wessex HC', '1985', 7, 'Veículos antigos', '1:18', 0.9, 11.5, 4.2, 5.5, 'Verde', 89.70, 5, 10, 10, 87, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-08-20'),
-	(89, '61110', 'N', 'WWII Army Ambulance ', '1925', 7, 'Veículos antigos', '1:18', 0.9, 11.5, 4.2, 5.5, 'Verde', 85.20, 5, 10, 10, 39, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-08-20'),
-	(90, '51109', 'N', 'Boeing 747-Cargo', '2003', 6, 'Boeing', '1:42', 1.2, 38.4, 21.1, 12.2, 'Azu/branco', 312.00, 5, 10, 10, 100, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-08-15');
+REPLACE INTO `miniaturas` (`id`, `codigo`, `destaque`, `nome`, `id_categoria`, `subcateg`, `altura`, `preco`, `desconto`, `desconto_boleto`, `max_parcelas`, `estoque`, `min_estoque`, `fabrica`, `descricao`) VALUES
+	(1, '100', 'S', 'Nendoroid Megumin', 1, 'KONO SUBARASHII SEKAI NI SYUKU', 125.0, 205.40, 10, 10, 12, 15, 1, 'Good Smile Company', 'Da série de anime KONO SUBARASHII SEKAI NI SYUKUFUKU WO! 2 vem um relançamento do Nendoroid do mago com delírios de grandeza e afinidade com o feitiço Explosão - Megumin! Ela vem com três placas faciais, incluindo um rosto sorridente, um rosto sério para lançar feitiços e uma expressão tímida e fofa.'),
+	(2, '101', 'S', 'figma Nadeko Sengoku', 2, 'Otorimonogatari', 177.0, 439.19, 10, 10, 12, 30, 1, 'Good Smile Company', 'Do anime \'Bakemonogatari Series Second Season\' vem uma figura em escala 1/8 de Nadeko Sengoku em sua versão medusa. A figura é baseada na ilustração da capa do Blu-ray e DVD \'Otorimonogatari Volume 2 / Nadeko Medusa (Parte 2)\'.'),
+	(3, '102', 'S', 'figma Saber/Nero Claudius (Bride)', 2, 'Fate/Grand Order', 150.0, 370.50, 30, 33, 12, 30, 1, 'Good Smile Company', 'Do popular jogo para smartphone Fate/Grand Order vem uma figura do servo da classe Sabre, Nero Claudius (Noiva) em sua aparição na Primeira Ascensão!.'),
+	(4, '103', 'S', 'Plushie Senko Ishigami', 5, 'Dr. STONE', 130.0, 111.10, 10, 15, 12, 30, 1, 'Good Smile Company', 'Do Dr. STONE vem uma coleção de pelúcias! Aproveite suas roupas e expressões cuidadosamente detalhadas!'),
+	(5, '104', 'S', 'Funk POP! SUPER WAR HAMMER TITAN (GLOW)', 4, 'Attack on Titan', 15.0, 150.00, 5, 10, 12, 30, 1, 'Funko POP!', 'O destino da humanidade está em jogo. Prepare sua coleção Attack on Titan para a batalha com este Super Pop exclusivo que brilha no escuro! Titã Martelo de Guerra. Esta figura exclusiva está armada e pronta para enfrentar qualquer coisa – e qualquer pessoa – em seu caminho. A figura de vinil tem aproximadamente 15 centímetros de altura.'),
+	(6, '105', 'S', 'BOCCHI THE ROCK! Hitori Goto 1/7', 3, 'BOCCHI THE ROCK!', 245.0, 442.32, 5, 10, 12, 30, 1, 'Good Smile Company', '\'A realidade é assustadora. Mas eu sinto que há coisas divertidas esperando por mim.\'De \'Bocchi the Rock!\' vem uma figura de escala 1/7 de Hitori Gotoh! Além de sua expressão ansiosa, as texturas distintas de sua caixa de guitarra e jaqueta de pista também foram fielmente capturadas em forma de figura, tornando essa figura um recorte perfeito da vida diária de Bocchi. A embalagem interna do cartão apresenta um verdadeiro instantâneo de cenário do anime, permitindo que você exiba a figura na caixa!'),
+	(7, '106', 'N', 'Kana Arima Oshi no Ko', 1, 'Oshi no Ko', 100.0, 156.29, 5, 10, 12, 10, 1, 'Good Smile Company', '\'Por favor... Trabalhe comigo para fazer um bom show.\' Da série de anime Oshi no Ko vem um Nendoroid da própria Baking Soda-chan, Kana Arima!'),
+	(8, '107', 'N', 'Steins;Gate Kurisu Makise [Lab Coat style] 1/7', 3, 'Steins; Gate', 22.5, 587.29, 5, 10, 12, 10, 1, 'WAVE', 'De \'Steins;Gate\' surge uma figura da heroína Kurisu Makise em uma impressionante pose de Chuunibyou que lembra um pouco \'Kyouma Hououin\', o autoproclamado cientista louco. Suas pernas esbeltas e corpo esbelto são simplesmente cativantes, e com seus longos cabelos e manto branco esvoaçando ao vento, ela parece estar prestes a ganhar vida a qualquer momento. Partes claras são usadas em seu cabelo, que brilha levemente nas pontas para uma aparência natural.'),
+	(9, '108', 'N', 'My Melody Lolita Dress Kuromi S', 5, 'Sanrio', 25.0, 96.44, 5, 5, 12, 10, 1, 'Nakajima Corporation', ' '),
+	(10, '109', 'N', 'Fate/Grand Order Lancer/Tamamo no Mae 1/7 Complete Figure', 3, 'Fate/Grand Order', 380.0, 506.77, 3, 5, 12, 10, 1, 'Kotobukiya', 'O próximo Servo a ser convocado para a linha de figuras de Kotobukiya do popular jogo para celular Fate/Grand Order é a devotada esposa com orelhas de raposa Tamamo-no-Mae em um maiô quando ela apareceu no evento \'É verão! É a praia! É aventura! FGO 2016 Summer Chaldea Summer Memories\'! A arte da sua 2ª Ascensão é fielmente recriada até aos mínimos detalhes, incluindo o guarda-sol que substitui uma lança e o seu chapéu de palha. A camiseta e a toalha podem ser retiradas para exibir a figura do biquíni. Assim como na arte, ela está inclinada para a frente e girando levemente a cintura, acentuando seu corpo feminino. Mostre-a nas férias de verão de duas maneiras, seja com uma camiseta molhada que ficou transparente para mostrar a pele, ou com um biquíni! Aproveite a Tamamo elegante e verdadeiramente feminina, adicionando-a à sua coleção hoje mesmo.');
 /*!40000 ALTER TABLE `miniaturas` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela db_php5.miniaturas_teste
 DROP TABLE IF EXISTS `miniaturas_teste`;
-CREATE TABLE IF NOT EXISTS `miniaturas_teste` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `codigo` varchar(5) CHARACTER SET latin1 DEFAULT '',
-  `destaque` char(1) COLLATE latin1_bin DEFAULT 'S',
-  `nome` varchar(60) CHARACTER SET latin1 DEFAULT '',
-  `ano` varchar(4) COLLATE latin1_bin DEFAULT '',
-  `id_categoria` int(11) DEFAULT 0,
-  `subcateg` varchar(30) CHARACTER SET latin1 DEFAULT '',
-  `escala` varchar(10) CHARACTER SET latin1 DEFAULT '1:18',
-  `peso` float(9,1) DEFAULT 0.0,
-  `comprimento` float(9,1) DEFAULT 0.0,
-  `largura` float(9,1) DEFAULT 0.0,
-  `altura` float(9,1) DEFAULT 0.0,
-  `cor` varchar(20) CHARACTER SET latin1 NOT NULL DEFAULT '',
-  `preco` float(9,2) DEFAULT 0.00,
-  `desconto` tinyint(4) DEFAULT 5,
-  `desconto_boleto` tinyint(4) DEFAULT 10,
-  `max_parcelas` tinyint(4) DEFAULT 10,
-  `estoque` int(11) DEFAULT 100,
-  `min_estoque` int(11) DEFAULT 10,
-  `credito` varchar(200) CHARACTER SET latin1 DEFAULT 'http://www.motormint.com (acesso 21/09/2009)',
-  `data_cad` date DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id` (`id`),
-  KEY `id_categoria` (`id_categoria`)
-) ENGINE=MyISAM AUTO_INCREMENT=104 DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
+IF NOT EXISTS ;
 
 -- Copiando dados para a tabela db_php5.miniaturas_teste: 89 rows
 /*!40000 ALTER TABLE `miniaturas_teste` DISABLE KEYS */;
-INSERT INTO `miniaturas_teste` (`id`, `codigo`, `destaque`, `nome`, `ano`, `id_categoria`, `subcateg`, `escala`, `peso`, `comprimento`, `largura`, `altura`, `cor`, `preco`, `desconto`, `desconto_boleto`, `max_parcelas`, `estoque`, `min_estoque`, `credito`, `data_cad`) VALUES
-	(1, '10510', 'N', 'Marcopolo Paradiso 1200', '2009', 1, 'Ônibus rodoviário', '1:36', 1.0, 20.2, 7.9, 11.3, 'Branco', 105.00, 5, 5, 3, 210, 10, 'http://www.marcopolo.com.br (acesso 21/09/2009)', '2009-05-27'),
-	(2, '10511', 'N', 'Marcopolo Paradiso 1550', '2009', 1, 'Ônibus rodoviário', '1:36', 0.9, 20.2, 8.7, 11.3, 'Azul', 78.30, 5, 10, 2, 2, 10, 'http://www.marcopolo.com.br (acesso 21/09/2009)', '2009-05-27'),
-	(3, '10512', 'N', 'Marcopolo Viaggio 1050 MD', '2009', 1, 'Ônibus rodoviário', '1:36', 0.9, 20.2, 8.7, 11.3, 'Azul', 126.32, 5, 10, 5, 140, 10, 'http://www.marcopolo.com.br (acesso 21/09/2009)', '2009-05-27'),
-	(4, '10513', 'N', 'Marcopolo Viaggio 1050 MT', '2009', 1, 'Ônibus rodoviário', '1:36', 1.2, 20.2, 8.3, 11.3, 'Amarelo', 200.50, 5, 10, 7, 85, 10, 'http://www.marcopolo.com.br (acesso 21/09/2009)', '2009-05-27'),
-	(5, '10514', 'S', 'Marcopolo Paradiso 1800 DD', '2009', 1, 'Ônibus rodoviário', '1:36', 1.0, 20.2, 8.1, 13.1, 'Prata/verde', 163.01, 5, 10, 10, 105, 10, 'http://www.marcopolo.com.br (acesso 21/09/2009)', '2009-05-27'),
-	(7, '11511', 'N', 'Marcopolo Torino', '2009', 1, 'Ônibus urbano', '1:36', 1.2, 20.2, 7.5, 11.3, 'Branco', 120.75, 5, 10, 10, 140, 10, 'http://www.marcopolo.com.br (acesso 21/09/2009)', '2009-05-27'),
-	(8, '11512', 'N', 'Marcopolo Viale', '2009', 1, 'Ônibus urbano', '1:36', 1.0, 20.2, 8.3, 11.3, 'Branco', 178.82, 5, 10, 10, 18, 10, 'http://www.marcopolo.com.br (acesso 21/09/2009)', '2009-05-27'),
-	(9, '12510', 'N', 'BRIT L004 Leyland Titan PD2 deck bus', '1962', 1, 'Ônibus dois andares', '1:36', 0.9, 10.8, 4.2, 2.5, 'Verde/branco', 126.53, 5, 10, 10, 45, 10, 'http://krwmodels.co.uk (acesso 21/09/2009)', '2009-05-27'),
-	(10, '12511', 'N', 'RM2217 - The Last Routemaster', '1952', 1, 'Ônibus dois andares', '1:36', 0.9, 11.5, 4.3, 2.5, 'Vermelho', 211.05, 5, 10, 10, 32, 10, 'http://krwmodels.co.uk (acesso 21/09/2009)', '2009-05-27'),
-	(11, '12512', 'N', 'RCL Routmaster Coach Greenline', '1952', 1, 'Ônibus dois andares', '1:36', 1.0, 10.7, 3.8, 2.5, 'Verde', 183.75, 5, 10, 10, 25, 10, 'http://krwmodels.co.uk (acesso 21/09/2009)', '2009-05-27'),
-	(12, '12513', 'N', 'East Lancs Myllenium', '2000', 1, 'Ônibus dois andares', '1:36', 1.0, 11.5, 3.9, 2.5, 'Vermelho', 175.35, 5, 10, 10, 130, 10, 'http://krwmodels.co.uk (acesso 21/09/2009)', '2009-05-27'),
-	(13, '12514', 'N', 'Crossley DD42 Portsmouth Eastney/Cosham', '1960', 1, 'Ônibus dois andares', '1:36', 1.1, 11.0, 4.2, 2.5, 'Vermelho/branco', 138.60, 5, 10, 10, 157, 10, 'http://krwmodels.co.uk (acesso 21/09/2009)', '2009-05-27'),
-	(14, '12515', 'N', 'Queen Mary - British Shoe Corporation', '1936', 1, 'Ônibus dois andares', '1:36', 1.3, 11.7, 5.0, 2.5, 'Azul', 236.25, 5, 10, 10, 1, 10, 'http://krwmodels.co.uk (acesso 21/09/2009)', '2009-05-27'),
-	(15, '12516', 'N', 'Bedford Val - West Riding', '1975', 1, 'Ônibus rodoviário', '1:36', 1.0, 10.5, 4.8, 2.5, 'Branco/verde', 260.40, 5, 10, 10, 15, 10, 'http://krwmodels.co.uk (acesso 21/09/2009)', '2009-05-27'),
-	(16, '12517', 'N', 'Bimingham/Worcester Split run, 2 of each dest', '1967', 1, 'Ônibus urbano', '1:36', 1.2, 11.5, 4.7, 2.5, 'Vermelho/preto', 164.43, 5, 10, 10, 147, 10, 'http://krwmodels.co.uk (acesso 21/09/2009)', '2009-05-27'),
-	(17, '12518', 'N', 'Scania Irizar PB - Bus Eireann', '2007', 1, 'Ônibus rodoviário', '1:36', 1.1, 11.5, 4.3, 2.5, 'Branco/vermelho', 215.25, 5, 10, 10, 18, 10, 'http://krwmodels.co.uk (acesso 21/09/2009)', '2009-06-10'),
-	(18, '12519', 'N', 'Bussing 6500 T - Sauerland', '1967', 1, 'Ônibus rodoviário', '1:36', 1.0, 11.5, 4.9, 2.5, 'Azul/creme', 155.40, 5, 10, 10, 9, 10, 'http://krwmodels.co.uk (acesso 21/09/2009)', '2009-06-10'),
-	(19, '20301', 'N', 'Volvo S40', '2009', 2, 'Linha Volvo', '1:18', 0.4, 11.5, 5.1, 2.5, 'Vermelho', 99.75, 5, 10, 5, 35, 10, 'http://www.volvocars.com/us/models/s40/Pages (acesso 22/09/2009)', '2009-06-10'),
-	(20, '20302', 'N', 'Volvo S80', '2009', 2, 'Linha Volvo', '1:18', 0.5, 11.5, 5.3, 2.5, 'Preto', 81.90, 5, 10, 3, 48, 10, 'http://www.volvocars.com/us/models/s40/Pages (acesso 22/09/2009)', '2009-06-10'),
-	(21, '20303', 'N', 'Volvo V50', '2009', 2, 'Linha Volvo', '1:18', 0.7, 11.5, 4.2, 2.5, 'Azul', 100.28, 5, 10, 6, 23, 10, 'http://www.volvocars.com/us/models/s40/Pages (acesso 22/09/2009)', '2009-06-10'),
-	(22, '20304', 'N', 'Volvo V70', '2009', 2, 'Linha Volvo', '1:18', 0.6, 11.5, 4.2, 2.5, 'Cinza', 93.98, 5, 10, 2, 120, 10, 'http://www.volvocars.com/us/models/s40/Pages (acesso 22/09/2009)', '2009-06-10'),
-	(23, '20305', 'N', 'Volvo XC70', '2009', 2, 'Linha Volvo', '1:18', 0.5, 11.5, 4.2, 2.5, 'Verde', 99.75, 5, 10, 3, 237, 10, 'http://www.volvocars.com/us/models/s40/Pages (acesso 22/09/2009)', '2009-06-10'),
-	(24, '20306', 'N', 'Volvo XC90', '2009', 2, 'Linha Volvo', '1:18', 0.8, 11.5, 4.8, 2.5, 'Prata', 99.75, 5, 10, 3, 8, 10, 'http://www.volvocars.com/us/models/s40/Pages (acesso 22/09/2009)', '2009-06-10'),
-	(25, '20307', 'N', 'Volvo C30', '2009', 2, 'Linha Volvo', '1:18', 0.4, 11.5, 4.1, 2.5, 'Vermelho', 99.75, 5, 10, 3, 4, 10, 'http://www.volvocars.com/us/models/s40/Pages (acesso 22/09/2009)', '2009-06-10'),
-	(26, '20308', 'S', 'Volvo C70', '2009', 2, 'Linha Volvo', '1:18', 0.4, 11.5, 4.0, 2.5, 'Prata', 99.75, 5, 10, 3, 13, 10, 'http://www.volvocars.com/us/models/s40/Pages (acesso 22/09/2009)', '2009-06-10'),
-	(27, '21301', 'N', 'Hummer H3', '2009', 2, 'Linha Hummer', '1:18', 0.5, 11.6, 5.0, 3.2, 'Preto', 304.50, 5, 10, 10, 27, 10, 'http://www.hummer.com (acesso 22/09/2009)', '2009-06-10'),
-	(28, '21302', 'N', 'Hummer H3T', '2009', 2, 'Linha Hummer', '1:18', 0.6, 10.8, 5.3, 3.2, 'Vermelho', 325.50, 5, 10, 10, 78, 10, 'http://www.hummer.com (acesso 22/09/2009)', '2009-06-10'),
-	(29, '21303', 'N', 'Hummer H3x', '2009', 2, 'Linha Hummer', '1:18', 0.6, 11.5, 4.8, 3.2, 'Cinza', 220.50, 5, 10, 10, 56, 10, 'http://www.hummer.com (acesso 22/09/2009)', '2009-06-10'),
-	(30, '21304', 'S', 'Hummer H3 Alpha', '2009', 2, 'Linha Hummer', '1:18', 0.6, 11.5, 4.2, 3.2, 'Azul', 249.90, 5, 10, 10, 54, 10, 'http://www.hummer.com (acesso 22/09/2009)', '2009-06-29'),
-	(31, '21305', 'N', 'Hummer H2', '2009', 2, 'Linha Hummer', '1:18', 0.5, 11.5, 4.3, 3.2, 'Vermelho', 194.25, 5, 10, 10, 83, 10, 'http://www.hummer.com (acesso 22/09/2009)', '2009-06-29'),
-	(32, '21306', 'N', 'Hummer H2 SUT', '2009', 2, 'Linha Hummer', '1:18', 0.6, 11.5, 4.8, 3.2, 'Cinza', 241.50, 5, 10, 10, 254, 10, 'http://www.hummer.com (acesso 22/09/2009)', '2009-06-29'),
-	(33, '22301', 'N', 'Chevrolet Malibu', '2009', 2, 'Linha Chevrolet', '1:18', 0.6, 11.5, 4.2, 3.2, 'Ouro', 164.85, 5, 10, 10, 1, 10, 'http://www.gm.com (acesso 22/09/2009)', '2009-06-29'),
-	(34, '22302', 'N', 'Chevrolet Traversi', '2009', 2, 'Linha Chevrolet', '1:18', 0.7, 11.5, 4.2, 3.2, 'Vinho', 204.75, 5, 10, 10, 0, 10, 'http://www.gm.com (acesso 22/09/2009)', '2009-06-29'),
-	(35, '22303', 'N', 'Chevrolet Camaro', '2009', 2, 'Linha Chevrolet', '1:18', 0.5, 11.5, 5.1, 2.0, 'Amarelo', 204.75, 5, 10, 10, 17, 10, 'http://www.gm.com (acesso 22/09/2009)', '2009-06-29'),
-	(36, '22304', 'N', 'Chevrolet Equinox', '2009', 2, 'Linha Chevrolet', '1:18', 0.5, 11.5, 5.3, 3.2, 'Vermelho', 241.50, 5, 10, 10, 168, 10, 'http://www.gm.com (acesso 22/09/2009)', '2009-06-29'),
-	(37, '22305', 'N', 'Chevrolet Tahoe Hybrid', '2009', 2, 'Linha Chevrolet', '1:18', 0.6, 11.5, 4.9, 3.2, 'Azul', 164.12, 5, 10, 10, 21, 10, 'http://www.gm.com (acesso 22/09/2009)', '2009-06-29'),
-	(38, '22306', 'S', 'Chevrolet Corvette ZR1', '2009', 2, 'Linha Chevrolet', '1:18', 0.7, 11.5, 4.8, 3.2, 'Amarelo', 93.45, 5, 10, 3, 75, 10, 'http://www.gm.com (acesso 22/09/2009)', '2009-06-29'),
-	(39, '30101', 'N', 'Retroescavadeira 416E', '2009', 3, 'Retroescavadeiras', '1:46', 1.0, 15.2, 4.2, 5.5, 'Amarelo', 89.25, 5, 10, 3, 14, 10, 'http://brasil.cat.com (acesso 21/09/2009)', '2009-07-18'),
-	(40, '30102', 'N', 'Retroescavadeira 420E', '2009', 3, 'Retroescavadeiras', '1:46', 1.0, 14.8, 5.6, 5.5, 'Amarelo', 137.55, 5, 10, 10, 2, 10, 'http://brasil.cat.com (acesso 21/09/2009)', '2009-07-18'),
-	(41, '30103', 'N', 'Retroescavadeira 450E', '2009', 3, 'Retroescavadeiras', '1:46', 1.0, 13.7, 5.7, 5.5, 'Amarelo', 163.80, 5, 10, 10, 45, 10, 'http://brasil.cat.com (acesso 21/09/2009)', '2009-07-18'),
-	(42, '32101', 'N', 'Fresadora PM-101', '2009', 3, 'Fresadoras', '1:46', 1.0, 11.8, 5.0, 5.5, 'Amarelo', 164.85, 5, 10, 10, 15, 10, 'http://brasil.cat.com (acesso 21/09/2009)', '2009-07-18'),
-	(43, '32102', 'N', 'Fresadora PM-201', '2009', 3, 'Fresadoras', '1:46', 1.1, 13.8, 5.3, 5.5, 'Amarelo', 102.90, 5, 10, 3, 32, 10, 'http://brasil.cat.com (acesso 21/09/2009)', '2009-07-18'),
-	(44, '33101', 'N', 'Escavadeira Hidráulica 307D ', '2009', 3, 'Escavadeiras', '1:46', 1.1, 11.7, 4.2, 5.5, 'Amarelo', 78.75, 5, 10, 2, 45, 10, 'http://brasil.cat.com (acesso 21/09/2009)', '2009-07-18'),
-	(45, '33102', 'N', 'Escavadeira Hidráulica 314D CR/314D LCR', '2009', 3, 'Escavadeiras', '1:46', 0.9, 11.5, 4.2, 5.5, 'Amarelo', 89.88, 5, 10, 10, 125, 10, 'http://brasil.cat.com (acesso 21/09/2009)', '2009-07-18'),
-	(46, '34101', 'N', 'Caminhão Fora de Estrada 770', '2009', 3, 'Fora de estrada', '1:46', 1.3, 15.6, 4.2, 5.5, 'Amarelo', 309.75, 5, 10, 10, 100, 10, 'http://brasil.cat.com (acesso 21/09/2009)', '2009-07-18'),
-	(47, '34102', 'N', 'Caminhão Fora de Estrada 775F', '2009', 3, 'Fora de estrada', '1:46', 1.2, 16.4, 4.2, 5.5, 'Amarelo', 281.40, 5, 10, 10, 45, 10, 'http://brasil.cat.com (acesso 21/09/2009)', '2009-07-18'),
-	(48, '35101', 'S', 'Minerador 785D', '2009', 3, 'Mineração', '1:46', 1.1, 14.6, 4.7, 5.5, 'Amarelo', 203.70, 5, 10, 10, 41, 10, 'http://brasil.cat.com (acesso 21/09/2009)', '2009-07-18'),
-	(49, '35102', 'N', '789C Mining Truck', '2009', 3, 'Mineração', '1:46', 1.1, 14.8, 4.6, 5.5, 'Amarelo', 198.97, 5, 10, 10, 75, 10, 'http://brasil.cat.com (acesso 21/09/2009)', '2009-07-18'),
-	(50, '36101', 'N', 'Pavimentadora de Asfalto AP-1000D', '2009', 3, 'Pavimentação', '1:46', 1.3, 13.4, 4.2, 5.5, 'Amarelo', 133.35, 5, 10, 10, 46, 10, 'http://brasil.cat.com (acesso 21/09/2009)', '2009-07-18'),
-	(51, '36102', 'S', 'Misturador Rotativo RM-500', '2009', 3, 'Pavimentação', '1:46', 1.1, 12.8, 4.5, 5.5, 'Amarelo', 100.38, 5, 10, 10, 24, 10, 'http://brasil.cat.com (acesso 21/09/2009)', '2009-07-20'),
-	(52, '41101', 'N', 'American LaFrance Fire Pumper', '1921', 4, 'Caminhões de bombeiro', '1:36', 1.2, 11.5, 4.2, 5.5, 'Vermelho', 162.75, 5, 10, 10, 12, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-20'),
-	(53, '41102', 'N', 'Studebaker South Bend, Indiana F.D. ', '1928', 4, 'Caminhões de bombeiro', '1:36', 1.1, 11.5, 4.3, 5.5, 'Vermelho', 154.35, 5, 10, 10, 44, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-20'),
-	(54, '41103', 'N', 'GMC CO2 Firewagon', '1941', 4, 'Caminhões de bombeiro', '1:36', 1.3, 11.5, 4.3, 5.5, 'Vermelho', 141.75, 5, 10, 10, 19, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-20'),
-	(55, '41104', 'N', 'MACK C (1000GPM) Fire Pumper', '1960', 4, 'Caminhões de bombeiro', '1:36', 1.0, 11.5, 4.2, 5.5, 'Vermelho', 162.75, 5, 10, 10, 29, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-20'),
-	(56, '41105', 'S', 'Ford Fire Engine', '1938', 4, 'Caminhões de bombeiro', '1:36', 1.1, 11.5, 4.9, 5.5, 'Vermelho', 162.75, 5, 10, 10, 44, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-20'),
-	(57, '41106', 'N', 'Mercedes-Benz L4500F Fire Engine', '1944', 4, 'Caminhões de bombeiro', '1:36', 1.1, 11.5, 5.3, 5.5, 'Vermelho', 176.40, 5, 10, 10, 1, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-20'),
-	(58, '41107', 'N', 'F.D.N.Y. E-One Rescue Truck ', '1985', 4, 'Caminhões de bombeiro', '1:36', 1.1, 11.5, 5.0, 5.5, 'Vermelho', 177.45, 5, 10, 10, 0, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-20'),
-	(59, '41108', 'N', 'F.D.N.Y. Super Tender', '1970', 4, 'Caminhões de bombeiro', '1:36', 0.8, 11.5, 4.2, 5.5, 'Vermelho', 102.38, 5, 10, 10, 0, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-20'),
-	(60, '41109', 'N', 'Ford Tanker Truck', '1934', 4, 'Veículos antigos', '1:36', 1.0, 11.5, 4.3, 5.5, 'Azul', 133.35, 5, 10, 5, 0, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-20'),
-	(61, '41110', 'N', 'Ford Chain Truck', '1934', 4, 'Veículos antigos', '1:36', 1.1, 11.5, 4.2, 5.5, 'Verde', 143.33, 5, 10, 10, 0, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-20'),
-	(62, '41111', 'N', 'Chevrolet Ajax Flatbed Truck', '1941', 4, 'Veículos antigos', '1:36', 1.1, 11.5, 4.2, 5.5, 'Laranja', 128.10, 5, 10, 10, 0, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-25'),
-	(63, '41112', 'N', 'Historical UPS Truck - Ford', '1934', 4, 'Veículos antigos', '1:36', 0.9, 11.5, 4.3, 5.5, 'Preto', 110.25, 5, 10, 10, 18, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-25'),
-	(64, '41113', 'N', 'Ford F100', '1956', 4, 'Veículos antigos', '1:36', 0.8, 11.5, 5.8, 5.5, 'Amarelo', 162.75, 5, 10, 10, 45, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-25'),
-	(65, '42101', 'N', 'JDH', '1928', 5, 'Motos antigas', '1:18', 0.4, 7.5, 2.5, 5.5, 'Preto', 89.25, 5, 10, 4, 79, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-28'),
-	(66, '42102', 'N', 'Indian Sport Scout', '1934', 5, 'Motos antigas', '1:18', 0.4, 6.2, 2.5, 5.5, 'Amarelo', 89.25, 5, 10, 4, 85, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-28'),
-	(67, '42103', 'N', 'Harley Davidson El Knucklehead', '1936', 5, 'Motos antigas', '1:18', 0.5, 5.3, 2.4, 5.5, 'Roxo', 89.25, 5, 10, 4, 47, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-28'),
-	(68, '42104', 'N', 'Panhead ', '1948', 5, 'Motos antigas', '1:18', 0.4, 7.3, 2.8, 5.5, 'Vermelho', 89.25, 5, 10, 4, 65, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-28'),
-	(69, '42105', 'S', 'Duo-Glide', '1958', 5, 'Motos antigas', '1:18', 0.6, 6.4, 2.8, 5.5, 'Azul', 89.25, 5, 10, 4, 54, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-28'),
-	(70, '42106', 'N', 'Harley Davidson FLHT Virginia State Police', '1998', 5, 'Motos atuais', '1:18', 0.6, 5.9, 2.9, 5.5, 'Preto', 89.25, 5, 10, 4, 24, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-28'),
-	(71, '42107', 'N', 'Harley Davidson FLSTC Heritage Softail Classic ', '2000', 5, 'Motos atuais', '1:18', 0.6, 6.7, 2.7, 5.5, 'Preto', 89.25, 5, 10, 4, 25, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-07-28'),
-	(72, '51101', 'N', 'Embraer ERJ 135', '2009', 6, 'Embraer', '1:42', 1.1, 20.5, 18.5, 5.5, 'Azul/branco', 220.50, 5, 10, 10, 4, 10, 'http://www.embraer.com.br (acesso 21/09/2009)', '2009-07-28'),
-	(73, '51102', 'N', 'Embraer EMB 120', '2009', 6, 'Embraer', '1:42', 1.1, 19.5, 17.2, 5.5, 'Azul/branco', 215.25, 5, 10, 10, 0, 10, 'http://www.embraer.com.br (acesso 21/09/2009)', '2009-07-28'),
-	(74, '51103', 'N', 'Embraer ERJ 140', '2009', 6, 'Embraer', '1:42', 1.3, 21.7, 18.2, 5.5, 'Azul/branco', 196.35, 5, 10, 10, 45, 10, 'http://www.embraer.com.br (acesso 21/09/2009)', '2009-08-15'),
-	(75, '51104', 'N', 'Embraer Super Tucano', '2009', 6, 'Embraer', '1:42', 1.0, 19.6, 19.4, 5.5, 'Verde/branco', 164.85, 5, 10, 10, 3, 10, 'http://www.embraer.com.br (acesso 21/09/2009)', '2009-08-15'),
-	(76, '51105', 'N', 'Embraer EMB 145 AEW&C', '2009', 6, 'Embraer', '1:42', 1.3, 18.6, 17.2, 5.5, 'Prata', 205.80, 5, 10, 10, 2, 10, 'http://www.embraer.com.br (acesso 21/09/2009)', '2009-08-15'),
-	(77, '51106', 'N', 'Embraer 175', '2009', 6, 'Embraer', '1:42', 1.3, 19.5, 19.0, 5.5, 'Azul/branco', 187.43, 5, 10, 10, 48, 10, 'http://www.embraer.com.br (acesso 21/09/2009)', '2009-08-15'),
-	(78, '51107', 'N', 'Embraer 195', '2009', 6, 'Embraer', '1:42', 1.0, 21.9, 17.2, 5.5, 'Azul/branco', 159.60, 5, 10, 10, 214, 10, 'http://www.embraer.com.br (acesso 21/09/2009)', '2009-08-15'),
-	(79, '51108', 'N', 'Boeing 777-400', '2009', 6, 'Boeing', '1:42', 1.4, 24.8, 21.8, 5.5, 'Azul/branco', 221.03, 5, 10, 10, 48, 10, 'http://www.boeing.com (acesso 21/09/2009)', '2009-08-15'),
-	(80, '61101', 'S', 'Dodge Military Power Wagon', '1946', 7, 'Veículos antigos', '1:18', 1.0, 11.5, 4.2, 5.5, 'Verde', 81.90, 5, 10, 2, 42, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-08-20'),
-	(81, '61102', 'N', 'White Ambulance', '1920', 7, 'Veículos antigos', '1:18', 1.0, 11.5, 4.2, 5.5, 'Verde', 79.38, 5, 10, 10, 1, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-08-20'),
-	(82, '61103', 'N', 'Willys U.S. Army Jeep', '1941', 7, 'Veículos antigos', '1:18', 1.1, 11.5, 4.2, 5.5, 'Verde', 94.08, 5, 10, 10, 44, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-08-20'),
-	(83, '61104', 'N', 'Original World War II Jeep', '1941', 7, 'Veículos antigos', '1:18', 0.9, 11.5, 4.2, 5.5, 'Verde', 75.60, 5, 10, 10, 67, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-08-20'),
-	(84, '61105', 'S', 'Chevrolet® U.S. Hickam Air Field Flatbed ', '1941', 7, 'Veículos antigos', '1:18', 0.9, 11.5, 4.2, 5.5, 'Verde', 68.25, 5, 10, 10, 47, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-08-20'),
-	(85, '61106', 'N', 'Berlin Express Tanker', '1952', 7, 'Veículos antigos', '1:18', 1.1, 11.5, 4.2, 5.5, 'Verde', 115.50, 5, 10, 10, 127, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-08-20'),
-	(86, '61107', 'N', 'German Panther Tank', '1960', 7, 'Veículos antigos', '1:18', 1.2, 11.5, 4.2, 5.5, 'Verde', 100.38, 5, 10, 10, 4, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-08-20'),
-	(87, '61108', 'N', 'Marine M1A1 Abrams Tank', '1972', 7, 'Veículos antigos', '1:18', 1.2, 11.5, 4.2, 5.5, 'Verde', 110.78, 5, 10, 10, 0, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-08-20'),
-	(88, '61109', 'N', 'Westland Wessex HC', '1985', 7, 'Veículos antigos', '1:18', 0.9, 11.5, 4.2, 5.5, 'Verde', 94.18, 5, 10, 10, 87, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-08-20'),
-	(89, '61110', 'N', 'WWII Army Ambulance ', '1925', 7, 'Veículos antigos', '1:18', 0.9, 11.5, 4.2, 5.5, 'Verde', 89.46, 5, 10, 10, 39, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-08-20'),
-	(90, '51109', 'N', 'Boeing 747-Cargo', '2003', 6, 'Boeing', '1:42', 1.2, 38.4, 21.1, 12.2, 'Azu/branco', 327.60, 5, 10, 10, 100, 10, 'http://www.motormint.com (acesso 21/09/2009)', '2009-08-15');
-/*!40000 ALTER TABLE `miniaturas_teste` ENABLE KEYS */;
-
 -- Copiando estrutura para tabela db_php5.pedidos
 DROP TABLE IF EXISTS `pedidos`;
 CREATE TABLE IF NOT EXISTS `pedidos` (
@@ -358,12 +151,10 @@ CREATE TABLE IF NOT EXISTS `pedidos` (
   `data_pag` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_cliente` (`id_cliente`)
-) ENGINE=MyISAM AUTO_INCREMENT=397 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=398 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Copiando dados para a tabela db_php5.pedidos: 1 rows
+-- Copiando dados para a tabela db_php5.pedidos: 0 rows
 /*!40000 ALTER TABLE `pedidos` DISABLE KEYS */;
-INSERT INTO `pedidos` (`id`, `id_cliente`, `num_ped`, `status`, `data`, `hora`, `valor`, `vencimento`, `frete`, `desconto`, `formpag`, `peso`, `cartao`, `num_cartao`, `venc_cartao`, `nome_cartao`, `cods_cartao`, `parcelas`, `data_pag`) VALUES
-	(378, 179, '378.183', 'Cancelado', '2009-11-25', '19:15:43', 226.10, '2009-11-29', 2.88, 22.61, 'B', 0.640, '-', '-', '-', '-', '-', 1, NULL);
 /*!40000 ALTER TABLE `pedidos` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela db_php5.tb_cidades
@@ -375,11 +166,11 @@ CREATE TABLE IF NOT EXISTS `tb_cidades` (
   `nome` varchar(50) NOT NULL DEFAULT '',
   UNIQUE KEY `id` (`id`),
   KEY `id_2` (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9715 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=9715 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- Copiando dados para a tabela db_php5.tb_cidades: 9.714 rows
 /*!40000 ALTER TABLE `tb_cidades` DISABLE KEYS */;
-INSERT INTO `tb_cidades` (`id`, `estado`, `uf`, `nome`) VALUES
+REPLACE INTO `tb_cidades` (`id`, `estado`, `uf`, `nome`) VALUES
 	(0001, 01, 'AC', 'Acrelandia'),
 	(0002, 01, 'AC', 'Assis Brasil'),
 	(0003, 01, 'AC', 'Brasileia'),
@@ -10106,11 +9897,11 @@ CREATE TABLE IF NOT EXISTS `tb_estados` (
   `cepi` char(8) DEFAULT NULL,
   `cepf` char(8) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- Copiando dados para a tabela db_php5.tb_estados: 27 rows
 /*!40000 ALTER TABLE `tb_estados` DISABLE KEYS */;
-INSERT INTO `tb_estados` (`id`, `uf`, `nome`, `frete`, `cepi`, `cepf`) VALUES
+REPLACE INTO `tb_estados` (`id`, `uf`, `nome`, `frete`, `cepi`, `cepf`) VALUES
 	(01, 'AC', 'Acre', 9.75, '69900000', '69999999'),
 	(02, 'AL', 'Alagoas', 7.70, '57000000', '57999999'),
 	(03, 'AM', 'Amazonas', 9.70, '69000000', '69899999'),
@@ -10144,11 +9935,11 @@ INSERT INTO `tb_estados` (`id`, `uf`, `nome`, `frete`, `cepi`, `cepf`) VALUES
 DROP TABLE IF EXISTS `teste`;
 CREATE TABLE IF NOT EXISTS `teste` (
   `campo1` varchar(30) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- Copiando dados para a tabela db_php5.teste: 3 rows
 /*!40000 ALTER TABLE `teste` DISABLE KEYS */;
-INSERT INTO `teste` (`campo1`) VALUES
+REPLACE INTO `teste` (`campo1`) VALUES
 	('Servidor Apache: OK'),
 	('Banco de dados MySQL: OK'),
 	('PHP 5: OK');
@@ -10163,11 +9954,11 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `senha` varchar(8) DEFAULT NULL,
   `acesso` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- Copiando dados para a tabela db_php5.usuarios: 1 rows
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` (`id`, `nome`, `login`, `senha`, `acesso`) VALUES
+REPLACE INTO `usuarios` (`id`, `nome`, `login`, `senha`, `acesso`) VALUES
 	(1, 'Administrador do sistema', 'admin', 'admin', 1);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 

@@ -10,6 +10,9 @@
 SESSION_START();
 include "inc_dbConexao.php";
 
+ini_set('display_errors', 0);
+ini_set('error_reporting', E_ALL & ~E_NOTICE & ~E_WARNING);
+
 
 // Recupera o produto (método POST) passado por index.php, categorias.php e pesquisa.php
 
@@ -60,10 +63,14 @@ $valor_boleto = $valor_desconto - ($valor_desconto * $desconto_boleto / 100);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faça um Site - PHP 5 com Banco de Dados MySQL</title>
+    <title>Meowverse</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+	<script type="text/javascript" src="js/jquery-1.4.2.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+
+    <script type='text/javascript' src="js/jquery.autocomplete.js"></script>
+	<link rel="stylesheet" type="text/css" href="js/jquery.autocomplete.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="style.css">
 	<script type="text/JavaScript">
 		<!--
 // Função para abertura da janela de imagens ampliadas
@@ -117,13 +124,13 @@ function ampliar_imagem(url,nome_janela,parametros) {
 							</div>
 						</div>
 
-						<?PHP if ($estoque > $min_estoque) { ?>
+						<?PHP if ($estoque >= $min_estoque) { ?>
 							<div class="col-md-4 text-end">
 								<a href="cesta.php?produto=<?PHP print $codigo; ?>&inserir=S"><button class="btn btn-success btn-lg" style="background-color: purple; border-color: purple;">Comprar</button></a>
 							</div>
 						<?PHP } else { ?>
-							<div class="col">
-								<button class="btn btn-info">Não disponível em estoque</button>
+							<div class="col-md-4 text-end">
+								<button class="btn btn-danger">Não disponível em estoque</button>
 							</div>
 						<?PHP } ?>
 					</div>
@@ -201,10 +208,8 @@ function ampliar_imagem(url,nome_janela,parametros) {
 		</div>
 		<?PHP include "inc_rodape.php" ?>
 	</div>
-
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 
 </html>

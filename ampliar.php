@@ -13,13 +13,16 @@ SESSION_START();
 $codigo = $_GET['codigo'];
 $nome = $_GET['nome'];
 
+ini_set('display_errors', 0);
+ini_set('error_reporting', E_ALL & ~E_NOTICE & ~E_WARNING);
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-  <title>Faça um Site - PHP 5 com banco de dados MySQL</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Meowverse</title>
+  
   <style type="text/css">
     <!--
     body {

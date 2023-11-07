@@ -10,6 +10,9 @@
 SESSION_START();
 include "inc_dbConexao.php";
 
+ini_set('display_errors', 0);
+ini_set('error_reporting', E_ALL & ~E_NOTICE & ~E_WARNING);
+
 // cadastro = S (se entrada for pelo menu Meu cadastro(neste caso exibe o menu de categorias))
 // cadastro = "" se entrada for pelo carrinho de compras (neste caso exibe as etapas de uma compra e
 // não exibe o menu superior e menu  de categorias)
@@ -25,10 +28,14 @@ $_SESSION['acao'] = "ver";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faça um Site - PHP 5 com Banco de Dados MySQL</title>
+    <title>Meowverse</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+	<script type="text/javascript" src="js/jquery-1.4.2.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+
+    <script type='text/javascript' src="js/jquery.autocomplete.js"></script>
+	<link rel="stylesheet" type="text/css" href="js/jquery.autocomplete.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="style.css">
     <script language="javascript">
 		//Valida campos do formulário de entrega (usuários já cadastrados)-->
 		function valida_form() {
@@ -74,8 +81,8 @@ $_SESSION['acao'] = "ver";
             <h2 class="mt-5"><?PHP print $tit_etapa; ?> <img src="imagens/marcador_setaDir.gif" /> Identificação</h2>
         </div>
 
-        <div class="row mt-5 d-grip gap-3">
-            <div class="form-group col bg-light border p-3 mx-auto">
+        <div class="row mt-5 gx-2">
+            <div class="form-group col-lg-6 col-12 bg-light border p-3 ">
                 <form name="form_entrega" method="post" action="login1.php" onsubmit="return valida_form(this);">
                     <h3 class="mt-2 mb-4">Já sou cadastrado</h3>
                     <p>Para prosseguir, por favor, identifique-se utilizando os campos abaixo e depois clique no botão "Continuar".</p>
@@ -97,15 +104,17 @@ $_SESSION['acao'] = "ver";
                         </div>
                     </div>
                     <div class="row mt-4 justify-content-between">
-                        <div class="text-center">
-                            <a class="btn btn-secondary" href="senha.php">Esqueci minha senha</a>
-                            <input type="submit" value="Continuar" class="btn btn-success" style="background-color: purple; border-color: purple;">
+                        <div class="col text-center">
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <a href="senha.php" role="button" class="btn btn-secondary">Esqueci minha senha</a>
+                                <input type="submit" value="Continuar" class="btn btn-success" style="background-color: purple; border-color: purple;">
+                            </div>
                         </div>
                     </div>
                 </form>
             </div>
 
-            <div class="form-group col bg-light border p-3 mx-auto">
+            <div class="form-group col-lg-6 col-12 bg-light border p-3">
                 <form action="cadastro.php" name="form_cadastro" method="post" onsubmit="return valida_form1(this);">
                     <h3 class="mt-2 mb-4">Quero me cadastrar</h3>
                     <p>Caso esta seja sua primeira compra na Faça um Site miniaturas, preencha o campo com seu e-mail e clique no botão "Continuar".</p>
@@ -138,9 +147,8 @@ $_SESSION['acao'] = "ver";
 
         <?PHP include "inc_rodape.php" ?>
         
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
     </div>
 
