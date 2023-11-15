@@ -1,17 +1,10 @@
 <?PHP
-// +---------------------------------------------------------+
-// | Recupera dados da página login.php                      |
-// +---------------------------------------------------------+
-// | Parte integrante do livro da série Faça um Site         |
-// | PHP 5 com banco de dados MySQL - Comércio eletrônico    |
-// | Editora Érica - autor: Carlos A J Oliviero              |
-// | www.facaumsite.com.br                                   |
-// +---------------------------------------------------------+
 SESSION_START();
 include "inc_dbConexao.php";
 
 ini_set('display_errors', 0);
 ini_set('error_reporting', E_ALL & ~E_NOTICE & ~E_WARNING);
+
 
 // Inicializa variavel de erro
 $erro = "0";
@@ -25,7 +18,7 @@ if ($_POST["txtemail1"] <> "") {
 // Verifica se o e-mail do cliente já está cadastrado
 $sql = "SELECT * ";
 $sql .= " FROM cadcli ";
-$sql .= " WHERE email = '" . $email . "' ";
+$sql .= " WHERE email = '".$email."'";
 $rs = mysqli_query($conexao, $sql);
 $total_registros = mysqli_num_rows($rs);
 if ($total_registros == 0) {
@@ -37,7 +30,7 @@ if ($total_registros == 0) {
 if ($erro == "0") {
 	$sql = "SELECT * ";
 	$sql .= "FROM cadcli ";
-	$sql .= "WHERE senha = '" . $senha . "' ";
+	$sql .= "WHERE senha = '".$senha."';";
 	$rs = mysqli_query($conexao, $sql);
 	$reg = mysqli_fetch_array($rs);
 	$total_registros = mysqli_num_rows($rs);
@@ -52,7 +45,7 @@ if ($erro == "0") {
 	$sql = "SELECT * ";
 	$sql .= "FROM cadcli ";
 	$sql .= "WHERE email = '" . $email . "' ";
-	$sql .= "AND senha = '" . $senha . "' ";
+	$sql .= "AND senha = '".$senha."';";
 	$rs = mysqli_query($conexao, $sql);
 	$reg = mysqli_fetch_array($rs);
 
@@ -76,67 +69,79 @@ if ($erro == "0") {
 }
 
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meowverse</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-	<script type="text/javascript" src="js/jquery-1.4.2.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 
-    <script type='text/javascript' src="js/jquery.autocomplete.js"></script>
-	<link rel="stylesheet" type="text/css" href="js/jquery.autocomplete.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<head>
+	<title>Meowverse</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
+	<link rel="stylesheet" href="fonts/icomoon/style.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/magnific-popup.css">
+	<link rel="stylesheet" href="css/jquery-ui.css">
+	<link rel="stylesheet" href="css/owl.carousel.min.css">
+	<link rel="stylesheet" href="css/owl.theme.default.min.css">
+	<link rel="stylesheet" href="css/aos.css">
+	<link rel="stylesheet" href="css/style.css">
+
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<script src="js/jquery-ui.js"></script>
+	<script src="js/jquery.magnific-popup.min.js"></script>
 </head>
 
 <body>
+	<div class="site-wrap">
+		<?php include "inc_menuSuperiorCat.php" ?>
 
-	<div class="container">
-		<!-- Se clicado no botão Meu cadastro do menu superior -->
-		<?PHP if (['cadastro'] == "S") { ?>
-			<?PHP $tit_etapa = "Meu Cadastro"; ?>
-			<div id="topo"><?PHP include "inc_menu_pesquisa.php" ?></div>
-			<div id="menuSup"><?PHP include "inc_menu_sup.php" ?></div>
-			<!-- Se a página for chamada por intermédio do botão "Fechar pedido" do carrinho de compras -->
-			<!-- Não exibe menu superior e menu de categorias. Neste caso, exibe o banner da primeira etapa de uma compra (1. Minha identificação) -->
-		<?PHP } else { ?>
-			<?PHP $tit_etapa = "Etapa 1"; ?>
-			<div id="etapa1"><a href="index.php"><img src="imagens/logo.png" alt="Faça um Site" border="0" /></a></div>
-		<?PHP } ?>
-
-		<!-- Título da página -->
-		<h3 class="mt-5 mb-3"><?PHP print $tit_etapa; ?> <img src="imagens/marcador_setaDir.gif" align="absmiddle" /> <span class="c_cinza">Identificação</span></h3>
-
-		<div class="container bg-light border">
-			<div align="center">
-				<table width="100%" height="200" border="0" cellpadding="0" cellspacing="0">
-					<tr>
-						<td align="center">
-							<!-- Exibe mensagens de erro -->
-							<?PHP if ($erro == 1) { ?>
-								<h4 class="c_vermelho"><?PHP print $mensagem_erro; ?></h4>
-								<p><a href="javascript:history.go(-1)"><button class="btn btn-success" style="background-color: purple; border-color: purple;">Voltar</button></a></p>
-							<?PHP } ?>
-
-							<?PHP if ($erro == 2) { ?>
-								<h4 class="c_vermelho"><?PHP print $mensagem_erro; ?></h4>
-								<p><a href="javascript:history.go(-1)"><button class="btn btn-success" style="background-color: purple; border-color: purple;">Voltar</button></a></p>
-							<?PHP } ?>
-						</td>
-					</tr>
-				</table>
+		<div class="site-section">
+			<div class="container">
+				<?PHP if ($erro == 1) { ?>
+					<div class="container mx-auto text-center mt-5 mb-5">
+						<div class="row">
+							<div class="col">
+								<h4 class="mb-3"><?PHP print $mensagem_erro; ?></h4>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+								<a href="javascript:history.go(-1)" class="btn btn-primary" role="button" aria-pressed="true">Voltar à loja</a>
+							</div>
+						</div>
+					</div>
+				<?PHP } ?>
+				<?PHP if ($erro == 2) { ?>
+					<div class="container mx-auto text-center mt-5 mb-5">
+						<div class="row">
+							<div class="col">
+								<h4 class="mb-3"><?PHP print $mensagem_erro; ?></h4>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+								<a href="javascript:history.go(-1)" class="btn btn-primary" role="button" aria-pressed="true">Voltar à loja</a>
+							</div>
+						</div>
+					</div>
+				<?PHP } ?>
 			</div>
 		</div>
-		<?PHP include "inc_rodape.php" ?>
+
+
+		<?php include "inc_rodape.php" ?>
 	</div>
 
-	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+	<script src="js/popper.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/owl.carousel.min.js"></script>
+	<script src="js/aos.js"></script>
+	<script src="js/main.js"></script>
 </body>
 
 </html>
+
 <?PHP
 // Libera os recursos usados pela conexão atual
 mysqli_free_result($rs);

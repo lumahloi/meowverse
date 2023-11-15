@@ -1,17 +1,10 @@
 <?PHP
-// +---------------------------------------------------------+
-// | Exibe detalhes de um determinado pedido                 |
-// +---------------------------------------------------------+
-// | Parte integrante do livro da série Faça um Site         |
-// | PHP 5 com banco de dados MySQL - Comércio eletrônico    |
-// | Editora Érica - autor: Carlos A J Oliviero              |
-// | www.facaumsite.com.br                                   |
-// +---------------------------------------------------------+
 SESSION_START();
 include "inc_dbConexao.php";
 
 ini_set('display_errors', 0);
 ini_set('error_reporting', E_ALL & ~E_NOTICE & ~E_WARNING);
+
 
 // Recupera código do pedido (selecionado em pedidos2.php
 $det_ped = $_GET['det_ped'];
@@ -30,15 +23,15 @@ $frete = $reg['frete'];
 $desconto = $reg['desconto'];
 $formpag = $reg['formpag'];
 $peso = $reg['peso'];
-$status = $reg['status'];
+$status = $reg['status_ped'];
 $cartao = $reg['cartao'];
 $parcelas = $reg['parcelas'];
 $id_cliente = $reg['id_cliente'];
 
 if ($formpag == "B") {
-	$formpag1 = "Boleto bancário" ;
+    $formpag1 = "Boleto bancário";
 } else {
-	$formpag1 = "Cartão de crédito" ;
+    $formpag1 = "Cartão de crédito";
 }
 
 // Carrega dados do cliente
@@ -47,7 +40,7 @@ $sql .= " WHERE id = '" . $id_cliente . "' ";
 
 $rs1 = mysqli_query($conexao, $sql);
 $reg1 = mysqli_fetch_array($rs1);
-	
+
 // Armazena dados do cliente para as próximas páginas
 $_SESSION['email_cli'] = $reg1['email'];
 $_SESSION['nome_cli'] = $reg1['nome'];
@@ -71,83 +64,97 @@ $rs = mysqli_query($conexao, $sql);
 $dia1 = date('d');
 $mes1 = date('m');
 $ano1 = date('Y');
-$dia2 = substr($vencimento,8,2);
-$mes2 = substr($vencimento,5,2);
-$ano2 = substr($vencimento,0,4);
-$timestamp_data1 = mktime(0,0,0,$mes1,$dia1,$ano1);
-$timestamp_data2 = mktime(0,0,0,$mes2,$dia2,$ano2);
+$dia2 = substr($vencimento, 8, 2);
+$mes2 = substr($vencimento, 5, 2);
+$ano2 = substr($vencimento, 0, 4);
+$timestamp_data1 = mktime(0, 0, 0, $mes1, $dia1, $ano1);
+$timestamp_data2 = mktime(0, 0, 0, $mes2, $dia2, $ano2);
 $dif_dias = round(($timestamp_data2 - $timestamp_data1) / 86400);
 // Define a mensagem para o número de dias que faltam para o cancelamento do pedido
 if ($dif_dias == 0) {
-	$mensagem_dias = "Hoje é o </span><span class='c_vermelho'><strong> último dia </strong></span>";
+    $mensagem_dias = "Hoje é o </span><span class='c_vermelho'><strong> último dia </strong></span>";
 } else {
 
-	$mensagem_dias = "Você ainda tem </span><span class='c_vermelho'><strong> " . $dif_dias . " dia(s) </strong></span>";
+    $mensagem_dias = "Você ainda tem </span><span class='c_vermelho'><strong> " . $dif_dias . " dia(s) </strong></span>";
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
+    <title>Meowverse</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-	<script type="text/javascript" src="js/jquery-1.4.2.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/aos.css">
+    <link rel="stylesheet" href="css/style.css">
 
-    <script type='text/javascript' src="js/jquery.autocomplete.js"></script>
-	<link rel="stylesheet" type="text/css" href="js/jquery.autocomplete.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
 </head>
+
 <body>
-<div class="container">
-  
-  <?PHP include "inc_menu_superior.php" ?>
-  <?PHP include "inc_menu_categorias.php" ?>	
-  <div class="row row-cols-2 mt-3 mb-3">
-    <div class="col"><h3>Detalhes do pedido número: <?PHP print $det_ped; ?></h3></div>
-    <div class="col"><h3>Status atual: <?PHP print $status; ?></h3></div>
-  </div>
 
+    <div class="site-wrap">
+        <?php include "inc_menuSuperiorCat.php" ?>
 
-  <div class="container">
-    <?PHP
-    $_SESSION['num_ped1'] = $det_ped;			
-    ?>
+        <div class="site-section">
+            <div class="container">
+                <h2>Detalhes do pedido</h2>
+                <h4 class="h4 mb-3 text-black mt-2"><?PHP print $status; ?>
+                </h4>
 
-    <?PHP if ($dif_dias >= 0 and $formpag == "B") {; ?>
-      <p><img src="imagens/marcador_atencao.gif" width="20" height="15" vspace="1" /> Olá <strong><?PHP print $_SESSION['nome']; ?></strong<strong>,</strong> Esse pedido se encontra no prazo de validade. <?PHP print $mensagem_dias; ?> para efetuar seu pagamento. Após este periodo seu pedido será cancelado. Se você ainda não imprimiu o referido boleto, poderá fazê-lo agora clicando no botão "Imprimir Boleto".</p>
-      <div class="row text-end"><a href="emitir_boleto.php"><button class="btn btn-success" style="background-color: purple; border-color: purple;">Imprimir boleto</button></a></div>
-
-    <?PHP } ?>
-
-    <h4>Informações sobre o pedido </h4>
-  
-    <div class="container bg-light border p-3">
-      <div class="row row-cols-2">
-        <div class="col-md-4">
-          <?PHP if ($formpag == "C") { ?>
-                <p>Pagamento efetuado por intermédio do cartão de crédito: <?PHP print $cartao; ?></p>
-                <p>N° de parcelas: <?PHP print $parcelas; ?></p>
-                <p>Valor da(s) parcela(s): R$ <?PHP print number_format(($valor / $parcelas),2,',','.'); ?></p> 
-          <?PHP } ?>
-              <p>Data do pedido: <?PHP print substr($data,8,2) . "/" . substr($data,5,2) . "/" . substr($data,0,4); ?></p>
-              <p>Vencimento: <?PHP print substr($vencimento,8,2) . "/" . substr($vencimento,5,2) . "/" . substr($vencimento,0,4); ?></p>
-              <p>Peso: <?PHP print $peso; ?></p>
-              <p>Forma de pagamento: <?PHP print $formpag1; ?></p>
-              <p>Status:<span class="c_laranja"> <?PHP print $status; ?></p>
-        </div>
-
-        <div class="col-md-8">
-          <table class="table table-striped">
-            <thead>
-              <th>Descrição do produto </th>
-              <th>Quantidade</th>
-              <th>Preço unitário R$</th>
-              <th>Total R$</th>
-            </thead>
-
-            <tbody>
-              <?PHP
+                <h3 class=" h3 mb-3 text-black mt-5">Informações sobre o pedido
+                </h3>
+                <div class="container  border p-3">
+                    <?PHP
+                    $_SESSION['num_ped1'] = $det_ped;
+                    ?>
+                    <div class="row row-cols-2">
+                        <div class="col-md-4">
+                            <?PHP if ($formpag == "C") { ?>
+                                <p>Pagamento efetuado por intermédio do cartão de crédito:
+                                    <?PHP print $cartao; ?>
+                                </p>
+                                <p>N° de parcelas:
+                                    <?PHP print $parcelas; ?>
+                                </p>
+                                <p>Valor da(s) parcela(s): R$
+                                    <?PHP print number_format(($valor / $parcelas), 2, ',', '.'); ?>
+                                </p>
+                            <?PHP } ?>
+                            <p>Código: <?PHP print $det_ped; ?></p>
+                            <p>Data do pedido:
+                                <?PHP print substr($data, 8, 2) . "/" . substr($data, 5, 2) . "/" . substr($data, 0, 4); ?>
+                            </p>
+                            <p>Vencimento:
+                                <?PHP print substr($vencimento, 8, 2) . "/" . substr($vencimento, 5, 2) . "/" . substr($vencimento, 0, 4); ?>
+                            </p>
+                            <p>Forma de pagamento:
+                                <?PHP print $formpag1; ?>
+                            </p>
+                            <p>Status:<span class="c_laranja">
+                                    <?PHP print $status; ?>
+                            </p>
+                        </div>
+                        <div class="col-md-8">
+                            <table class="table table-striped">
+                                <thead>
+                                    <th>Descrição do produto </th>
+                                    <th>Quantidade</th>
+                                    <th>Preço unitário R$</th>
+                                    <th>Total R$</th>
+                                </thead>
+                                <tbody>
+                                <?PHP
                 $subtotal = 0;
                 $n = 0;
                 while ($reg = mysqli_fetch_array($rs)) {
@@ -162,61 +169,105 @@ if ($dif_dias == 0) {
                   $preco_total = $preco * $qt
               ?>
 
-              <tr>
-                <td><img src='imagens/<?PHP print $codigo; ?>.jpg' width='53' height='32' align="absmiddle" /> <?PHP print $codigo; ?> - <?PHP print $nome; ?></td>
-                <td><?PHP print $qt; ?></td>
-                <td>R$ <?PHP print number_format($preco,2,',','.'); ?></td>
-                <td>R$ <?PHP print number_format($preco_total,2,',','.'); ?></td>
-              </tr>
+                                    <tr>
+                                        <td>
+                                            <?PHP print $codigo; ?> -
+                                            <?PHP print $nome; ?>
+                                        </td>
+                                        <td>
+                                            <?PHP print $qt; ?>
+                                        </td>
+                                        <td>R$
+                                            <?PHP print number_format($preco, 2, ',', '.'); ?>
+                                        </td>
+                                        <td>R$
+                                            <?PHP print number_format($preco_total, 2, ',', '.'); ?>
+                                        </td>
+                                    </tr>
 
-              <?PHP
-                }
-              ?>
+                                    <?php } ?>
+                                    <tr>
+                                        <td colspan="3">Subtotal</td>
+                                        <td><strong>R$
+                                                <?PHP print number_format(($valor), 2, ',', '.'); ?>
+                                            </strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3"><strong>Desconto</strong></td>
+                                        <td><strong>R$
+                                                <?PHP print number_format($desconto, 2, ',', '.'); ?>
+                                            </strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3"><strong>Frete</strong></td>
+                                        <td><strong>R$
+                                                <?PHP print number_format($frete, 2, ',', '.'); ?>
+                                            </strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <h3>Total do pedido </h3>
+                                        </td>
+                                        <td>
+                                            <h3>R$
+                                                <?PHP print number_format(($valor + $frete - $desconto), 2, ',', '.'); ?>
+                                            </h3>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> <!--fecha row-cols-2-->
+                </div> <!--fecha container-->
+                <h3 class="h3 mb-3 text-black mt-5">Informações para envio de sua compra</h3>
+                <div class="p-3 p-lg-5 border">
+                    <p>Nome do comprador: <strong class="c_laranja">
+                            <?PHP print $_SESSION['nome_cli']; ?>
+                        </strong></p>
 
-              <tr>
-                <td colspan="3">Subtotal</td>
-                <td><strong>R$ <?PHP print number_format(($valor),2,',','.'); ?></strong></td>
-              </tr>
+                    <p>E-mail: <strong class="c_laranja">
+                            <?PHP print $_SESSION['email_cli']; ?>
+                        </strong></p>
 
-              <tr>
-                <td colspan="3"><strong>Desconto</strong></td>
-                <td><strong>R$ <?PHP print number_format($desconto,2,',','.'); ?></strong></td>
-              </tr>
+                    <p>
+                        <?PHP print ltrim($_SESSION['end_nome']) . ", " . ltrim($_SESSION['end_num']) . " " . ltrim($_SESSION['end_comp']); ?><br />
+                        <?PHP print substr($_SESSION['cep'], 0, 5) . "-" . substr($_SESSION['cep'], 5, 3) . " " . ltrim($_SESSION['bairro']) . " - " . ltrim($_SESSION['cidade']) . " - " . ltrim($_SESSION['uf']); ?>
+                    </p>
 
-              <tr>
-                <td colspan="3"><strong>Frete</strong></td>
-                <td><strong>R$ <?PHP print number_format($frete,2,',','.'); ?></strong></td>
-              </tr>
+                    <p><strong>* E-mail de confirmação:</strong> se você não receber um e-mail de confirmação do pedido
+                        em breve, verifique sua pasta/diretório de spam ou e-mails indesejados (junk folder) na sua
+                        caixa de correio eletrônico. Se encontrar o e-mail em uma dessas pastas, seu provedor da
+                        Internet, bloqueador de spam ou software de filtragem está redirecionando as nossas mensagens.
+                    </p>
 
-              <tr>
-                <td colspan="3"><h3>Total do pedido </h3></td>
-                <td><h3>R$ <?PHP print number_format(($valor + $frete - $desconto),2,',','.'); ?></h3></td>
-              </tr>
-            </tbody>
-          </table>
+                    <p><strong>* Status do pedido:</strong> você pode acompanhar o status do seu pedido, bem como
+                        visualizar todas as suas informações, clicando no botão "Meus pedidos" que se encontra na parte
+                        superior desse site.</p>
+                </div>
+
+                <div class="row justify-content-md-end mt-5">
+
+                    <div class="col-md-3">
+                        <button class="btn btn-outline-primary btn-block py-3"
+                            onclick="window.location='javascript:history.go(-1)'">Voltar</button>
+                    </div>
+                </div>
+
+            </div>
         </div>
-      </div> <!--fecha row-cols-2-->
-    </div> <!--fecha container-->
-    
-    <h4 class="mt-4">Informações para envio de sua compra</h4>
-			<div class="container border p-3 mt-3 mb-3">
-				<p>Nome do comprador: <strong class="c_laranja"><?PHP print $_SESSION['nome_cli']; ?></strong></p>
+        <?php include "inc_rodape.php" ?>
+    </div>
 
-				<p>E-mail: <strong class="c_laranja"><?PHP print $_SESSION['email_cli']; ?></strong></p>
 
-				<p><?PHP print ltrim($_SESSION['end_nome']) . ", " . ltrim($_SESSION['end_num']) . " " . ltrim($_SESSION['end_comp']); ?><br /><?PHP print substr($_SESSION['cep'], 0, 5) . "-" . substr($_SESSION['cep'], 5, 3) . " " . ltrim($_SESSION['bairro']) . " - " . ltrim($_SESSION['cidade']) . " - " . ltrim($_SESSION['uf']); ?></p>
-			</div>
-
-  <div class="row text-end">
-    <a href="javascript:history.go(-1)"><button class="btn btn-secondary">Voltar</button></a>
-  </div>
-
-  <?PHP include "inc_rodape.php" ?>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/aos.js"></script>
+    <script src="js/main.js"></script>
 </body>
+
 </html>
+
 <?PHP
 // Libera os recursos usados pela conexão atual
 mysqli_free_result($rs);

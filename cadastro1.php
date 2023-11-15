@@ -1,17 +1,10 @@
 <?PHP
-// +---------------------------------------------------------+
-// | Inclusão, alteração e visualização do cadastro          |
-// +---------------------------------------------------------+
-// | Parte integrante do livro da série Faça um Site         |
-// | PHP 5 com banco de dados MySQL - Comércio eletrônico    |
-// | Editora Érica - autor: Carlos A J Oliviero              |
-// | www.facaumsite.com.br                                   |
-// +---------------------------------------------------------+
 SESSION_START();
 include "inc_dbConexao.php";
 
 ini_set('display_errors', 0);
 ini_set('error_reporting', E_ALL & ~E_NOTICE & ~E_WARNING);
+
 
 if ($_SESSION['acao'] <> "ver") {
 	// Captura os dados do formulário
@@ -29,6 +22,10 @@ if ($_SESSION['acao'] <> "ver") {
 	$txtcidade = $_POST['txtcidade'];
 	$txtuf = $_POST['txtuf'];
 
+    $sql = "select id from cadcli where cpf = '".$txtcpf."';";
+    $rs = mysqli_query($conexao, $sql);
+    $reg = mysqli_fetch_array($rs);
+
 	// Atualiza variáveis de sessão
 	$_SESSION['id_cli'] = $reg['id'];
 	$_SESSION['nome_cli'] = $txtnome;
@@ -37,7 +34,7 @@ if ($_SESSION['acao'] <> "ver") {
 	$_SESSION['sexo'] = $txtsexo;
 	$_SESSION['email_cli'] = $txtemail;
 	$_SESSION['senha'] = $txtsenha;
-	$_SESSION['end nome'] = $txtend_nome;
+	$_SESSION['end_nome'] = $txtend_nome;
 	$_SESSION['end_num'] = $txtend_num;
 	$_SESSION['end_comp'] = $txtend_comp;
 	$_SESSION['cep'] = $txtcep;
@@ -50,7 +47,7 @@ if ($_SESSION['acao'] == "inc") {
 	// Insere registro
 	$sql = "INSERT INTO cadcli ";
 	$sql = $sql . " (nome, cpf, rg, sexo, email, senha, end_nome, end_num, end_comp, cep, bairro, cidade, uf) ";
-	$sql = $sql . "VALUES ('$txtnome', '$txtcpf', '$txtrg', '$txtsexo', '$txtemail','$txtsenha', '$txtend_nome', '$txtend_num', '$txtend_comp', '$txtcep', '$txtbairro','$txtcidade', '$txtuf') ";
+	$sql = $sql . "VALUES ('$txtnome', '$txtcpf', '$txtrg', '$txtsexo', '$txtemail', '$txtsenha', '$txtend_nome', '$txtend_num', '$txtend_comp', '$txtcep', '$txtbairro','$txtcidade', '$txtuf') ";
 
 	//echo $sql;
 	//exit;
@@ -89,7 +86,7 @@ if ($_SESSION['acao'] == 'alt') {
 	$sql = $sql . "rg = '$txtrg', ";
 	$sql = $sql . "sexo = '$txtsexo', ";
 	$sql = $sql . "email = '$txtemail', ";
-	$sql = $sql . "senha = '$txtsenha', ";
+	$sql = $sql . "senha = ('$txtsenha'), ";
 	$sql = $sql . "end_nome = '$txtend_nome', ";
 	$sql = $sql . "end_num = '$txtend_num', ";
 	$sql = $sql . "end_comp = '$txtend_comp', ";
@@ -118,147 +115,194 @@ if ($_SESSION['acao'] == "ins") {
 	$mensagem = "* Seu cadastro foi concluído com sucesso";
 	$titulo_2 = "Inclusão";
 }
-
-
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meowverse</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-	<script type="text/javascript" src="js/jquery-1.4.2.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 
-    <script type='text/javascript' src="js/jquery.autocomplete.js"></script>
-	<link rel="stylesheet" type="text/css" href="js/jquery.autocomplete.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<head>
+    <title>Meowverse</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/aos.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
 </head>
 
 <body>
-	<div class="container">
-		<!-- Se clicado no botão Meu cadastro do menu superior -->
-		
-			<?PHP include "inc_menu_superior.php" ?>
-			<?PHP include "inc_menu_categorias.php" ?>
-			<!-- Se a página for chamada por intermédio do botão "Fechar pedido" do carrinho de compras -->
-			<!-- Não exibe menu superior e menu de categorias. Neste caso, exibe o banner da primeira etapa de uma compra (1. Minha identificação) -->
-			<?PHP $titulo_1 = "Meu Cadastro"; ?>
-		
-		<?PHP if($_POST ['cadastro'] != "S") {?>
-			<?PHP $titulo_1 = "Etapa 2"; ?>
-			<?PHP $titulo_2 = "Endereço de Entrega - Dados Pessoais"; ?>
-			
-		<?PHP } ?>
+    <div class="site-wrap">
+        <?php include "inc_menuSuperior.php" ?>
 
-		<!-- Título da página -->
-		<h3 class="mt-3"><?PHP print $titulo_1; ?> <img src="imagens/marcador_setaDir.gif" align="absmiddle" /> <span class="c_cinza"><?PHP print $titulo_2; ?> </span> </h3>
+        <div class="bg-light py-3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 mb-0">
+                        <a href="index.php">Home</a>
+                        <span class="mx-2 mb-0">/</span>
+                        <a href="cesta.php">Carrinho</a>
+                        <span class="mx-2 mb-0">/</span>
+                        <a href="login.php">Login</a>
+                        <span class="mx-2 mb-0">/</span>
+                        <strong class="text-black">Cadastro</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-		<div class="container border mt-4">
-			<div class="row row-cols-2">
-				<div class="col-lg-6 col-12">
-					<table class="table table-borderless">
-						<thead>
-							<tr>
-								<th colspan="2" class="text-center">Dados pessoais</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td><label>Nome:</label></td>
-								<td><p><?PHP print $_SESSION['nome_cli']; ?></p></td>
-							</tr>
-							<tr>
-								<td><label>CPF:</label></td>
-								<td><p><?PHP print substr($_SESSION['cpf'], 0, 3) . "." . substr($_SESSION['cpf'], 3, 3) . "." . substr($_SESSION['cpf'], 6, 3) . "-" . substr($_SESSION['cpf'], 9, 2); ?></p></td>
-							</tr>
-							<tr>
-								<td><label>RG:</label></td>
-								<td><p><?PHP print number_format($_SESSION['rg'], 0, '', '.'); ?></p></td>
-							</tr>
-							<tr>
-								<td><label>Sexo:</label></td>
-								<td><p><?PHP print $_SESSION['sexo']; ?></p></td>
-							</tr>
-							<tr>
-								<td><label>E-mail:</label></td>
-								<td><p><?PHP print $_SESSION['email_cli']; ?></p></td>
-							</tr>
-							<tr>
-								<td><label>Senha:</label></td>
-								<td><p><?PHP print $_SESSION['senha']; ?></p></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
+        <div class="site-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 mb-5 mb-md-0">
+                        <h2 class="h3 mb-3 text-black">Dados Pessoais</h2>
+                        <div class="p-3 p-lg-5 border">
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label for="c_companyname" class="text-black">Nome completo </label>
+                                    <p><?PHP print $_SESSION['nome_cli']; ?></p>
+                                </div>
+                            </div>
 
-				<div class="col-lg-6 col-12">
-					<table class="table table-borderless">
-						<thead>
-							<tr>
-								<th colspan="2" class="text-center">Endereço de entrega</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td><label>Endereço:</label></td>
-								<td><p><?PHP print $_SESSION['end_nome']; ?></p></td>
-							</tr>
-							<tr>
-								<td><label>Número:</label></td>
-								<td><p><?PHP print number_format($_SESSION['end_num'], 0, '', '.'); ?></p></td>
-							</tr>
-							<tr>
-								<td><label>Complemento:</label></td>
-								<td><p><?PHP print $_SESSION['end_comp']; ?></p></td>
-							</tr>
-							<tr>
-								<td><label>CEP:</label></td>
-								<td><p><?PHP print substr($_SESSION['cep'], 0, 5) . "-" . substr($_SESSION['cep'], 5, 3); ?></p></td>
-							</tr>
-							<tr>
-								<td><label>Bairro:</label></td>
-								<td><p><?PHP print $_SESSION['bairro']; ?></p></td>
-							</tr>
-							<tr>
-								<td><label>Cidade:</label></td>
-								<td><p><?PHP print $_SESSION['cidade']; ?></p></td>
-							</tr>
-							<tr>
-								<td><label>Unidade Federativa:</label></td>
-								<td><p><?PHP print $_SESSION['uf']; ?></p></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label for="c_companyname" class="text-black">CPF </label>
+                                    <p><?PHP print substr($_SESSION['cpf'], 0, 3) . "." . substr($_SESSION['cpf'], 3, 3) . "." . substr($_SESSION['cpf'], 6, 3) . "-" . substr($_SESSION['cpf'], 9, 2);?></p>
+                                </div>
+                            </div>
 
-			<div class="row row-cols-2 p-3">
-				<div class="col">
-					<p><?PHP print $mensagem; ?></p>
-				</div>
-				<div class="col text-end">
-					<div class="btn-group" role="group" aria-label="Basic example">
-						<a href="cadastro.php" role="button" class="btn btn-secondary">Alterar dados</a>
-						<?PHP if ($_SESSION['cadastro'] == "S") { ?>
-									<a href="index.php" role="button" class="btn btn-primary" style="background-color: purple; border-color: purple;">Voltar à loja</a>
-								<?PHP } else { ?>
-									<a href="pagamento.php" role="button" class="btn btn-primary" style="background-color: purple; border-color: purple;">Continuar</a>
-						<?PHP } ?>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- rodape da página -->
-		<?PHP include "inc_rodape.php" ?>
-	</div>
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label for="c_companyname" class="text-black">RG </label>
+                                    <p><?PHP print number_format($_SESSION['rg'], 0, '', '.'); ?></p>
+                                </div>
+                            </div>
 
-	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label for="c_companyname" class="text-black">Gênero </label>
+                                    <p><?PHP print $_SESSION['sexo']; ?></p>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label for="c_companyname" class="text-black">Email </label>
+                                    <p><?PHP print $_SESSION['email_cli']; ?></p>
+                                </div>
+                            </div>
 
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label for="c_companyname" class="text-black">Senha </label>
+                                    <p><?PHP print $_SESSION['senha']; ?></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="col-md-6 mb-5 mb-md-0">
+                        <h2 class="h3 mb-3 text-black">Endereço de entrega</h2>
+                        <div class="p-3 p-lg-5 border">
+
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label for="c_companyname" class="text-black">CEP </label>
+                                    <p><?PHP print substr($_SESSION['cep'], 0, 5) . "-" . substr($_SESSION['cep'], 5, 3); ?></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label for="c_companyname" class="text-black">Rua </label>
+                                    <p><?PHP print $_SESSION['end_nome']; ?></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label for="c_companyname" class="text-black">Número </label>
+                                    <p><?PHP print number_format($_SESSION['end_num'], 0, '', '.'); ?></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label for="c_companyname" class="text-black">Complemento </label>
+                                    <p><?php if(isset($_SESSION['end_comp'])&& !empty($_SESSION['end_comp'])){
+                                        echo $_SESSION['end_comp'];
+                                    } else {
+                                        echo '-';
+                                    }?></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <label for="c_fname" class="text-black">Bairro </label>
+                                    <p><?PHP print $_SESSION['bairro']; ?></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="c_lname" class="text-black">Cidade</label>
+                                    <p><?PHP print $_SESSION['cidade']; ?></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label for="c_companyname" class="text-black">Estado </label>
+                                    <p><?PHP print $_SESSION['uf']; ?></p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row justify-content-md-end mt-5">
+                    <div class="col-md-3">
+                        <p><?PHP print $mensagem; ?></p>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-outline-primary btn-block py-3"
+                            onclick="window.location='cadastro.php'">Alterar dados</button>
+                    </div>
+                    <div class="col-md-3">
+                        <?php if ($_SESSION['cadastro'] == "S") { ?>
+                        <button class="btn btn-primary btn-block py-3"
+                            onclick="window.location='index.php'">Voltar à loja</button>
+                        <?php } else { ?>
+
+                        <button class="btn btn-primary btn-block py-3"
+                            onclick="window.location='pagamento.php'">Continuar</button>
+                        <?php } ?>
+                    </div>
+                </div>
+
+                <!-- </form> -->
+            </div>
+            
+        </div>
+
+        
+
+        <?php include "inc_rodape.php" ?>
+    </div>
+
+    
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/aos.js"></script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>

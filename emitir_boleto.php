@@ -1,12 +1,4 @@
 <?PHP
-// +---------------------------------------------------------+
-// | Emissão do boleto bancário                              |
-// +---------------------------------------------------------+
-// | Parte integrante do livro da sárie Faça um Site         |
-// | PHP 5 com banco de dados MySQL - Comércio eletrônico    |
-// | Editora Érica - autor: Carlos A J Oliviero               |
-// |                                                           |
-// +---------------------------------------------------------+
 SESSION_START();
 include "inc_dbConexao.php";
 
@@ -38,7 +30,7 @@ $_SESSION['valor_boleto1'] = number_format($_SESSION['valor_boleto'], 2, '', '')
 // **** DADOS DO BOLETO
 // DADOS FIXOS DE CONFIGURAÇÃO DO BOLETO
 // 1. Dados da sua empresa
-$boleto["cedente_nome"] = "FaÇa um Site Miniaturas Ltda";
+$boleto["cedente_nome"] = "Meowverse";
 $boleto["cedente_cnpj"] = "33.333.333/0001-33";
 
 // 2. Dados da conta bancária da empresa (devem ser confirmados com o banco do cedente)
@@ -60,7 +52,7 @@ $boleto["fixo"] = "0";					// posicao 44 do código de barras
 // 4. Informações gerais do boleto
 $boleto['dv_codbar'] = "";	// Dígito verificador do Código de Barras
 
-$boleto['fator'] = fator_venc($_SESSION['datavenc']);
+$boleto['fator'] = fator_venc(!empty($_SESSION['datavenc']) ? $_SESSION['datavenc'] : null);
 $boleto['valor_zeroesq'] = zero_esquerda($_SESSION['valor_boleto1'], 10);
 $boleto['nosso_numero'] = zero_esquerda($_SESSION['id'], 11);
 
@@ -100,11 +92,11 @@ for ($i = 0; $i <= 42; $i++) {
 	}
 	// Multiplica as posições de 42 a 39 por 2,3,4,5,6,7,8 e 9
 	if ($i >= 32 and $i <= 39) {
-		$fator[$i] = $a[$i] * ($i - 30);
+		$fator[$i] = floatval($a[$i]) * (floatval($i) - 30.0);
 	}
 	// Multiplica as posições de 40 a 42 por 2,3 e 4
 	if ($i >= 40) {
-		$fator[$i] = $a[$i] * ($i - 38);
+		$fator[$i] = floatval($a[$i]) * (floatval($i) - 30.0);
 	}
 	// Soma os números de cada posição do código de barras invertido pelo respectivo fator
 	$soma = $soma + $fator[$i];
@@ -217,12 +209,16 @@ $linha_digitavel = $linha_digitavel . $campo4 . " " . $campo5;
 // Parâmetro: $data = Data de vencimento do boleto no formato aaaa-mm-dd
 function fator_venc($data)
 {
+	if ($data === null) {
+        return null;
+    }
+
 	// Separa a data em dia, mês e ano
 	$dia = substr($data, 8, 2);
 	$mes = substr($data, 5, 2);
 	$ano = substr($data, 0, 4);
 	// calcula o timestamp da data 07/10/1997 (base de cálculo do fator de vencimento)
-	$timestamp_data1 = mktime(0, 0, 0, 10, 07, 1997);
+	$timestamp_data1 = mktime(0, 0, 0, intval($mes), $dia, $ano);
 	// calcula o timestamp da data de vencimento do boleto
 	$timestamp_data2 = mktime(0, 0, 0, $mes, $dia, $ano);
 	// Calcula a diferença de dias entre as duas datas. Como esta diferença é calculada em segundos, 
@@ -236,7 +232,9 @@ function fator_venc($data)
 function zero_esquerda($numero, $zeros)
 {
 	// Retira o ponto decimal do número	
-	$numero = str_replace(".", "", $numero);
+	if($numero !== null ){
+		$numero = str_replace(".", "", $numero);
+	}
 	// Define o número de zeros a serem inseridos à esquerda do número
 	$loop = $zeros - strlen($numero);
 	for ($i = 0; $i < $loop; $i++) {
@@ -329,7 +327,6 @@ function calculo_dac2($campo)
 	<link rel="stylesheet" type="text/css" href="js/jquery.autocomplete.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 	<style type="text/css">
-		<!--
 		.linha_inf {
 			border-bottom-width: 1px;
 			border-bottom-style: solid;
@@ -506,7 +503,6 @@ function calculo_dac2($campo)
 			border-bottom-style: solid;
 			border-bottom-color: #000000;
 		}
-		-->
 	</style>
 </head>
 
@@ -515,7 +511,7 @@ function calculo_dac2($campo)
 	<table width="700" border="0" align="center" cellpadding="0" cellspacing="0">
 		<tr>
 			<td height="28" valign="top" background="imagens/menu_boleto.gif">
-				<div align="right">
+				<div>
 					<a href="javascript:window.print();"><img src="imagens/btn_transparente.gif" width="85" height="23" hspace="3" border="0" /></a>
 					<a href="index.php"><img src="imagens/btn_transparente.gif" width="80" height="23" hspace="3" border="0" /></a>
 					<a href="pedidos.php"><img src="imagens/btn_transparente.gif" alt="Ver meus pedidos" width="100" height="23" hspace="3" border="0" /></a>
@@ -528,7 +524,7 @@ function calculo_dac2($campo)
 	<!-- Recibo do Sacado -->
 	<table width="700" border="0" align="center" cellpadding="0" cellspacing="0">
 		<tr>
-			<td class="logo_fs"><a href="index.php"><img src="imagens/logo.png" width="178" height="37" vspace="2" border="0" /></a></td>
+			<td class="logo_fs"><a href="index.php"><img src="imagens/logo.png"/></a></td>
 			<td width="439" class="titulo">Boleto para pagamento do pedido n°<strong>&nbsp;<?PHP print $_SESSION['num_ped']; ?></strong></td>
 		</tr>
 	</table>

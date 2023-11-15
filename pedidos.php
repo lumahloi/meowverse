@@ -1,31 +1,33 @@
 <?PHP
-// +---------------------------------------------------------+
-// | Meus pedidos                                            |
-// +---------------------------------------------------------+
-// | Parte integrante do livro da série Faça um Site         |
-// | PHP 5 com banco de dados MySQL - Comércio eletrônico    |
-// | Editora Érica - autor: Carlos A J Oliviero              |
-// | www.facaumsite.com.br                                   |
-// +---------------------------------------------------------+
 SESSION_START();
 include "inc_dbConexao.php";
 
 ini_set('display_errors', 0);
 ini_set('error_reporting', E_ALL & ~E_NOTICE & ~E_WARNING);
+
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meowverse</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-	<script type="text/javascript" src="js/jquery-1.4.2.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 
-    <script type='text/javascript' src="js/jquery.autocomplete.js"></script>
-	<link rel="stylesheet" type="text/css" href="js/jquery.autocomplete.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<head>
+  <title>Meowverse</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
+  <link rel="stylesheet" href="fonts/icomoon/style.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/magnific-popup.css">
+  <link rel="stylesheet" href="css/jquery-ui.css">
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+  <link rel="stylesheet" href="css/owl.theme.default.min.css">
+  <link rel="stylesheet" href="css/aos.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="js/jquery-ui.js"></script>
+  <script src="js/jquery.magnific-popup.min.js"></script>
+
   <script language="javascript">
     function valida_form() {
       if (document.pedidos.txtemail.value == "") {
@@ -39,46 +41,63 @@ ini_set('error_reporting', E_ALL & ~E_NOTICE & ~E_WARNING);
 </head>
 
 <body>
-  <div id="main" class="container">
-    <!-- Logomarca e mneu superior -->
-    <?PHP include "inc_menu_superior.php" ?>
-    <?PHP include "inc_menu_categorias.php" ?>
+  <div class="site-wrap">
+    <?php include "inc_menuSuperior.php" ?>
 
-    <h2 class="mt-5">Meus Pedidos</h2>
-    
-    <div class="container border mt-3 bg-light p-3">
-      <p class="mt-3 text-center">Para prosseguir, por favor, identifique-se utilizando os campos abaixo e depois clique no botão "Continuar".</p>
-
-      <form action="pedidos1.php" method="post" onsubmit="return valida_form(this);" class="col-md-6 mx-auto form-group mt-5">
-        <div class="row mb-3">
-          <label for="email" class="col-sm-2 col-form-label">Seu email:</label>
-          <div class="col-sm-10">
-            <input type="email" class="form-control" placeholder="Insira seu email" id="email" name="txtemail">
+    <div class="bg-light py-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 mb-0"><a href="index.php">Home</a> 
+          <span class="mx-2 mb-0">/</span> 
+          <strong class="text-black">Meus Pedidos</strong>
           </div>
         </div>
-
-        <div class="row mb-3">
-          <label for="senha" class="col-sm-2 col-form-label">Sua senha:</label>
-          <div class="col-sm-10">
-            <input type="password" class="form-control" placeholder="Insira sua senha" id="senha" name="txtsenha">
-            <small class="form-text text-muted">Nunca compartilharemos sua senha.</small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <div class="text-center">
-            <button class="btn btn-success" type="submit" style="background-color: purple; border-color: purple;" >Continuar</button>
-          </div>
-        </div>
-        
-      </form>
-
+      </div>
     </div>
 
-    <?PHP include "inc_rodape.php" ?>
-      
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <div class="site-section">
+      <div class="container">
+        <div class="row">
+          <div class="col mb-5 mb-md-0">
+            <h2 class="h3 mb-3 text-black">Meus pedidos</h2>
+            <div class="p-3 p-lg-5 border">
+              <form  action="pedidos1.php" method="post" onsubmit="return valida_form(this);">
+                <div class="form-group row justify-content-md-center">
+                  <div class="col-6">
+                    <label for="txtemail" class="text-black">E-mail</label>
+                    <input type="email" class="form-control" id="txtemail" name="txtemail" value="<?php echo $_SESSION['email_cli']?>">
+                  </div>
+                </div>
+                <div class="form-group row justify-content-md-center">
+                  <div class="col-6">
+                    <label for="txtsenha" class="text-black">Senha</label>
+                    <input type="password" class="form-control" id="txtsenha" name="txtsenha"  value="<?php echo $_SESSION['senha']?>">
+                  </div>
+                </div>
+                <div class="form-group row justify-content-md-center">
+                  <div class="col-6">
+                    <button class="btn btn-primary btn-block py-3"
+                      onclick="window.location='pedidos1.php'">Continuar</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+        </div>
+        <!-- </form> -->
+      </div>
+    </div>
+
+    <?php include "inc_rodape.php" ?>
   </div>
+
+  
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/aos.js"></script>
+  <script src="js/main.js"></script>
 </body>
+
 </html>
