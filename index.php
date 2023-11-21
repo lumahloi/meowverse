@@ -117,7 +117,7 @@
               <div class="item">
                 <div class="block-4 text-center">
                   <figure class="block-4-image">
-                    <img src="imagens/<?php print $codigo ?>.jpg" alt="Imagem de <?php print $nome?>" class="img-fluid">
+                    <img src="imagens/<?php print $codigo ?>.jpg" alt="Imagem de <?php print $nome?>" class="img-fluid" width="600" height="600">
                   </figure>
                   <div class="block-4-text p-4">
                     <div style="height: 60px;">

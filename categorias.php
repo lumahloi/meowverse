@@ -1,8 +1,11 @@
 <?php
+session_start();
 include "inc_dbConexao.php";
+
 
 ini_set('display_errors', 0);
 ini_set('error_reporting', E_ALL & ~E_NOTICE & ~E_WARNING);
+
 
 $quantidade = 9;
 $pagina = (isset($_GET['pg']) && is_numeric($_GET['pg'])) ? (int) $_GET['pg'] : 1;
@@ -133,7 +136,7 @@ $qt_itens = $total_registros_total;
                                         <figure class="block-4-image">
                                             <a href="detalhes.php?produto=<?php echo $codigo ?>"><img
                                                     src="imagens/<?php echo $codigo ?>.jpg"
-                                                    alt="Imagem de <?php echo $nome ?>" class="img-fluid"></a>
+                                                    alt="Imagem de <?php echo $nome ?>" class="img-fluid" width="600" height="600"></a>
                                         </figure>
                                         <div class="block-4-text p-4">
                                             <div style="height: 70px;">
@@ -177,7 +180,7 @@ $qt_itens = $total_registros_total;
                                 <div class="site-block-27">
                                     <ul>
                                         <?php if ($qt_paginas != 1) { ?>
-                                        <a href="categorias.php?cat_id=<?php echo $cat_id?>&cat_nome=<?php echo $cat_nome?>&pg=1">
+                                        <a href="categorias.php?cat_id=<?php echo $cat_id?>&cat_nome=<?php echo $cat_nome?>&pg=1&ordenar=<?php echo $ordenar ?>">
                                             <li class="<?php if ($pagina == 1) {
                                                 echo 'active';
                                             } ?>"><span>1</span></li>
@@ -185,7 +188,7 @@ $qt_itens = $total_registros_total;
 
                                         <?php for ($i = 2; $i <= $qt_paginas; $i++) { ?>
                                             <a
-                                                href="categorias.php?cat_id=<?php echo $cat_id?>&cat_nome=<?php echo $cat_nome?>&pg=<?php echo $i ?>">
+                                                href="categorias.php?cat_id=<?php echo $cat_id?>&cat_nome=<?php echo $cat_nome?>&pg=<?php echo $i ?>&ordenar=<?php echo $ordenar ?>">
                                                 <li class="<?php if ($pagina == $i) {
                                                     echo 'active';
                                                 } ?>"><span>

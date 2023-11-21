@@ -1,5 +1,4 @@
 <?php
-SESSION_START();
 include "inc_dbConexao.php";
 
 ini_set('display_errors', 0);

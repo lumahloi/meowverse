@@ -47,7 +47,7 @@ if ($_SESSION['acao'] == "inc") {
 	// Insere registro
 	$sql = "INSERT INTO cadcli ";
 	$sql = $sql . " (nome, cpf, rg, sexo, email, senha, end_nome, end_num, end_comp, cep, bairro, cidade, uf) ";
-	$sql = $sql . "VALUES ('$txtnome', '$txtcpf', '$txtrg', '$txtsexo', '$txtemail', '$txtsenha', '$txtend_nome', '$txtend_num', '$txtend_comp', '$txtcep', '$txtbairro','$txtcidade', '$txtuf') ";
+	$sql = $sql . "VALUES ('$txtnome', '$txtcpf', '$txtrg', '$txtsexo', '$txtemail', sha1('$txtsenha'), '$txtend_nome', '$txtend_num', '$txtend_comp', '$txtcep', '$txtbairro','$txtcidade', '$txtuf') ";
 
 	//echo $sql;
 	//exit;
@@ -68,7 +68,8 @@ if ($_SESSION['acao'] == "inc") {
 	$_SESSION['cpf'] = $reg['cpf'];
 	$_SESSION['rg'] = $reg['rg'];
 	$_SESSION['sexo'] = $reg['sexo'];
-	$_SESSION['senha'] = $reg['senha'];
+	//$_SESSION['senha'] = $reg['senha'];
+    $_SESSION['senha'] = $txtsenha;
 	$_SESSION['end_nome'] = $reg['end_nome'];
 	$_SESSION['end_num'] = $reg['end_num'];
 	$_SESSION['end_comp'] = $reg['end_comp'];
@@ -84,7 +85,7 @@ if ($_SESSION['acao'] == 'alt') {
 	$sql = $sql . "nome = '$txtnome', ";
 	$sql = $sql . "cpf = '$txtcpf', ";
 	$sql = $sql . "rg = '$txtrg', ";
-	$sql = $sql . "sexo = '$txtsexo', ";
+	$sql = $sql . "sexo = sha1('$txtsexo'), ";
 	$sql = $sql . "email = '$txtemail', ";
 	$sql = $sql . "senha = ('$txtsenha'), ";
 	$sql = $sql . "end_nome = '$txtend_nome', ";

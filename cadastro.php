@@ -58,7 +58,7 @@ if ($_SESSION['acao'] == "alt") {
   $txtemail2 = $_SESSION['email_cli'];
   $txtemail_2 = $_SESSION['email_cli'];
   $txtsenha_1 = $_SESSION['senha'];
-  $txtsenha_2 = $_SESSION['senha'];
+  //$txtsenha_2 = $_SESSION['senha'];
   $txtend_nome = $_SESSION['end_nome'];
   $txtend_num = $_SESSION['end_num'];
   $txtend_comp = $_SESSION['end_comp'];
@@ -90,11 +90,28 @@ if ($_SESSION['acao'] == "alt") {
   <link rel="stylesheet" href="css/aos.css">
   <link rel="stylesheet" href="css/style.css">
 
+  <style>
+    .mostrar-senha {
+      cursor: pointer;
+      user-select: none;
+    }
+  </style>
+
   <script src="js/jquery-3.3.1.min.js"></script>
   <script src="js/jquery-ui.js"></script>
   <script src="js/jquery.magnific-popup.min.js"></script>
 
   <script type="text/javascript">
+    function mostrarSenha(senhaId) {
+        var campo = document.getElementById(senhaId);
+        
+        if (campo.type === "password") {
+          campo.type = "text";
+        } else {
+          campo.type = "password";
+        }
+    }
+
     function valida_form() {
       if (document.cadastro.txtnome.value == "") {
         alert("Por favor, informe seu nome completo.");
@@ -347,15 +364,23 @@ if ($_SESSION['acao'] == "alt") {
                   <div class="form-group row">
                     <div class="col-md-6">
                       <label for="txtsenha_1" class="text-black">Senha <span class="text-danger">*</span></label>
-                      <input type="password" class="form-control" id="txtsenha_1" name="txtsenha_1" maxlength="10"
-                        value="<?PHP print $txtsenha_1; ?>">
+                      <div class="input-group">
+                        <input type="password" class="form-control" id="txtsenha_1" name="txtsenha_1" maxlength="10"
+                          value="<?PHP print $txtsenha_1; ?>">
+                          <span onclick="mostrarSenha('txtsenha_1')" class="mostrar-senha icon icon-eye" aria-hidden="true"></span>
+                      </div>
                     </div>
                     <div class="col-md-6">
-                      <label for="txtsenha_2" class="text-black">Confirmar senha <span
-                          class="text-danger">*</span></label>
-                      <input type="password" class="form-control" id="txtsenha_2" name="txtsenha_2" maxlength="10"
-                        value="<?PHP print $txtsenha_1; ?>">
+                      <label for="txtsenha_2" class="text-black">Confirmar senha <span class="text-danger">*</span></label>
+
+                      <div class="input-group">
+                        <input type="password" class="form-control" id="txtsenha_2" name="txtsenha_2" maxlength="10" value="<?PHP print $txtsenha_1; ?>">
+                        <span onclick="mostrarSenha('txtsenha_2')" class="mostrar-senha icon icon-eye" aria-hidden="true"></span>
+                      </div>
+
                     </div>
+
+
                   </div>
               </div>
             </div>

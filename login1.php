@@ -30,7 +30,7 @@ if ($total_registros == 0) {
 if ($erro == "0") {
 	$sql = "SELECT * ";
 	$sql .= "FROM cadcli ";
-	$sql .= "WHERE senha = '".$senha."';";
+	$sql .= "WHERE senha = sha1('$senha');";
 	$rs = mysqli_query($conexao, $sql);
 	$reg = mysqli_fetch_array($rs);
 	$total_registros = mysqli_num_rows($rs);
@@ -45,7 +45,7 @@ if ($erro == "0") {
 	$sql = "SELECT * ";
 	$sql .= "FROM cadcli ";
 	$sql .= "WHERE email = '" . $email . "' ";
-	$sql .= "AND senha = '".$senha."';";
+	$sql .= "AND senha = sha1('$senha');";
 	$rs = mysqli_query($conexao, $sql);
 	$reg = mysqli_fetch_array($rs);
 
@@ -56,7 +56,8 @@ if ($erro == "0") {
 	$_SESSION['cpf'] = $reg['cpf'];
 	$_SESSION['rg'] = $reg['rg'];
 	$_SESSION['sexo'] = $reg['sexo'];
-	$_SESSION['senha'] = $reg['senha'];
+	//$_SESSION['senha'] = $reg['senha'];
+	$_SESSION['senha'] = $senha;
 	$_SESSION['end_nome'] = $reg['end_nome'];
 	$_SESSION['end_num'] = $reg['end_num'];
 	$_SESSION['end_comp'] = $reg['end_comp'];

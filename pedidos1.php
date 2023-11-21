@@ -30,7 +30,7 @@ if ($total_registros == 0) {
 if ($erro == "0") {
 	$sql = " SELECT * ";
 	$sql .= " FROM cadcli ";
-	$sql .= " WHERE senha = '" . $senha . "' ";
+	$sql .= " WHERE senha = sha1('$senha')";
 
 	$rs = mysqli_query($conexao, $sql);
 	$reg = mysqli_fetch_array($rs);
@@ -46,7 +46,7 @@ if ($erro == "0") {
 	$sql = " SELECT * ";
 	$sql .= " FROM cadcli ";
 	$sql .= " WHERE email = '" . $email . "' ";
-	$sql .= " AND senha = '" . $senha . "' ";
+	$sql .= " AND senha = sha1('$senha')";
 
 	$rs = mysqli_query($conexao, $sql);
 	$reg = mysqli_fetch_array($rs);

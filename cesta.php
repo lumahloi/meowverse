@@ -292,8 +292,8 @@ $_SESSION['total_itens'] = $total_itens;
                                                             <a href="cesta.php?id=<?PHP print $id ?>&excluir=S&rem=A"
                                                                 class="btn btn-outline-primary" type="button">&minus;</a>
                                                         </div>
-                                                        <input type="number" class="form-control text-center"
-                                                            value="<?php echo $qt ?>" placeholder=""
+                                                        <input type="text" class="form-control text-center"
+                                                            value="<?php echo $qt ?>" readonly inputmode="numeric"
                                                             aria-label="Example text with button addon"
                                                             aria-describedby="button-addon1">
                                                         <div class="input-group-append">
