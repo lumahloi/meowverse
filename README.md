@@ -13,12 +13,6 @@ A **Meowverse** é meu **Trabalho de Conclusão de Curso** para o **Técnico em 
 <img src="https://camo.githubusercontent.com/10e636bd70ba255c2c2567a7873e4d7e26cecaca0b71eb9bb92ea27aaa71bde7/68747470733a2f2f692e696d6775722e636f6d2f745731454f4c562e706e67">
 <img src="https://camo.githubusercontent.com/7c56637f29c18ba792998535b58164a53004e5452017a2b52e0897b3e5b9072d/68747470733a2f2f692e696d6775722e636f6d2f4e4b417752624f2e706e67">
 
-## Tecnologias utilizadas
-- **Frontend**: HTML, CSS, JavaScript
-- **Backend**: PHP, SQL, MySQL
-- **Frameworks**: Bootstrap
-- **Outros**: GitHub, Visual Studio Code, WebHost
-
 ## Funcionalidades
 - Exibição de produtos, seja por pesquisa por nome, categoria ou origem;
 - Exibição de informações cadastrais;
