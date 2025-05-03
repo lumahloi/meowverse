@@ -8,6 +8,11 @@
 
 **Meowverse** is a web store which sells figurines, leading the client through all customer experience and successfully makes checkouts. This project was my Final Paper for the Web Development Technician course I undertook, thus my first fullstack project. The modularization and project design isn't the best and will be fixed in the future, as well as code logic and refactoration. 
 
+## Screenshots
+<img src="https://camo.githubusercontent.com/01be8415c849be14f6a35e4271924552ed3b8e298314497d31fa33de5ab94fe4/68747470733a2f2f692e696d6775722e636f6d2f4e64757a4c567a2e706e67">
+<img src="https://camo.githubusercontent.com/10e636bd70ba255c2c2567a7873e4d7e26cecaca0b71eb9bb92ea27aaa71bde7/68747470733a2f2f692e696d6775722e636f6d2f745731454f4c562e706e67">
+<img src="https://camo.githubusercontent.com/7c56637f29c18ba792998535b58164a53004e5452017a2b52e0897b3e5b9072d/68747470733a2f2f692e696d6775722e636f6d2f4e4b417752624f2e706e67">
+
 ## Functionalities
 - Product search: through name, category, price, availability, series;
 - Account sign up, log in and sign out;
@@ -16,15 +21,25 @@
 - Product details;
 - Payment through Pix, Debit/Credit cards and Payment Slip.
 
-## Screenshots
-<img src="https://camo.githubusercontent.com/01be8415c849be14f6a35e4271924552ed3b8e298314497d31fa33de5ab94fe4/68747470733a2f2f692e696d6775722e636f6d2f4e64757a4c567a2e706e67">
-> <img src="https://camo.githubusercontent.com/10e636bd70ba255c2c2567a7873e4d7e26cecaca0b71eb9bb92ea27aaa71bde7/68747470733a2f2f692e696d6775722e636f6d2f745731454f4c562e706e67">
-<img src="https://camo.githubusercontent.com/7c56637f29c18ba792998535b58164a53004e5452017a2b52e0897b3e5b9072d/68747470733a2f2f692e696d6775722e636f6d2f4e4b417752624f2e706e67">
+## How to run locally
+Step by step guide of how to run the project locally on your machine.
 
-## Pre-requisites
+### Pre-requisites
 - **PHP**: check installation at the [official website](https://www.php.net/manual/en/install.php)
 - **MySQL**: check installation at the [official website](https://dev.mysql.com/downloads/installer/)
 - A local server of your choice; I recommend [XAMPP](https://www.apachefriends.org/pt_br/download.html)
+
+## Installation
+TBD
+
+## Running locally
+TBD
+
+## APIs
+TBD
+
+## Future improvements
+TBD
 
 ## Author
 <img src="https://github.com/lumahloi.png" width="80" align="left"/>
